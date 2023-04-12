@@ -15,6 +15,7 @@ import com.github.britooo.looca.api.group.sistema.Sistema;
 import com.github.britooo.looca.api.group.temperatura.Temperatura;
 import com.github.britooo.looca.api.group.rede.Rede;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -52,6 +53,7 @@ public class TesteMaquina {
         System.out.println(looca.getSistema() + "\n");
         
         //Data e hora
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss dd-MM-yyyy ");
         LocalDateTime dataHora = LocalDateTime.now();
         
         new Timer().scheduleAtFixedRate(new TimerTask() {
@@ -60,7 +62,7 @@ public class TesteMaquina {
             @Override
             public void run() {
                 System.out.println("Rodada de atualização: " + cont);
-                System.out.println(dataHora);
+                System.out.println(dataHora.format(formatter));
                 System.out.println("Utilização dos componentes");
                 System.out.println("Processador");
                 System.out.println(String.format("Nome: %s\n"

@@ -5,12 +5,13 @@
 package com.mycompany.teste.looca;
 
 import com.github.britooo.looca.api.core.Looca;
-import com.github.britooo.looca.api.group.discos.Disco;
-import com.github.britooo.looca.api.group.discos.DiscoGrupo;
-import com.github.britooo.looca.api.group.rede.Rede;
-import com.github.britooo.looca.api.group.rede.RedeInterfaceGroup;
-import com.github.britooo.looca.api.group.sistema.Sistema;
+import com.github.britooo.looca.api.group.processos.Processo;
+import com.github.britooo.looca.api.group.processos.ProcessoGrupo;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  *
@@ -20,26 +21,39 @@ public class TestantoLooca {
 
     public static void main(String[] args) {
         Looca looca = new Looca();
-        Sistema sistema = new Sistema();
-        DiscoGrupo grupoDeDiscos = looca.getGrupoDeDiscos();
+        ProcessoGrupo grupoDeProcessos = looca.getGrupoDeProcessos();
+        List<Processo> processos = grupoDeProcessos.getProcessos();
 
-        List<Disco> discos = grupoDeDiscos.getDiscos();
-                
-        System.out.println("Processador \n" + looca.getProcessador());
-        System.out.println("Memória ram \n" + looca.getMemoria());
-        System.out.println("Rede \n" + looca.getRede());
-        
-        Rede rede = looca.getRede();
-        RedeInterfaceGroup rig = rede.getGrupoDeInterfaces();
-        
-        
-        System.out.println(looca.getRede().getGrupoDeInterfaces().getInterfaces());
-        
-        for (Disco disco : discos) {
-            System.out.println("Disco: ");
-            System.out.println(sistema);
-        }
-        
-//        LISTAGEM DE PROCESSOS
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss dd-MM-yyyy ");
+        LocalDateTime dataHora = LocalDateTime.now();
+        System.out.println();
+
+        new Timer().scheduleAtFixedRate(new TimerTask() {
+            int cont = 0;
+
+            @Override
+            public void run() {
+                cont++;
+                System.out.println("LISTAGEM DE PROCESSOS: " + cont);
+                System.out.println("Data e Hora: " + dataHora.format(formatter));
+                for (Processo processo : processos) {
+                    
+                    System.out.println(String.format(
+                            """
+                        Processo: %s; PID: %d
+                           Percentual de uso da CPU: %.3f%%
+                           Percentual de usa da RAM: %.3f%%
+                           MBs alocados na RAM: %dMB
+                        """,
+                            processo.getNome(), processo.getPid(),
+                            processo.getUsoCpu(), // Retorna o valor percentual de uso da CPU pelo processo.
+                            processo.getUsoMemoria(), //Retorna o Valor percentual de uso da Memória RAM pelo processo.
+                            (processo.getBytesUtilizados() / 1000000) // Retorna quanta memória está alocada para esse processo e está na RAM em MB
+                    ));
+                }
+                System.out.println("Total de Processos em execuçã: " + grupoDeProcessos.getTotalProcessos());
+                System.out.println("Total de Threads em execução: " + grupoDeProcessos.getTotalThreads());
+            }
+        }, 0, 10000);
     }
 }
