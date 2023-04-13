@@ -17,7 +17,7 @@ import java.util.TimerTask;
  *
  * @author silvam
  */
-public class TestantoLooca {
+public class TesteProcesso {
 
     public static void main(String[] args) {
         Looca looca = new Looca();
