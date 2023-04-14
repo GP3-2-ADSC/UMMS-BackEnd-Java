@@ -14,6 +14,8 @@ import com.github.britooo.looca.api.group.rede.RedeInterfaceGroup;
 import com.github.britooo.looca.api.group.sistema.Sistema;
 import com.github.britooo.looca.api.group.temperatura.Temperatura;
 import com.github.britooo.looca.api.group.rede.Rede;
+import com.github.britooo.looca.api.util.Conversor;
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -27,8 +29,9 @@ import javax.print.DocFlavor;
  */
 public class TesteMaquina {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         Looca looca = new Looca();
+        TesteInovacao ping = new TesteInovacao();
         // Informações da máquina
 
         // Processador
@@ -56,51 +59,56 @@ public class TesteMaquina {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss dd-MM-yyyy ");
         LocalDateTime dataHora = LocalDateTime.now();
         
-        new Timer().scheduleAtFixedRate(new TimerTask() {
-            int cont = 0;
+        System.out.println(ping.execCommand());
+//        System.out.println(Conversor.formatarBytes());
+                     
 
-            @Override
-            public void run() {
-                System.out.println("Rodada de atualização: " + cont);
-                System.out.println(dataHora.format(formatter));
-                System.out.println("Utilização dos componentes");
-                System.out.println("Processador");
-                System.out.println(String.format("Nome: %s\n"
-                        + "Uso: %.2f\n", processador.getNome(), processadorUso));
-
-                System.out.println("Memoria Ram");
-                System.out.println(String.format("Total: %.2f Gb\n"
-                        + "Uso: %.2f Gb\n"
-                        + "Disponível: %.2f Gb\n", memoriaTotalGb, memoriaEmUsoGb, memoriaDisponivelGb));
-
-                System.out.println("Disco");
-
-                for (Disco disco : discos) {
-                    System.out.println(
-                            String.format("Modelo: %s\n"
-                                    + "Bytes de leitura: %d \n"
-                                    + "Bytes de escrita: %d \n", disco.getModelo(),
-                                    disco.getBytesDeLeitura(), disco.getBytesDeEscritas()));
-                }
-
-                System.out.println("Rede");
-                for (RedeInterface redeInterface : interfaceDeRede) {
-                    if (redeInterface.getBytesEnviados() > 0
-                            && redeInterface.getBytesRecebidos() > 0) {
-
-                        System.out.println(
-                                String.format("Nome da rede: %s\n"
-                                        + "IPV4: %s\n"
-                                        + "Bytes enviados: %.2f Mb\n"
-                                        + "Bytes recebidos: %.2f Mb\n",
-                                        redeInterface.getNome(),
-                                        redeInterface.getEnderecoIpv4(),
-                                        redeInterface.getBytesEnviados() / 1000000.0,
-                                        redeInterface.getBytesRecebidos() / 1000000.0));
-                    }
-                }
-                cont++;
-            }
-        }, 0, 10000);
+        
+//        new Timer().scheduleAtFixedRate(new TimerTask() {
+//            int cont = 0;
+//
+//            @Override
+//            public void run() {
+//                System.out.println("Rodada de atualização: " + cont);
+//                System.out.println(dataHora.format(formatter));
+//                System.out.println("Utilização dos componentes");
+//                System.out.println("Processador");
+//                System.out.println(String.format("Nome: %s\n"
+//                        + "Uso: %.2f\n", processador.getNome(), processadorUso));
+//
+//                System.out.println("Memoria Ram");
+//                System.out.println(String.format("Total: %.2f Gb\n"
+//                        + "Uso: %.2f Gb\n"
+//                        + "Disponível: %.2f Gb\n", memoriaTotalGb, memoriaEmUsoGb, memoriaDisponivelGb));
+//
+//                System.out.println("Disco");
+//
+//                for (Disco disco : discos) {
+//                    System.out.println(
+//                            String.format("Modelo: %s\n"
+//                                    + "Bytes de leitura: %d \n"
+//                                    + "Bytes de escrita: %d \n", disco.getModelo(),
+//                                    disco.getBytesDeLeitura(), disco.getBytesDeEscritas()));
+//                }
+//
+//                System.out.println("Rede");
+//                for (RedeInterface redeInterface : interfaceDeRede) {
+//                    if (redeInterface.getBytesEnviados() > 0
+//                            && redeInterface.getBytesRecebidos() > 0) {
+//
+//                        System.out.println(
+//                                String.format("Nome da rede: %s\n"
+//                                        + "IPV4: %s\n"
+//                                        + "Bytes enviados: %.2f Mb\n"
+//                                        + "Bytes recebidos: %.2f Mb\n",
+//                                        redeInterface.getNome(),
+//                                        redeInterface.getEnderecoIpv4(),
+//                                        redeInterface.getBytesEnviados() / 1000000.0,
+//                                        redeInterface.getBytesRecebidos() / 1000000.0));
+//                    }
+//                }
+//                cont++;
+//            }
+//        }, 0, 10000);
     }
 }
