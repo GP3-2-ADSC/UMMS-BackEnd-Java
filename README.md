@@ -1,4 +1,4 @@
-# UMMS-Tela-Login-MySQL
+# UMMS-BackEnd-Java
 
 ## Rodando localmente?
 ### Clone o projeto
