@@ -50,7 +50,7 @@ public class LoginValidado extends javax.swing.JFrame {
         jLabel1.setForeground(new java.awt.Color(0, 0, 0));
         jLabel1.setText("Login feito com sucesso!");
         jPanel1.add(jLabel1);
-        jLabel1.setBounds(70, 40, 190, 17);
+        jLabel1.setBounds(70, 40, 190, 19);
 
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/image5.png"))); // NOI18N
         jLabel2.setText("jLabel2");
