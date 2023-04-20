@@ -90,7 +90,7 @@ public class RetriaLogin extends javax.swing.JFrame {
         labelEmail.setText("Email");
         labelEmail.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         Painel_Campos.add(labelEmail);
-        labelEmail.setBounds(120, 150, 44, 24);
+        labelEmail.setBounds(120, 150, 52, 23);
 
         campoEmail.setBackground(new java.awt.Color(255, 255, 255));
         campoEmail.setFont(new java.awt.Font("Fira Sans", 0, 14)); // NOI18N
@@ -112,7 +112,7 @@ public class RetriaLogin extends javax.swing.JFrame {
         labelSenha.setForeground(new java.awt.Color(0, 0, 0));
         labelSenha.setText("Senha");
         Painel_Campos.add(labelSenha);
-        labelSenha.setBounds(120, 230, 52, 24);
+        labelSenha.setBounds(120, 230, 57, 23);
 
         campo_senha.setBackground(new java.awt.Color(255, 255, 255));
         campo_senha.setFont(new java.awt.Font("Fira Sans", 0, 14)); // NOI18N
@@ -131,7 +131,7 @@ public class RetriaLogin extends javax.swing.JFrame {
         jLabel3.setForeground(new java.awt.Color(140, 204, 240));
         jLabel3.setText("Login");
         Painel_Campos.add(jLabel3);
-        jLabel3.setBounds(20, 30, 96, 47);
+        jLabel3.setBounds(20, 30, 107, 44);
 
         botaoLogar.setBackground(new java.awt.Color(255, 255, 255));
         botaoLogar.setFont(new java.awt.Font("Montserrat", 1, 18)); // NOI18N
