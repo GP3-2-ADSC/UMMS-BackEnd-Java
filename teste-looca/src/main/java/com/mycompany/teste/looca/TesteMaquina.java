@@ -21,6 +21,8 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javax.print.DocFlavor;
 
 /**
@@ -31,7 +33,7 @@ public class TesteMaquina {
 
     public static void main(String[] args) throws IOException {
         Looca looca = new Looca();
-        TesteInovacao ping = new TesteInovacao();
+        Inovacao ping = new Inovacao();
         // Informações da máquina
 
         // Processador
@@ -51,19 +53,35 @@ public class TesteMaquina {
 
         //Rede
         List<RedeInterface> interfaceDeRede = looca.getRede().getGrupoDeInterfaces().getInterfaces();
-        
+
         System.out.println("Sistema da máquina");
         System.out.println(looca.getSistema() + "\n");
-        
+
         //Data e hora
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss dd-MM-yyyy ");
         LocalDateTime dataHora = LocalDateTime.now();
         
-        System.out.println(ping.execCommand());
-//        System.out.println(Conversor.formatarBytes());
-                     
+
+        // inovação
+        List ipv4 = null;
+        String ipRoteador = null;
+
+        for (RedeInterface redeInterface : interfaceDeRede) {
+            if (redeInterface.getBytesEnviados() > 0
+                    && redeInterface.getBytesRecebidos() > 0) {
+   
+                ipv4 = redeInterface.getEnderecoIpv4();
+                ping.setIpRoteador(String.valueOf(ipv4));
+            }
+        }
+
+        ping.execCommand("ping " + ping.getIpRoteador());
+        System.out.println(ping.getMediaPing());
 
         
+      //  ping.internetTest();
+
+//        System.out.println(Conversor.formatarBytes());
 //        new Timer().scheduleAtFixedRate(new TimerTask() {
 //            int cont = 0;
 //
