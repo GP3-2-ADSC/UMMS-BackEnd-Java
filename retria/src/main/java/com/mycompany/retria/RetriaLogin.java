@@ -4,9 +4,19 @@
  */
 package com.mycompany.retria;
 
-import com.mycompany.retria.DAO.ClienteDAO;
+import com.github.britooo.looca.api.core.Looca;
+import com.github.britooo.looca.api.group.rede.RedeInterface;
+import com.mycompany.retria.DAO.AdministradorDAO;
 import com.mycompany.retria.DAO.Conexao;
+import com.mycompany.retria.DAO.EspecificacaoComponenteDAO;
+import com.mycompany.retria.DAO.MaquinaUltrassomDAO;
+import com.mycompany.retria.DAO.MaquinaUltrassomEspecificadaDAO;
+import com.mycompany.retria.MODEL.Inovacao;
 import java.awt.Toolkit;
+import java.io.IOException;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 /**
@@ -90,7 +100,7 @@ public class RetriaLogin extends javax.swing.JFrame {
         labelEmail.setText("Email");
         labelEmail.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         Painel_Campos.add(labelEmail);
-        labelEmail.setBounds(120, 150, 52, 23);
+        labelEmail.setBounds(120, 150, 44, 24);
 
         campoEmail.setBackground(new java.awt.Color(255, 255, 255));
         campoEmail.setFont(new java.awt.Font("Fira Sans", 0, 14)); // NOI18N
@@ -112,7 +122,7 @@ public class RetriaLogin extends javax.swing.JFrame {
         labelSenha.setForeground(new java.awt.Color(0, 0, 0));
         labelSenha.setText("Senha");
         Painel_Campos.add(labelSenha);
-        labelSenha.setBounds(120, 230, 57, 23);
+        labelSenha.setBounds(120, 230, 52, 24);
 
         campo_senha.setBackground(new java.awt.Color(255, 255, 255));
         campo_senha.setFont(new java.awt.Font("Fira Sans", 0, 14)); // NOI18N
@@ -131,7 +141,7 @@ public class RetriaLogin extends javax.swing.JFrame {
         jLabel3.setForeground(new java.awt.Color(140, 204, 240));
         jLabel3.setText("Login");
         Painel_Campos.add(jLabel3);
-        jLabel3.setBounds(20, 30, 107, 44);
+        jLabel3.setBounds(20, 30, 96, 47);
 
         botaoLogar.setBackground(new java.awt.Color(255, 255, 255));
         botaoLogar.setFont(new java.awt.Font("Montserrat", 1, 18)); // NOI18N
@@ -171,9 +181,41 @@ public class RetriaLogin extends javax.swing.JFrame {
         botaoLogar.setRequestFocusEnabled(false);
         botaoLogar.setRolloverEnabled(false);
 
-        ClienteDAO clienteDAO = new ClienteDAO();
-        if (clienteDAO.consultar(email, senha)) {
+        AdministradorDAO admDAO = new AdministradorDAO();
+        EspecificacaoComponenteDAO especificacaoComponenteDAO = new EspecificacaoComponenteDAO();
+        MaquinaUltrassomEspecificadaDAO maquinaUltrassomEspecDAO = new MaquinaUltrassomEspecificadaDAO();
+        Looca looca = new Looca();
+        Inovacao ping = new Inovacao();
+        
+        //Rede
+        List<RedeInterface> interfaceDeRede = looca.getRede().getGrupoDeInterfaces().getInterfaces();
+        // inovação
+        List ipv4 = null;
+        String ipRoteador = null;
+        
+        if (admDAO.consultar(email, senha)) {
             new LoginValidado().setVisible(true);
+
+            especificacaoComponenteDAO.adicionar();
+            maquinaUltrassomEspecDAO.adicionar();
+            admDAO.relatorioAdm(email, senha);
+
+            for (RedeInterface redeInterface : interfaceDeRede) {
+                if (redeInterface.getBytesEnviados() > 0
+                        && redeInterface.getBytesRecebidos() > 0) {
+
+                    ipv4 = redeInterface.getEnderecoIpv4();
+                    ping.setIpRoteador(String.valueOf(ipv4));
+                }
+            }
+
+            try {
+                ping.execCommand("ping " + ping.getIpRoteador());
+            } catch (IOException ex) {
+                Logger.getLogger(RetriaLogin.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            System.out.println(ping.getMediaPing());
+
         } else {
             new LoginInvalido().setVisible(true);
         }

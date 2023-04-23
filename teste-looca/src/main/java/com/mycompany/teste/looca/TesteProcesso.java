@@ -5,6 +5,7 @@
 package com.mycompany.teste.looca;
 
 import com.github.britooo.looca.api.core.Looca;
+import com.github.britooo.looca.api.group.processador.Processador;
 import com.github.britooo.looca.api.group.processos.Processo;
 import com.github.britooo.looca.api.group.processos.ProcessoGrupo;
 import java.time.LocalDateTime;
@@ -23,37 +24,28 @@ public class TesteProcesso {
         Looca looca = new Looca();
         ProcessoGrupo grupoDeProcessos = looca.getGrupoDeProcessos();
         List<Processo> processos = grupoDeProcessos.getProcessos();
-
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss dd-MM-yyyy ");
         LocalDateTime dataHora = LocalDateTime.now();
-        System.out.println();
 
-        new Timer().scheduleAtFixedRate(new TimerTask() {
-            int cont = 0;
+        System.out.println("LISTAGEM DE PROCESSOS: ");
+        System.out.println("Data e Hora: " + dataHora.format(formatter));
+        for (Processo processo : processos) {
 
-            @Override
-            public void run() {
-                cont++;
-                System.out.println("LISTAGEM DE PROCESSOS: " + cont);
-                System.out.println("Data e Hora: " + dataHora.format(formatter));
-                for (Processo processo : processos) {
-                    
-                    System.out.println(String.format(
-                            """
+            System.out.println(String.format(
+                    """
                         Processo: %s; PID: %d
                            Percentual de uso da CPU: %.3f%%
                            Percentual de usa da RAM: %.3f%%
                            MBs alocados na RAM: %dMB
                         """,
-                            processo.getNome(), processo.getPid(),
-                            processo.getUsoCpu(), // Retorna o valor percentual de uso da CPU pelo processo.
-                            processo.getUsoMemoria(), //Retorna o Valor percentual de uso da Memória RAM pelo processo.
-                            (processo.getBytesUtilizados() / 1000000) // Retorna quanta memória está alocada para esse processo e está na RAM em MB
-                    ));
-                }
-                System.out.println("Total de Processos em execuçã: " + grupoDeProcessos.getTotalProcessos());
-                System.out.println("Total de Threads em execução: " + grupoDeProcessos.getTotalThreads());
-            }
-        }, 0, 10000);
+                    processo.getNome(), processo.getPid(),
+                    processo.getUsoCpu(), // Retorna o valor percentual de uso da CPU pelo processo.
+                    processo.getUsoMemoria(), //Retorna o Valor percentual de uso da Memória RAM pelo processo.
+                    (processo.getBytesUtilizados() / 1000000) // Retorna quanta memória está alocada para esse processo e está na RAM em MB
+            ));
+        }
+        System.out.println("Total de Processos em execuçã: " + grupoDeProcessos.getTotalProcessos());
+        System.out.println("Total de Threads em execução: " + grupoDeProcessos.getTotalThreads());
     }
+
 }

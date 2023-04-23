@@ -17,14 +17,23 @@ public class Conexao {
 
     public Conexao() {
 
+/**
+ * jdbc:sqlserver://umms-retria.database.windows.net:1433;database=BD-UMMS;user=adm@umms-retria;password=#Gfgrupo3;encrypt=true;trustServerCertificate=false;hostNameInCertificate=*.database.windows.net;loginTimeout=30;
+ * 
+ */
+        
         BasicDataSource dataSource = new BasicDataSource();
-        // setDriverClassName recebe o drive para conexão do banco // Mysql = com.mysql.jdbc.Driver
-        dataSource​.setDriverClassName("com.mysql.cj.jdbc.Driver");  
+        // setDriverClassName recebe o drive para conexão do banco // Mysql = com.mysql.cj.jdbc.Driver
+        dataSource​.setDriverClassName("com.mysql.cj.jdbc.Driver");
+//        dataSource​.setDriverClassName("com.microsoft.jdbc.sqlserver.SQLServerDriver");
         // setUrl cria um arquivo de com o nome do banco que vc especificar no argumento // Mysql = jdbc:mysql://localhost:3306/nomeBanco
-        dataSource​.setUrl("jdbc:mysql://localhost:3306/teste"); 
+        dataSource​.setUrl("jdbc:mysql://localhost:3306/retria");
+//        dataSource​.setUrl("jdbc:sqlserver://umms-retria.database.windows.net:1433;database=BD-UMMS;encrypt=true;trustServerCertificate=false;hostNameInCertificate=*.database.windows.net;loginTimeout=30;");
         // setUsername recebe o nome do usuario como argumento // root
-        dataSource​.setUsername("root"); 
+//        dataSource​.setUsername("umms-retria.database.windows.net");
+        dataSource​.setUsername("root");
         // setPassword recebe a senha do usuario como argumento
+//        dataSource​.setPassword("#Gfgrupo3");
         dataSource​.setPassword("40028922");
 
         this.connection = new JdbcTemplate(dataSource);
