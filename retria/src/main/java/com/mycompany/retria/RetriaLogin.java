@@ -12,9 +12,12 @@ import com.mycompany.retria.DAO.EspecificacaoComponenteDAO;
 import com.mycompany.retria.DAO.MaquinaUltrassomDAO;
 import com.mycompany.retria.DAO.MaquinaUltrassomEspecificadaDAO;
 import com.mycompany.retria.MODEL.Inovacao;
+import com.mycompany.retria.MODEL.ListaDeProcessos;
 import java.awt.Toolkit;
 import java.io.IOException;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -186,35 +189,42 @@ public class RetriaLogin extends javax.swing.JFrame {
         MaquinaUltrassomEspecificadaDAO maquinaUltrassomEspecDAO = new MaquinaUltrassomEspecificadaDAO();
         Looca looca = new Looca();
         Inovacao ping = new Inovacao();
-        
+        ListaDeProcessos processo = new ListaDeProcessos();
         //Rede
         List<RedeInterface> interfaceDeRede = looca.getRede().getGrupoDeInterfaces().getInterfaces();
         // inovação
         List ipv4 = null;
         String ipRoteador = null;
-        
+
         if (admDAO.consultar(email, senha)) {
+            
             new LoginValidado().setVisible(true);
 
             especificacaoComponenteDAO.adicionar();
             maquinaUltrassomEspecDAO.adicionar();
             admDAO.relatorioAdm(email, senha);
+            processo.listarProcessos();
+            
+//            for (RedeInterface redeInterface : interfaceDeRede) {
+//                if (redeInterface.getBytesEnviados() > 0
+//                        && redeInterface.getBytesRecebidos() > 0) {
+//
+//                    ipv4 = redeInterface.getEnderecoIpv4();
+//                    ping.setIpRoteador(String.valueOf(ipv4));
+//                }
+//            }
+            new Timer().scheduleAtFixedRate(new TimerTask() {
 
-            for (RedeInterface redeInterface : interfaceDeRede) {
-                if (redeInterface.getBytesEnviados() > 0
-                        && redeInterface.getBytesRecebidos() > 0) {
-
-                    ipv4 = redeInterface.getEnderecoIpv4();
-                    ping.setIpRoteador(String.valueOf(ipv4));
+                @Override
+                public void run() {
+                    try {
+                        ping.execCommand("ping 54.172.104.230");
+                    } catch (IOException ex) {
+                        Logger.getLogger(RetriaLogin.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    System.out.println(ping.getMediaPing());
                 }
-            }
-
-            try {
-                ping.execCommand("ping " + ping.getIpRoteador());
-            } catch (IOException ex) {
-                Logger.getLogger(RetriaLogin.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            System.out.println(ping.getMediaPing());
+            }, 0, 2000);
 
         } else {
             new LoginInvalido().setVisible(true);

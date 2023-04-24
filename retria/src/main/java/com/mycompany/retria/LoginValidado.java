@@ -9,7 +9,7 @@ package com.mycompany.retria;
  * @author Sammy Guergachi <sguergachi at gmail.com>
  */
 public class LoginValidado extends javax.swing.JFrame {
-
+    
     /**
      * Creates new form LoginValidade
      */
@@ -99,7 +99,7 @@ public class LoginValidado extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        System.exit(0);   // TODO add your handling code here:
+        LoginValidado.this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**

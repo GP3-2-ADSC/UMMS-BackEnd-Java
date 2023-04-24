@@ -29,6 +29,7 @@ public class TesteProcesso {
 
         System.out.println("LISTAGEM DE PROCESSOS: ");
         System.out.println("Data e Hora: " + dataHora.format(formatter));
+        
         for (Processo processo : processos) {
 
             System.out.println(String.format(

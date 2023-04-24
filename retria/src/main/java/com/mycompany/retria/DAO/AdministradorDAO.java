@@ -119,7 +119,7 @@ public class AdministradorDAO {
                 + "----------------------------------------------------------\n";
         String fraseComponentes = "";
         List<Administrador> administradores = con.query(String.format("select adm.nome_administrador, adm.ocupacao, \n"
-                + "	emp.nome_mpresa, \n"
+                + "	emp.nome_empresa, \n"
                 + "    maquina.setor, maquina.andar, maquina.tipo_maquina, maquina.sistema_operacional, \n"
                 + "    tipo, nome_fabricante, descricao_componente,\n"
                 + "    numero_serial, uso_maximo, frequencia_maxima from administrador adm\n"
@@ -137,7 +137,7 @@ public class AdministradorDAO {
         }
 
         List<Empresa> empresas = con.query(String.format("select adm.nome_administrador, adm.ocupacao, \n"
-                + "	emp.nome_mpresa, \n"
+                + "	emp.nome_empresa, \n"
                 + "    maquina.setor, maquina.andar, maquina.tipo_maquina, maquina.sistema_operacional, \n"
                 + "    tipo, nome_fabricante, descricao_componente,\n"
                 + "    numero_serial, uso_maximo, frequencia_maxima from administrador adm\n"
@@ -149,11 +149,11 @@ public class AdministradorDAO {
                 new BeanPropertyRowMapper(Empresa.class));
 
         for (Empresa emp : empresas) {
-            fraseEmp = String.format("   Empresa: %s \n", emp.getNome_mpresa());
+            fraseEmp = String.format("   Empresa: %s \n", emp.getNome_empresa());
         }
 
         List<MaquinaUltrassom> maquinas = con.query(String.format("select adm.nome_administrador, adm.ocupacao, \n"
-                + "	emp.nome_mpresa, \n"
+                + "	emp.nome_empresa, \n"
                 + "    maquina.setor, maquina.andar, maquina.tipo_maquina, maquina.sistema_operacional, \n"
                 + "    tipo, nome_fabricante, descricao_componente,\n"
                 + "    numero_serial, uso_maximo, frequencia_maxima from administrador adm\n"
@@ -173,7 +173,7 @@ public class AdministradorDAO {
         }
 
         List<EspecificacaoComponente> componentes = con.query(String.format("select adm.nome_administrador, adm.ocupacao, \n"
-                + "	emp.nome_mpresa, \n"
+                + "	emp.nome_empresa, \n"
                 + "    maquina.setor, maquina.andar, maquina.tipo_maquina, maquina.sistema_operacional, \n"
                 + "    tipo, nome_fabricante, descricao_componente,\n"
                 + "    numero_serial, uso_maximo, frequencia_maxima from administrador adm\n"
@@ -192,7 +192,7 @@ public class AdministradorDAO {
         }
 
         List<MaquinaUltrassomEspecificada> componentesEspecificados = con.query(String.format("select adm.nome_administrador, adm.ocupacao, \n"
-                + "	emp.nome_mpresa, \n"
+                + "	emp.nome_empresa, \n"
                 + "    maquina.setor, maquina.andar, maquina.tipo_maquina, maquina.sistema_operacional, \n"
                 + "    tipo, nome_fabricante, descricao_componente,\n"
                 + "    numero_serial, uso_maximo, frequencia_maxima from administrador adm\n"

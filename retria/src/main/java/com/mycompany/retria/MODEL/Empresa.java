@@ -11,7 +11,7 @@ package com.mycompany.retria.MODEL;
 public class Empresa {
    
     private Integer id_empresa; 
-    private String nome_mpresa;
+    private String nome_empresa;
     private String prcnpj;
     private String telefone_01;
     private String telefone_02;
@@ -27,12 +27,12 @@ public class Empresa {
         this.id_empresa = id_empresa;
     }
 
-    public String getNome_mpresa() {
-        return nome_mpresa;
+    public String getNome_empresa() {
+        return nome_empresa;
     }
 
-    public void setNome_mpresa(String nome_mpresa) {
-        this.nome_mpresa = nome_mpresa;
+    public void setNome_empresa(String nome_empresa) {
+        this.nome_empresa = nome_empresa;
     }
 
     public String getPrcnpj() {
@@ -85,6 +85,6 @@ public class Empresa {
 
     @Override
     public String toString() {
-        return "Empresa{" + "id_empresa=" + id_empresa + ", nome_mpresa=" + nome_mpresa + ", prcnpj=" + prcnpj + ", telefone_01=" + telefone_01 + ", telefone_02=" + telefone_02 + ", email=" + email + ", senha=" + senha + ", responsavel_empresa=" + responsavel_empresa + '}';
+        return "Empresa{" + "id_empresa=" + id_empresa + ", nome_mpresa=" + nome_empresa + ", prcnpj=" + prcnpj + ", telefone_01=" + telefone_01 + ", telefone_02=" + telefone_02 + ", email=" + email + ", senha=" + senha + ", responsavel_empresa=" + responsavel_empresa + '}';
     }
 }
