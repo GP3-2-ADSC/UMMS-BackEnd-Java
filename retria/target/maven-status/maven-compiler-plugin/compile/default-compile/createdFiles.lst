@@ -9,6 +9,7 @@ com\mycompany\retria\DAO\MaquinaUltrassomDAO.class
 com\mycompany\retria\RetriaLogin$4.class
 com\mycompany\retria\MODEL\Inovacao.class
 com\mycompany\retria\DAO\AdministradorDAO.class
+.netbeans_automatic_build
 com\mycompany\retria\LoginValidado$1.class
 com\mycompany\retria\LoginInvalido$2.class
 com\mycompany\retria\LoginValidado.class

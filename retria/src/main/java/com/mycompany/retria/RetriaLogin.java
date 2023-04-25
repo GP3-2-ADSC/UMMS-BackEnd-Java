@@ -215,7 +215,7 @@ public class RetriaLogin extends javax.swing.JFrame {
                         System.out.println(new IOException(String.format("Falha ao executar comando %s. Erro: %s", "ping 54.172.104.230", ex.toString())));
                     }
                 }
-            }, 0, 2000);
+            }, 2000, 2000);
 
         } else {
             new LoginInvalido().setVisible(true);
