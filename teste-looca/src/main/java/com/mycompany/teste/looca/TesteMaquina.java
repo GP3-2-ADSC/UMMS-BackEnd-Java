@@ -35,99 +35,12 @@ public class TesteMaquina {
         Looca looca = new Looca();
         Inovacao ping = new Inovacao();
         // Informações da máquina
-
-        // Processador
-        Processador processador = looca.getProcessador();
-        Double processadorUso = processador.getUso();
-        Long processadorFreq = processador.getFrequencia();
-
-        // Memoria
-        Memoria memoria = looca.getMemoria();
-        Double memoriaTotalGb = Double.valueOf(memoria.getTotal()) / 1000000000.0;
-        Double memoriaEmUsoGb = Double.valueOf(memoria.getEmUso()) / 1000000000.0;
-        Double memoriaDisponivelGb = Double.valueOf(memoria.getDisponivel()) / 1000000000.0;
-
-        // Disco
-        DiscoGrupo grupoDeDiscos = looca.getGrupoDeDiscos();
-        List<Disco> discos = grupoDeDiscos.getDiscos();
-
-        //Rede
-        List<RedeInterface> interfaceDeRede = looca.getRede().getGrupoDeInterfaces().getInterfaces();
-
-        System.out.println("Sistema da máquina");
-        System.out.println(processador.getFabricante());
-        System.out.println(looca.getSistema() + "\n");
-
-        //Data e hora
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss dd-MM-yyyy ");
-        LocalDateTime dataHora = LocalDateTime.now();
-        
-
         // inovação
-        List ipv4 = null;
-        String ipRoteador = null;
 
-        for (RedeInterface redeInterface : interfaceDeRede) {
-            if (redeInterface.getBytesEnviados() > 0
-                    && redeInterface.getBytesRecebidos() > 0) {
-   
-                ipv4 = redeInterface.getEnderecoIpv4();
-                ping.setIpRoteador(String.valueOf(ipv4));
-            }
-        }
-
-        ping.execCommand("ping " + ping.getIpRoteador());
+        ping.execCommand("ping 54.172.104.230");
         System.out.println(ping.getMediaPing());
 
-        
-      //  ping.internetTest();
-
+        //  ping.internetTest();
 //        System.out.println(Conversor.formatarBytes());
-        new Timer().scheduleAtFixedRate(new TimerTask() {
-            int cont = 0;
-
-            @Override
-            public void run() {
-                System.out.println("Rodada de atualização: " + cont);
-                System.out.println(dataHora.format(formatter));
-                System.out.println("Utilização dos componentes");
-                System.out.println("Processador");
-                System.out.println(String.format("Nome: %s\n"
-                        + "Uso: %.2f\n", processador.getNome(), processadorUso));
-
-                System.out.println("Memoria Ram");
-                System.out.println(String.format("Total: %.2f Gb\n"
-                        + "Uso: %.2f Gb\n"
-                        + "Disponível: %.2f Gb\n", memoriaTotalGb, memoriaEmUsoGb, memoriaDisponivelGb));
-
-                System.out.println("Disco");
-
-                for (Disco disco : discos) {
-                    System.out.println(
-                            String.format("Modelo: %s\n%s\n"
-                                    + "Bytes de leitura: %d \n"
-                                    + "Bytes de escrita: %d \n", disco.getModelo(),disco.getNome(),
-                                    disco.getBytesDeLeitura(), disco.getBytesDeEscritas()));
-                }
-
-                System.out.println("Rede");
-                for (RedeInterface redeInterface : interfaceDeRede) {
-                    if (redeInterface.getBytesEnviados() > 0
-                            && redeInterface.getBytesRecebidos() > 0) {
-
-                        System.out.println(
-                                String.format("Nome da rede: %s\n"
-                                        + "IPV4: %s\n"
-                                        + "Bytes enviados: %.2f Mb\n"
-                                        + "Bytes recebidos: %.2f Mb\n",
-                                        redeInterface.getNome(),
-                                        redeInterface.getEnderecoIpv4(),
-                                        redeInterface.getBytesEnviados() / 1000000.0,
-                                        redeInterface.getBytesRecebidos() / 1000000.0));
-                    }
-                }
-                cont++;
-            }
-        }, 0, 10000);
     }
 }

@@ -14,6 +14,7 @@ com\mycompany\retria\LoginInvalido$2.class
 com\mycompany\retria\LoginValidado.class
 com\mycompany\retria\DAO\MaquinaUltrassomEspecificadaDAO.class
 com\mycompany\retria\DAO\EspecificacaoComponenteDAO.class
+com\mycompany\retria\RetriaLogin$6.class
 com\mycompany\retria\RetriaLogin$1.class
 com\mycompany\retria\TesteProcesso.class
 com\mycompany\retria\LoginInvalido.class
@@ -22,5 +23,6 @@ com\mycompany\retria\MODEL\Administrador.class
 com\mycompany\retria\RetriaLogin$5.class
 com\mycompany\retria\RetriaLogin.class
 com\mycompany\retria\MODEL\EspecificacaoComponente.class
+com\mycompany\retria\MODEL\ListaDeProcessos.class
 com\mycompany\retria\RetriaLogin$3.class
 com\mycompany\retria\DAO\Conexao.class

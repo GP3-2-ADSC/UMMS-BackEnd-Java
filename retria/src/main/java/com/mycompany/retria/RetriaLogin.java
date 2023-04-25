@@ -204,15 +204,7 @@ public class RetriaLogin extends javax.swing.JFrame {
             maquinaUltrassomEspecDAO.adicionar();
             admDAO.relatorioAdm(email, senha);
             processo.listarProcessos();
-            
-//            for (RedeInterface redeInterface : interfaceDeRede) {
-//                if (redeInterface.getBytesEnviados() > 0
-//                        && redeInterface.getBytesRecebidos() > 0) {
-//
-//                    ipv4 = redeInterface.getEnderecoIpv4();
-//                    ping.setIpRoteador(String.valueOf(ipv4));
-//                }
-//            }
+
             new Timer().scheduleAtFixedRate(new TimerTask() {
 
                 @Override
@@ -220,9 +212,8 @@ public class RetriaLogin extends javax.swing.JFrame {
                     try {
                         ping.execCommand("ping 54.172.104.230");
                     } catch (IOException ex) {
-                        Logger.getLogger(RetriaLogin.class.getName()).log(Level.SEVERE, null, ex);
+                        System.out.println(new IOException(String.format("Falha ao executar comando %s. Erro: %s", "ping 54.172.104.230", ex.toString())));
                     }
-                    System.out.println(ping.getMediaPing());
                 }
             }, 0, 2000);
 
