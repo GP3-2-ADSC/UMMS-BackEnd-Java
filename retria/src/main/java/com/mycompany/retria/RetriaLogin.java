@@ -58,7 +58,7 @@ public class RetriaLogin extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setLocation(new java.awt.Point(0, 0));
         setMaximumSize(new java.awt.Dimension(1000, 600));
-        setMinimumSize(getMaximumSize());
+        setMinimumSize(new java.awt.Dimension(1000, 600));
         setSize(new java.awt.Dimension(820, 500));
         setType(java.awt.Window.Type.UTILITY);
         addMouseListener(new java.awt.event.MouseAdapter() {
@@ -143,7 +143,7 @@ public class RetriaLogin extends javax.swing.JFrame {
         jLabel3.setForeground(new java.awt.Color(140, 204, 240));
         jLabel3.setText("Login");
         Painel_Campos.add(jLabel3);
-        jLabel3.setBounds(20, 30, 370, 47);
+        jLabel3.setBounds(20, 30, 280, 47);
 
         botaoLogar.setBackground(new java.awt.Color(255, 255, 255));
         botaoLogar.setFont(new java.awt.Font("Montserrat", 1, 18)); // NOI18N
