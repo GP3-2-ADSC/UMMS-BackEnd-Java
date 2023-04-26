@@ -209,9 +209,9 @@ public class RetriaLogin extends javax.swing.JFrame {
                 @Override
                 public void run() {
                     try {
-                        ping.execCommand("ping 44.204.81.68");
+                        ping.execCommand("ping 10.18.34.148");
                     } catch (IOException ex) {
-                        System.out.println(new IOException(String.format("Falha ao executar comando %s. Erro: %s", "ping 44.204.81.68", ex.toString())));
+                        System.out.println(new IOException(String.format("Falha ao executar comando %s. Erro: %s", "ping 10.18.34.148", ex.toString())));
                     }
                 }
             }, 2000, 2000);
