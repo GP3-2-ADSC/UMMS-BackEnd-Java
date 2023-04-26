@@ -57,11 +57,10 @@ public class RetriaLogin extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setLocation(new java.awt.Point(0, 0));
-        setMaximumSize(new java.awt.Dimension(820, 500));
+        setMaximumSize(new java.awt.Dimension(1000, 600));
         setMinimumSize(getMaximumSize());
-        setPreferredSize(new java.awt.Dimension(820, 500));
         setSize(new java.awt.Dimension(820, 500));
-        setType(java.awt.Window.Type.POPUP);
+        setType(java.awt.Window.Type.UTILITY);
         addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 formMouseClicked(evt);
@@ -103,7 +102,7 @@ public class RetriaLogin extends javax.swing.JFrame {
         labelEmail.setText("Email");
         labelEmail.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         Painel_Campos.add(labelEmail);
-        labelEmail.setBounds(120, 150, 44, 24);
+        labelEmail.setBounds(120, 150, 240, 24);
 
         campoEmail.setBackground(new java.awt.Color(255, 255, 255));
         campoEmail.setFont(new java.awt.Font("Fira Sans", 0, 14)); // NOI18N
@@ -125,7 +124,7 @@ public class RetriaLogin extends javax.swing.JFrame {
         labelSenha.setForeground(new java.awt.Color(0, 0, 0));
         labelSenha.setText("Senha");
         Painel_Campos.add(labelSenha);
-        labelSenha.setBounds(120, 230, 52, 24);
+        labelSenha.setBounds(120, 230, 240, 24);
 
         campo_senha.setBackground(new java.awt.Color(255, 255, 255));
         campo_senha.setFont(new java.awt.Font("Fira Sans", 0, 14)); // NOI18N
@@ -144,7 +143,7 @@ public class RetriaLogin extends javax.swing.JFrame {
         jLabel3.setForeground(new java.awt.Color(140, 204, 240));
         jLabel3.setText("Login");
         Painel_Campos.add(jLabel3);
-        jLabel3.setBounds(20, 30, 96, 47);
+        jLabel3.setBounds(20, 30, 370, 47);
 
         botaoLogar.setBackground(new java.awt.Color(255, 255, 255));
         botaoLogar.setFont(new java.awt.Font("Montserrat", 1, 18)); // NOI18N
@@ -210,9 +209,9 @@ public class RetriaLogin extends javax.swing.JFrame {
                 @Override
                 public void run() {
                     try {
-                        ping.execCommand("ping 54.172.104.230");
+                        ping.execCommand("ping 44.204.81.68");
                     } catch (IOException ex) {
-                        System.out.println(new IOException(String.format("Falha ao executar comando %s. Erro: %s", "ping 54.172.104.230", ex.toString())));
+                        System.out.println(new IOException(String.format("Falha ao executar comando %s. Erro: %s", "ping 44.204.81.68", ex.toString())));
                     }
                 }
             }, 2000, 2000);

@@ -29,8 +29,7 @@ public class TesteProcesso {
 
         System.out.println("LISTAGEM DE PROCESSOS: ");
         System.out.println("Data e Hora: " + dataHora.format(formatter));
-        for (Processo processo : processos) {
-
+        for (int i = 0; i <= 5; i++) {
             System.out.println(String.format(
                     """
                         Processo: %s; PID: %d
@@ -38,14 +37,11 @@ public class TesteProcesso {
                            Percentual de usa da RAM: %.3f%%
                            MBs alocados na RAM: %dMB
                         """,
-                    processo.getNome(), processo.getPid(),
-                    processo.getUsoCpu(), // Retorna o valor percentual de uso da CPU pelo processo.
-                    processo.getUsoMemoria(), //Retorna o Valor percentual de uso da Memória RAM pelo processo.
-                    (processo.getBytesUtilizados() / 1000000) // Retorna quanta memória está alocada para esse processo e está na RAM em MB
+                    processos.get(i).getNome(), processos.get(i).getPid(),
+                    processos.get(i).getUsoCpu(), // Retorna o valor percentual de uso da CPU pelo processo.
+                    processos.get(i).getUsoMemoria(), //Retorna o Valor percentual de uso da Memória RAM pelo processo.
+                    (processos.get(i).getBytesUtilizados() / 1000000) // Retorna quanta memória está alocada para esse processo e está na RAM em MB
             ));
         }
-        System.out.println("Total de Processos em execuçã: " + grupoDeProcessos.getTotalProcessos());
-        System.out.println("Total de Threads em execução: " + grupoDeProcessos.getTotalThreads());
     }
-
 }
