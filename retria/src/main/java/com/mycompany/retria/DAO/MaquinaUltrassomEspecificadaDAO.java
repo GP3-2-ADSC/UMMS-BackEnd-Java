@@ -60,7 +60,7 @@ public class MaquinaUltrassomEspecificadaDAO {
         con.execute(String.format("insert into maquina_ultrassom_especificada (numero_serial, uso_maximo, frequencia_maxima, fk_maquina, fk_administrador, fk_empresa, fk_especificacao_componente) values ('%s', %.0f, %.0f, %d, %d, %d, %d);",
                 espMaqui.getNumero_serial(),
                 espMaqui.getUso_maximo(),
-                espMaqui.getFrequencia_maxima(), 
+                espMaqui.getFrequencia_maxima(),
                 maquiUltra.consultaID(),
                 adm.consultaID(),
                 emp.consultaID(),
