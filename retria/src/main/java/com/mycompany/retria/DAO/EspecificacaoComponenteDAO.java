@@ -20,15 +20,39 @@ import org.springframework.jdbc.core.JdbcTemplate;
  */
 public class EspecificacaoComponenteDAO {
 
-    private Integer id_especificacao_componente;
-    private String tipo;
-    private String nome_fabricante;
-    private String descricao_componente;
     JdbcTemplate con;
+
+    Looca looca = new Looca();
+
+    private Processador processador = looca.getProcessador();
+    private Memoria memoria = looca.getMemoria();
+
+    private List<Disco> discos = looca.getGrupoDeDiscos().getDiscos();
+
 
     public EspecificacaoComponenteDAO() {
         Conexao conexao = new Conexao();
         con = conexao.getConnection();
+    }
+
+    public List<EspecificacaoComponente> getComponentes(){
+        List<EspecificacaoComponente> especificacaoComponentes =
+                con.query(String.format("""
+                select
+                    *
+                from
+                    especificacao_componente
+                where
+                    
+                
+                
+                
+                
+                
+                
+                
+                """), new BeanPropertyRowMapper<>(EspecificacaoComponente.class));
+
     }
 
     public void adicionar() {
@@ -37,15 +61,6 @@ public class EspecificacaoComponenteDAO {
         Memoria memoria = looca.getMemoria();
         DiscoGrupo grupoDeDiscos = looca.getGrupoDeDiscos();
         List<Disco> discos = grupoDeDiscos.getDiscos();
-        EspecificacaoComponente esp = new EspecificacaoComponente();
-
-        tipo = processador.getNome();
-        nome_fabricante = processador.getFabricante();
-        descricao_componente = processador.getIdentificador();
-
-        esp.setTipo(tipo);
-        esp.setNome_fabricante(nome_fabricante);
-        esp.setDescricao_componente(descricao_componente);
 
         con.execute(String.format("insert into especificacao_componente (tipo, nome_fabricante, descricao_componente) values ('%s', '%s', '%s')",
                 esp.getTipo(), esp.getNome_fabricante(), esp.getDescricao_componente()));
@@ -68,17 +83,5 @@ public class EspecificacaoComponenteDAO {
         System.out.println("COMPONENTES CADASTRADOS COM SUCESSO!");
     }
 
-    Integer idConsulta = 0;
-
-    public Integer consultaID() {
-        List<EspecificacaoComponente> administradores = con.query("select * from especificacao_componente;",
-                new BeanPropertyRowMapper(EspecificacaoComponente.class));
-
-        for (EspecificacaoComponente espComp : administradores) {
-            idConsulta = espComp.getId_especificacao_componente();
-        }
-
-        return idConsulta;
-    }
 
 }

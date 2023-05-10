@@ -5,25 +5,12 @@
 package com.mycompany.retria;
 
 import com.github.britooo.looca.api.core.Looca;
-import com.github.britooo.looca.api.group.discos.Disco;
-import com.github.britooo.looca.api.group.discos.DiscoGrupo;
-import com.github.britooo.looca.api.group.memoria.Memoria;
-import com.github.britooo.looca.api.group.processador.Processador;
-import com.github.britooo.looca.api.group.rede.RedeInterface;
 import com.mycompany.retria.DAO.AdministradorDAO;
 import com.mycompany.retria.DAO.Conexao;
-import com.mycompany.retria.DAO.EspecificacaoComponenteDAO;
-import com.mycompany.retria.DAO.MaquinaUltrassomEspecificadaDAO;
-import com.mycompany.retria.MODEL.Inovacao;
-import com.mycompany.retria.MODEL.ListaDeProcessos;
-import java.awt.Toolkit;
-import java.io.IOException;
-import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
 
-import com.mycompany.retria.MODEL.MaquinaUltrassomEspecificada;
-import com.mycompany.retria.validadores.ValidadorDeComponentes;
+import java.awt.Toolkit;
+
+import com.mycompany.retria.services.Service;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 /**
@@ -182,56 +169,19 @@ public class RetriaLogin extends javax.swing.JFrame {
     }//GEN-LAST:event_campo_senhaActionPerformed
 
     private void botaoLogarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoLogarActionPerformed
-        String email = (campoEmail.getText());
-        String senha = (campo_senha.getText());
         botaoLogar.setRequestFocusEnabled(false);
         botaoLogar.setRolloverEnabled(false);
 
         AdministradorDAO admDAO = new AdministradorDAO();
-        EspecificacaoComponenteDAO especificacaoComponenteDAO = new EspecificacaoComponenteDAO();
-        MaquinaUltrassomEspecificadaDAO maquinaUltrassomEspecDAO = new MaquinaUltrassomEspecificadaDAO();
         Looca looca = new Looca();
-        Inovacao ping = new Inovacao();
-        ListaDeProcessos processo = new ListaDeProcessos();
-        ValidadorDeComponentes validadorDeComponentes = new ValidadorDeComponentes();
-        //Rede
-        List<RedeInterface> interfaceDeRede = looca.getRede().getGrupoDeInterfaces().getInterfaces();
-        // inovação
-        List ipv4 = null;
-        String ipRoteador = null;
+        Service service = new Service();
 
+        String email = (campoEmail.getText());
+        String senha = (campo_senha.getText());
 
         if (admDAO.consultar(email, senha, looca.getProcessador().getIdentificador())) {
-            
             new LoginValidado().setVisible(true);
-
-            especificacaoComponenteDAO.adicionar();
-            maquinaUltrassomEspecDAO.adicionar();
-            admDAO.relatorioAdm(email, senha);
-
-            Processador processador = looca.getProcessador();
-            Memoria memoria = looca.getMemoria();
-            DiscoGrupo grupoDeDiscos = looca.getGrupoDeDiscos();
-            List<Disco> discos = grupoDeDiscos.getDiscos();
-
-            try {
-                validadorDeComponentes.validar(processador, memoria, discos, new MaquinaUltrassomEspecificada());
-            } catch (Exception ex) {
-                ex.getMessage();
-            }
-
-
-            new Timer().scheduleAtFixedRate(new TimerTask() {
-
-                @Override
-                public void run() {
-                    try {
-                        ping.execCommand("ping 44.204.81.68");
-                    } catch (IOException ex) {
-                        System.out.println(new IOException(String.format("Falha ao executar comando %s. Erro: %s", "ping 44.204.81.68", ex.toString())));
-                    }
-                }
-            }, 2000, 2000);
+            service.ScriptDeValidacaoDeBanco(email,looca.getProcessador().getIdentificador());
 
         } else {
             new LoginInvalido().setVisible(true);

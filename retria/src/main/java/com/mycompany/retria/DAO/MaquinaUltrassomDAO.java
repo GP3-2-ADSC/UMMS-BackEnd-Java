@@ -15,23 +15,47 @@ import org.springframework.jdbc.core.JdbcTemplate;
  * @author lucka
  */
 public class MaquinaUltrassomDAO {
-
-    private Integer id_maquina;
     JdbcTemplate con;
 
     public MaquinaUltrassomDAO() {
         Conexao conexao = new Conexao();
         con = conexao.getConnection();
     }
-    
-    Integer idConsulta = 0;
-    public Integer consultaID(){
-        List<MaquinaUltrassom> maquinasUltra = con.query("select * from maquina_ultrassom;",
+
+    public MaquinaUltrassom getMaquinaUltrassom(String idProcessador, Integer fkAdmin,Integer fkEmpresa, String sistema){
+        List<MaquinaUltrassom> maquinasUltra = con.query(String.format("""
+                        select 
+                            m.* 
+                        from 
+                            maquina_ultrassonografica
+                        where 
+                            id_processador = '%s';
+                        """, idProcessador),
                 new BeanPropertyRowMapper(MaquinaUltrassom.class));
-        
-        for (MaquinaUltrassom maquinaUltrassom : maquinasUltra) {
-            idConsulta = maquinaUltrassom.getId_maquina();
+
+        while(maquinasUltra.size() == 0){
+            con.execute(String.format("""
+                    insert 
+                        (sistema_operacional, id_processador, fk_administrador,fk_empresa) 
+                    values
+                        ('%s','%s' ,%d, %d);
+                    """,sistema, idProcessador,fkAdmin, fkEmpresa));
+
+            maquinasUltra = con.query(String.format("""
+                        select 
+                            m.* 
+                        from 
+                            maquina_ultrassonografica
+                        where 
+                            id_processador = '%s';
+                        """, idProcessador),
+                    new BeanPropertyRowMapper(MaquinaUltrassom.class));
         }
-        return idConsulta;
+
+        MaquinaUltrassom dados = maquinasUltra.get(0);
+
+        return new MaquinaUltrassom(dados.getIdMaquina(),dados.getSistemaOperacional(),dados.getIdProcessador(),
+                dados.getFkAdmin(), dados.getFkEmpresa());
     }
+
 }

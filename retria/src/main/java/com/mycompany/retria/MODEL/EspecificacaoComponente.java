@@ -15,7 +15,14 @@ public class EspecificacaoComponente {
     private String tipo;
     private String nome_fabricante;
     private String descricao_componente;
-    
+
+    public EspecificacaoComponente(Integer id_especificacao_componente, String tipo, String nome_fabricante, String descricao_componente) {
+        this.id_especificacao_componente = id_especificacao_componente;
+        this.tipo = tipo;
+        this.nome_fabricante = nome_fabricante;
+        this.descricao_componente = descricao_componente;
+    }
+
     public Integer getId_especificacao_componente() {
         return id_especificacao_componente;
     }

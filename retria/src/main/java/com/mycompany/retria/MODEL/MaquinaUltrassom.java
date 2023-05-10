@@ -9,63 +9,70 @@ package com.mycompany.retria.MODEL;
  * @author lucka
  */
 public class MaquinaUltrassom {
-    private Integer id_maquina;
-    private String nome_fornecedor;
-    private String tipo_maquina;
-    private String sistema_operacional;
-    private String setor;
-    private Integer andar;
+    private Integer idMaquina;
+    private String sistemaOperacional;
+    private String idProcessador;
 
-    public Integer getId_maquina() {
-        return id_maquina;
+    private Integer fkAdmin;
+
+    private Integer fkEmpresa;
+
+    public MaquinaUltrassom(Integer idMaquina, String sistemaOperacional, String idProcessador, Integer fkAdmin, Integer fkEmpresa) {
+        this.idMaquina = idMaquina;
+        this.sistemaOperacional = sistemaOperacional;
+        this.idProcessador = idProcessador;
+        this.fkAdmin = fkAdmin;
+        this.fkEmpresa = fkEmpresa;
     }
 
-    public void setId_maquina(Integer id_maquina) {
-        this.id_maquina = id_maquina;
+    public Integer getIdMaquina() {
+        return idMaquina;
     }
 
-    public String getNome_fornecedor() {
-        return nome_fornecedor;
+    public void setIdMaquina(Integer idMaquina) {
+        this.idMaquina = idMaquina;
     }
 
-    public void setNome_fornecedor(String nome_fornecedor) {
-        this.nome_fornecedor = nome_fornecedor;
+    public String getSistemaOperacional() {
+        return sistemaOperacional;
     }
 
-    public String getTipo_maquina() {
-        return tipo_maquina;
+    public void setSistemaOperacional(String sistemaOperacional) {
+        this.sistemaOperacional = sistemaOperacional;
     }
 
-    public void setTipo_maquina(String tipo_maquina) {
-        this.tipo_maquina = tipo_maquina;
+    public String getIdProcessador() {
+        return idProcessador;
     }
 
-    public String getSistema_operacional() {
-        return sistema_operacional;
+    public void setIdProcessador(String idProcessador) {
+        this.idProcessador = idProcessador;
     }
 
-    public void setSistema_operacional(String sistema_operacional) {
-        this.sistema_operacional = sistema_operacional;
+    public Integer getFkAdmin() {
+        return fkAdmin;
     }
 
-    public String getSetor() {
-        return setor;
+    public void setFkAdmin(Integer fkAdmin) {
+        this.fkAdmin = fkAdmin;
     }
 
-    public void setSetor(String setor) {
-        this.setor = setor;
+    public Integer getFkEmpresa() {
+        return fkEmpresa;
     }
 
-    public Integer getAndar() {
-        return andar;
-    }
-
-    public void setAndar(Integer andar) {
-        this.andar = andar;
+    public void setFkEmpresa(Integer fkEmpresa) {
+        this.fkEmpresa = fkEmpresa;
     }
 
     @Override
     public String toString() {
-        return "MaquinaUltrassom{" + "id_maquina=" + id_maquina + ", nome_fornecedor=" + nome_fornecedor + ", tipo_maquina=" + tipo_maquina + ", sistema_operacional=" + sistema_operacional + ", setor=" + setor + ", andar=" + andar + '}';
+        return "MaquinaUltrassom{" +
+                "idMaquina=" + idMaquina +
+                ", sistemaOperacional='" + sistemaOperacional + '\'' +
+                ", idProcessador='" + idProcessador + '\'' +
+                ", fkAdmin=" + fkAdmin +
+                ", fkEmpresa=" + fkEmpresa +
+                '}';
     }
 }
