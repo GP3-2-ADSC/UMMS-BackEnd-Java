@@ -7,6 +7,8 @@ package com.mycompany.retria;
 import com.github.britooo.looca.api.core.Looca;
 import com.github.britooo.looca.api.group.discos.Disco;
 import com.github.britooo.looca.api.group.discos.DiscoGrupo;
+import com.github.britooo.looca.api.group.memoria.Memoria;
+import com.github.britooo.looca.api.group.processador.Processador;
 import com.github.britooo.looca.api.group.rede.RedeInterface;
 import com.mycompany.retria.DAO.AdministradorDAO;
 import com.mycompany.retria.DAO.Conexao;
@@ -20,6 +22,8 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import com.mycompany.retria.MODEL.MaquinaUltrassomEspecificada;
+import com.mycompany.retria.validadores.ValidadorDeComponentes;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 /**
@@ -189,6 +193,7 @@ public class RetriaLogin extends javax.swing.JFrame {
         Looca looca = new Looca();
         Inovacao ping = new Inovacao();
         ListaDeProcessos processo = new ListaDeProcessos();
+        ValidadorDeComponentes validadorDeComponentes = new ValidadorDeComponentes();
         //Rede
         List<RedeInterface> interfaceDeRede = looca.getRede().getGrupoDeInterfaces().getInterfaces();
         // inovação
@@ -204,13 +209,16 @@ public class RetriaLogin extends javax.swing.JFrame {
             maquinaUltrassomEspecDAO.adicionar();
             admDAO.relatorioAdm(email, senha);
 
+            Processador processador = looca.getProcessador();
+            Memoria memoria = looca.getMemoria();
             DiscoGrupo grupoDeDiscos = looca.getGrupoDeDiscos();
             List<Disco> discos = grupoDeDiscos.getDiscos();
 
-            Double usoProcessador = looca.getProcessador().getUso();
-            Double usoRam = looca.getMemoria().getEmUso().doubleValue();
-            Double usoDisco = discos.get(0).getTamanho().doubleValue() - discos.get(0).getBytesDeEscritas().doubleValue();
-
+            try {
+                validadorDeComponentes.validar(processador, memoria, discos, new MaquinaUltrassomEspecificada());
+            } catch (Exception ex) {
+                ex.getMessage();
+            }
 
 
             new Timer().scheduleAtFixedRate(new TimerTask() {
