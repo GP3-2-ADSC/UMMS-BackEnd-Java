@@ -25,18 +25,18 @@ public class Conexao {
         // setDriverClassName recebe o drive para conexão do banco // Mysql = com.mysql.cj.jdbc.Driver
 //        dataSource​.setDriverClassName("com.mysql.cj.jdbc.Driver");
 
-        dataSource​.setDriverClassName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+        dataSource.setDriverClassName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
 
         // setUrl cria um arquivo de com o nome do banco que vc especificar no argumento // Mysql = jdbc:mysql://localhost:3306/nomeBanco
 //        dataSource​.setUrl("jdbc:mysql://localhost:3306/retria");
-        dataSource​.setUrl("jdbc:sqlserver://umms-retria.database.windows.net:1433;database=BD-UMMS");
+        dataSource.setUrl("jdbc:sqlserver://umms-retria.database.windows.net:1433;database=BD-UMMS");
 
         // setUsername recebe o nome do usuario como argumento // root
-        dataSource​.setUsername("adm");
+        dataSource.setUsername("adm");
 
 //        dataSource​.setUsername("root");
         // setPassword recebe a senha do usuario como argumento
-        dataSource​.setPassword("#Gfgrupo3");
+        dataSource.setPassword("#Gfgrupo3");
 //      
 //        dataSource​.setPassword("40028922");
 

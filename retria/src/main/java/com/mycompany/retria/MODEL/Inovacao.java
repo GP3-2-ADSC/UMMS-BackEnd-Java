@@ -82,7 +82,7 @@ public class Inovacao {
     }
 
     public void setIpRoteador(String ipv4) {
-        Pattern pattern = Pattern.compile("\\[(.*?)\\]");
+        Pattern pattern = Pattern.compile("\\[(.*?)]");
         Matcher matcher = pattern.matcher(ipv4);
 
         if (matcher.find()) {

@@ -15,10 +15,10 @@ public class Alerta {
 
     private MetricaComponente metricaComponente;
 
-    public Alerta(Integer idAlerta, String tipoAlerta) {
+    public Alerta(Integer idAlerta, String tipoAlerta, MetricaComponente metricaComponente) {
         this.idAlerta = idAlerta;
         this.tipoAlerta = tipoAlerta;
-        this.metricaComponente = new MetricaComponente();
+        this.metricaComponente = metricaComponente;
     }
 
     public Integer getIdAlerta() {

@@ -23,7 +23,7 @@ public class MetricaComponente {
         this.idMetricaComponente = idMetricaComponente;
         this.uso = uso;
         this.frequencia = frequencia;
-        this.maquinaUltrassomEspecificada = new MaquinaUltrassomEspecificada();
+        this.maquinaUltrassomEspecificada = maquinaUltrassomEspecificada;
     }
 
 

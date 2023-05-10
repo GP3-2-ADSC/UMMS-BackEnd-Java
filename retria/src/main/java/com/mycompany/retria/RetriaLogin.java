@@ -5,11 +5,12 @@
 package com.mycompany.retria;
 
 import com.github.britooo.looca.api.core.Looca;
+import com.github.britooo.looca.api.group.discos.Disco;
+import com.github.britooo.looca.api.group.discos.DiscoGrupo;
 import com.github.britooo.looca.api.group.rede.RedeInterface;
 import com.mycompany.retria.DAO.AdministradorDAO;
 import com.mycompany.retria.DAO.Conexao;
 import com.mycompany.retria.DAO.EspecificacaoComponenteDAO;
-import com.mycompany.retria.DAO.MaquinaUltrassomDAO;
 import com.mycompany.retria.DAO.MaquinaUltrassomEspecificadaDAO;
 import com.mycompany.retria.MODEL.Inovacao;
 import com.mycompany.retria.MODEL.ListaDeProcessos;
@@ -18,8 +19,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
 import org.springframework.jdbc.core.JdbcTemplate;
 
 /**
@@ -195,14 +195,23 @@ public class RetriaLogin extends javax.swing.JFrame {
         List ipv4 = null;
         String ipRoteador = null;
 
-        if (admDAO.consultar(email, senha)) {
+
+        if (admDAO.consultar(email, senha, looca.getProcessador().getIdentificador())) {
             
             new LoginValidado().setVisible(true);
 
             especificacaoComponenteDAO.adicionar();
             maquinaUltrassomEspecDAO.adicionar();
             admDAO.relatorioAdm(email, senha);
-            processo.listarProcessos();
+
+            DiscoGrupo grupoDeDiscos = looca.getGrupoDeDiscos();
+            List<Disco> discos = grupoDeDiscos.getDiscos();
+
+            Double usoProcessador = looca.getProcessador().getUso();
+            Double usoRam = looca.getMemoria().getEmUso().doubleValue();
+            Double usoDisco = discos.get(0).getTamanho().doubleValue() - discos.get(0).getBytesDeEscritas().doubleValue();
+
+
 
             new Timer().scheduleAtFixedRate(new TimerTask() {
 

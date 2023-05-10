@@ -71,14 +71,28 @@ public class AdministradorDAO {
         System.out.println("Administrador cadastrado com sucesso\n");
     }
 
-    public Boolean consultar(String email, String senha) {
+    public Boolean consultar(String email, String senha, String idProcessador) {
 
         this.email_administrador = email;
         this.senha_administrador = senha;
 
         Boolean admEncontrado = null;
         String respostaConsulta = "";
-        List<Administrador> administradores = con.query("select * from administrador;",
+
+        List<Administrador> administradores = con.query(String.format("""
+                        SELECT 
+                            *.administrador 
+                        FROM 
+                            administrador as a
+                        JOIN
+                            maquinaUltrassom as m
+                        ON
+                            a.idAdministrador = m.fkAdministrador
+                        WHERE
+                            a.email = %s
+                        AND a.senha = %s
+                        AND m.idIdentificador = %s
+                        """, email, senha, idProcessador),
                 new BeanPropertyRowMapper(Administrador.class));
 
         for (Administrador admDaVez : administradores) {
