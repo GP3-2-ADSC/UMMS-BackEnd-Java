@@ -31,7 +31,7 @@ public class EspecificacaoComponenteDAO {
         con = conexao.getConnection();
     }
 
-    public void adicionar() {
+    public void adicionarEspecComponente() {
         Looca looca = new Looca();
         Processador processador = looca.getProcessador();
         Memoria memoria = looca.getMemoria();
