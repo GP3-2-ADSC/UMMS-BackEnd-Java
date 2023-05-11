@@ -35,6 +35,7 @@ public class EspecificacaoComponenteDAO {
         con = conexao.getConnection();
     }
 
+<<<<<<< HEAD
     public List<EspecificacaoComponente> getComponentes(){
         List<EspecificacaoComponente> especificacaoComponentes =
                 con.query(String.format("""
@@ -56,6 +57,9 @@ public class EspecificacaoComponenteDAO {
     }
 
     public void adicionar() {
+=======
+    public void adicionarEspecComponente() {
+>>>>>>> aa385b21165e4a0fcc5152ebf7b4729656cb6696
         Looca looca = new Looca();
         Processador processador = looca.getProcessador();
         Memoria memoria = looca.getMemoria();
