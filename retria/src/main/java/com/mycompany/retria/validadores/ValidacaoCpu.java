@@ -16,7 +16,6 @@ public class ValidacaoCpu {
             throw new ValidacaoException("Não é possível validar o uso de cpu nulo!!!");
         }
 
-
         if (dados.getUso() < 40.0) {
             System.out.println("Uso da Cpu está dentro dos conformes!");
             // aqui precisamos mandar um alerta

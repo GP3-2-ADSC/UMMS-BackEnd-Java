@@ -6,16 +6,20 @@ package com.mycompany.retria.DAO;
 
 import com.github.britooo.looca.api.core.Looca;
 import com.github.britooo.looca.api.group.discos.Disco;
-import com.github.britooo.looca.api.group.discos.DiscoGrupo;
 import com.github.britooo.looca.api.group.memoria.Memoria;
 import com.github.britooo.looca.api.group.processador.Processador;
 import com.mycompany.retria.MODEL.EspecificacaoComponente;
+
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+
+import com.mycompany.retria.MODEL.TipoComponente;
+import com.mycompany.retria.services.Service;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 /**
- *
  * @author lucka
  */
 public class EspecificacaoComponenteDAO {
@@ -24,10 +28,7 @@ public class EspecificacaoComponenteDAO {
 
     Looca looca = new Looca();
 
-    private Processador processador = looca.getProcessador();
-    private Memoria memoria = looca.getMemoria();
-
-    private List<Disco> discos = looca.getGrupoDeDiscos().getDiscos();
+    Service service = new Service();
 
 
     public EspecificacaoComponenteDAO() {
@@ -35,57 +36,111 @@ public class EspecificacaoComponenteDAO {
         con = conexao.getConnection();
     }
 
-<<<<<<< HEAD
-    public List<EspecificacaoComponente> getComponentes(){
-        List<EspecificacaoComponente> especificacaoComponentes =
-                con.query(String.format("""
-                select
-                    *
-                from
-                    especificacao_componente
-                where
-                    
-                
-                
-                
-                
-                
-                
-                
-                """), new BeanPropertyRowMapper<>(EspecificacaoComponente.class));
-
-    }
 
     public void adicionar() {
-=======
-    public void adicionarEspecComponente() {
->>>>>>> aa385b21165e4a0fcc5152ebf7b4729656cb6696
-        Looca looca = new Looca();
-        Processador processador = looca.getProcessador();
-        Memoria memoria = looca.getMemoria();
-        DiscoGrupo grupoDeDiscos = looca.getGrupoDeDiscos();
-        List<Disco> discos = grupoDeDiscos.getDiscos();
 
-        con.execute(String.format("insert into especificacao_componente (tipo, nome_fabricante, descricao_componente) values ('%s', '%s', '%s')",
-                esp.getTipo(), esp.getNome_fabricante(), esp.getDescricao_componente()));
 
-//        for (Disco disco : discos) {
-//
-//            tipo = disco.getNome();
-//            nome_fabricante = disco.getModelo();
-//            descricao_componente = disco.getSerial();
-//
-//            esp.setTipo(tipo);
-//            esp.setNome_fabricante(nome_fabricante);
-//            esp.setDescricao_componente(descricao_componente);
-//
-//            con.execute(String.format("insert into especificacao_componente values"
-//                    + "(null, '%s', '%s', '%s')",
-//                     esp.getTipo(), esp.getNome_fabricante(), esp.getDescricao_componente()));
-//        }
-
-        System.out.println("COMPONENTES CADASTRADOS COM SUCESSO!");
     }
 
+    public EspecificacaoComponente getComponenteCpu(Processador processador) {
 
+        List<EspecificacaoComponente> especificacaoComponentes =
+                con.query(String.format("""
+                        select
+                            *
+                        from
+                            especificacao_componente
+                        where
+                            descricao_componente = '%s'
+                        """, processador.getNome()), new BeanPropertyRowMapper<>(EspecificacaoComponente.class));
+
+        if (especificacaoComponentes.size() == 0) {
+            con.execute(String.format("insert into especificacao_componente" +
+                            "(tipo_componente,descricao_componente, nome_fabricante, numero_serial) values ('%s', '%s', '%s', '%s')",
+                  "CPU",processador.getNome(), processador.getFabricante(), processador.getId()));
+
+            especificacaoComponentes =
+                    con.query(String.format("""
+                            select
+                                *
+                            from
+                                especificacao_componente
+                            where
+                                descricao_componente = '%s'
+                            """, processador.getNome()), new BeanPropertyRowMapper<>(EspecificacaoComponente.class));
+        }
+
+        EspecificacaoComponente dados = especificacaoComponentes.get(0);
+
+        return new EspecificacaoComponente(dados.getId_especificacao_componente(),
+                dados.getTipoComponente(), dados.getNome_fabricante(), dados.getDescricao_componente());
+    }
+
+    public EspecificacaoComponente getComponenteMemoria(Memoria memoria) {
+        String nomeMemoria = String.format("Pente de memória ram - %.0f GB", service.convertBytesToGB(memoria.getTotal()));
+
+        List<EspecificacaoComponente> especificacaoComponentes =
+                con.query(String.format("""
+                        select
+                            *
+                        from
+                            especificacao_componente
+                        where
+                            descricao_componente = '%s'
+                        """, nomeMemoria), new BeanPropertyRowMapper<>(EspecificacaoComponente.class));
+
+        if (especificacaoComponentes.size() == 0) {
+            con.execute(String.format("insert into especificacao_componente" +
+                            "(tipo_componente,descricao_componente) values ('%s','%s')",
+                    "RAM",nomeMemoria));
+
+            especificacaoComponentes =
+                    con.query(String.format("""
+                            select
+                                *
+                            from
+                                especificacao_componente
+                            where
+                                descricao_componente = '%s'
+                            """, nomeMemoria), new BeanPropertyRowMapper<>(EspecificacaoComponente.class));
+        }
+
+        EspecificacaoComponente dados = especificacaoComponentes.get(0);
+        return new EspecificacaoComponente(dados.getId_especificacao_componente(),
+                dados.getTipoComponente(), dados.getNome_fabricante(), dados.getDescricao_componente());
+    }
+
+    public EspecificacaoComponente getComponenteDisco(Disco disco) {
+
+        List<EspecificacaoComponente> especificacaoComponentes =
+                con.query(String.format("""
+                        select
+                            *
+                        from
+                            especificacao_componente
+                        where
+                            descricao_componente = '%s'
+                        """, disco.getNome()), new BeanPropertyRowMapper<>(EspecificacaoComponente.class));
+
+        if (especificacaoComponentes.size() == 0) {
+            con.execute(String.format("insert into especificacao_componente" +
+                            "(descricao_componente, nome_fabricante, numero_serial) values ('%s', '%s', '%s')",
+                    disco.getNome(), disco.getModelo(), disco.getSerial()));
+
+            especificacaoComponentes =
+                    con.query(String.format("""
+                            select
+                                *
+                            from
+                                especificacao_componente
+                            where
+                                descricao_componente = '%s'
+                            """, disco.getNome()), new BeanPropertyRowMapper<>(EspecificacaoComponente.class));
+        }
+
+        EspecificacaoComponente dados = especificacaoComponentes.get(0);
+
+        return new EspecificacaoComponente(dados.getId_especificacao_componente(),
+                dados.getTipoComponente(), dados.getNome_fabricante(), dados.getDescricao_componente());
+    }
 }

@@ -12,13 +12,14 @@ package com.mycompany.retria.MODEL;
 public class EspecificacaoComponente {
     
     private Integer id_especificacao_componente;
-    private String tipo;
+    private TipoComponente tipoComponente;
+
     private String nome_fabricante;
     private String descricao_componente;
 
-    public EspecificacaoComponente(Integer id_especificacao_componente, String tipo, String nome_fabricante, String descricao_componente) {
+    public EspecificacaoComponente(Integer id_especificacao_componente, TipoComponente tipo, String nome_fabricante, String descricao_componente) {
         this.id_especificacao_componente = id_especificacao_componente;
-        this.tipo = tipo;
+        this.tipoComponente = tipo;
         this.nome_fabricante = nome_fabricante;
         this.descricao_componente = descricao_componente;
     }
@@ -31,12 +32,12 @@ public class EspecificacaoComponente {
         this.id_especificacao_componente = id_especificacao_componente;
     }
 
-    public String getTipo() {
-        return tipo;
+    public TipoComponente getTipoComponente() {
+        return tipoComponente;
     }
 
-    public void setTipo(String tipo) {
-        this.tipo = tipo;
+    public void setTipoComponente(TipoComponente tipoComponente) {
+        this.tipoComponente = tipoComponente;
     }
 
     public String getNome_fabricante() {
@@ -57,8 +58,11 @@ public class EspecificacaoComponente {
 
     @Override
     public String toString() {
-        return "EspecificacaoComponente{" + "id_especificacao_componente=" + id_especificacao_componente + ", tipo=" + tipo + ", nome_fabricante=" + nome_fabricante + ", descricao_componente=" + descricao_componente + '}';
+        return "EspecificacaoComponente{" +
+                "id_especificacao_componente=" + id_especificacao_componente +
+                ", tipoComponente=" + tipoComponente +
+                ", nome_fabricante='" + nome_fabricante + '\'' +
+                ", descricao_componente='" + descricao_componente + '\'' +
+                '}';
     }
-    
-    
 }
