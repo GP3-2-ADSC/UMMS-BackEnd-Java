@@ -32,15 +32,24 @@ public class Service {
         admDao.setAdministrador(emailAdm, idProcessador);
         maquinaUltrassomDAO.getMaquinaUltrassom(idProcessador,adm.getId_administrador(),adm.getFk_empresa()
                 ,looca.getSistema().getSistemaOperacional());
-        maquinaUltrassomEspecificadaDAO.adicionar();
 
         especificacaoComponenteDAO.getComponenteCpu(looca.getProcessador());
         especificacaoComponenteDAO.getComponenteMemoria(looca.getMemoria());
-
+        
         for (Disco disco : discos) {
             especificacaoComponenteDAO.getComponenteDisco(disco);
         }
 
+        maquinaUltrassomEspecificadaDAO.getMaquiUltassomEspecRAM(
+                looca.getMemoria().getTotal(),
+                maquinaUltrassom.getIdMaquina(), 
+                especificacaoComponente.getId_especificacao_componente()
+        );
+        
+        maquinaUltrassomEspecificadaDAO.getMaquiUltassomEspecCPU(looca.getProcessador().getUso(),
+                looca.getProcessador().getFrequencia(),
+                maquinaUltrassom.getIdMaquina(), 
+                especificacaoComponente.getId_especificacao_componente());
 
     }
 

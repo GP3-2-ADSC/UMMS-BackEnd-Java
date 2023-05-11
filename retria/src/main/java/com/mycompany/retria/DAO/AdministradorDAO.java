@@ -5,14 +5,7 @@
 package com.mycompany.retria.DAO;
 
 import com.mycompany.retria.MODEL.Administrador;
-import com.mycompany.retria.MODEL.Empresa;
-import com.mycompany.retria.MODEL.EspecificacaoComponente;
-import com.mycompany.retria.MODEL.MaquinaUltrassom;
-import com.mycompany.retria.MODEL.MaquinaUltrassomEspecificada;
 import java.util.List;
-import java.util.Scanner;
-
-import com.mycompany.retria.services.Service;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 
@@ -22,7 +15,6 @@ import org.springframework.jdbc.core.JdbcTemplate;
  */
 public class AdministradorDAO {
     JdbcTemplate con;
-    private Service service;
 
     public AdministradorDAO() {
         Conexao conexao = new Conexao();
@@ -33,17 +25,17 @@ public class AdministradorDAO {
 
         List<Administrador> administradores = con.query(String.format("""
                         SELECT 
-                            *.administrador 
+                            a.*
                         FROM 
                             administrador as a
                         JOIN
-                            maquinaUltrassom as m
+                            maquina_ultrassom as m
                         ON
-                            a.idAdministrador = m.fkAdministrador
+                            a.id_administrador = m.fk_administrador
                         WHERE
-                            a.email = %s
-                        AND a.senha = %s
-                        AND m.idIdentificador = %s
+                            a.email_administrador = '%s'
+                        AND a.senha_administrador = '%s'
+                        AND m.numero_serial_maquina = '%s';
                         """, email, senha, idProcessador),
                 new BeanPropertyRowMapper(Administrador.class));
 
@@ -58,16 +50,16 @@ public class AdministradorDAO {
 
         List<Administrador> administradores = con.query(String.format("""
                         SELECT 
-                            *.administrador 
+                            a.*
                         FROM 
                             administrador as a
                         JOIN
-                            maquinaUltrassom as m
+                            maquina_ultrassom as m
                         ON
                             a.id_administrador = m.fk_administrador
                         WHERE
-                            a.email = '%s'
-                        AND m.id_processador = '%s'
+                            a.email_administrador = '%s'
+                        AND m.numero_serial_maquina = '%s'
                         """, email, idProcessador),
                 new BeanPropertyRowMapper(Administrador.class));
 

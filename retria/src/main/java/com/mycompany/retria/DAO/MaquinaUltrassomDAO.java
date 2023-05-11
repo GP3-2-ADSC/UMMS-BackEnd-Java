@@ -27,16 +27,16 @@ public class MaquinaUltrassomDAO {
                         select 
                             m.* 
                         from 
-                            maquina_ultrassonografica
+                            maquina_ultrassom
                         where 
-                            id_processador = '%s';
+                            numero_serial_maquina = '%s';
                         """, idProcessador),
                 new BeanPropertyRowMapper(MaquinaUltrassom.class));
 
         while(maquinasUltra.size() == 0){
             con.execute(String.format("""
-                    insert 
-                        (sistema_operacional, id_processador, fk_administrador,fk_empresa) 
+                    insert into maquina_ultrassom
+                        (sistema_operacional, numero_serial_maquina, fk_administrador,fk_empresa) 
                     values
                         ('%s','%s' ,%d, %d);
                     """,sistema, idProcessador,fkAdmin, fkEmpresa));
@@ -45,9 +45,9 @@ public class MaquinaUltrassomDAO {
                         select 
                             m.* 
                         from 
-                            maquina_ultrassonografica
+                            maquina_ultrassom
                         where 
-                            id_processador = '%s';
+                            numero_serial_maquina = '%s';
                         """, idProcessador),
                     new BeanPropertyRowMapper(MaquinaUltrassom.class));
         }
@@ -57,5 +57,4 @@ public class MaquinaUltrassomDAO {
         return new MaquinaUltrassom(dados.getIdMaquina(),dados.getSistemaOperacional(),dados.getIdProcessador(),
                 dados.getFkAdmin(), dados.getFkEmpresa());
     }
-
 }

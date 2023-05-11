@@ -30,7 +30,7 @@ public class TesteAdministrador {
         AdministradorDAO admDAO = new AdministradorDAO();
         MaquinaUltrassomEspecificadaDAO maquiEspecif = new MaquinaUltrassomEspecificadaDAO();
         
-        admDAO.relatorioAdm("lucas@gmail.com", "123");
+//        admDAO.relatorioAdm("lucas@gmail.com", "123");
 
 //        List<Administrador> administradores = con.query("select * from administrador;",
 //                new BeanPropertyRowMapper(Administrador.class));

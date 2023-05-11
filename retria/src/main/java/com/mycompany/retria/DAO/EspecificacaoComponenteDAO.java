@@ -4,17 +4,11 @@
  */
 package com.mycompany.retria.DAO;
 
-import com.github.britooo.looca.api.core.Looca;
 import com.github.britooo.looca.api.group.discos.Disco;
 import com.github.britooo.looca.api.group.memoria.Memoria;
 import com.github.britooo.looca.api.group.processador.Processador;
 import com.mycompany.retria.MODEL.EspecificacaoComponente;
-
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-
-import com.mycompany.retria.MODEL.TipoComponente;
 import com.mycompany.retria.services.Service;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -26,20 +20,12 @@ public class EspecificacaoComponenteDAO {
 
     JdbcTemplate con;
 
-    Looca looca = new Looca();
-
     Service service = new Service();
 
 
     public EspecificacaoComponenteDAO() {
         Conexao conexao = new Conexao();
         con = conexao.getConnection();
-    }
-
-
-    public void adicionar() {
-
-
     }
 
     public EspecificacaoComponente getComponenteCpu(Processador processador) {
@@ -54,9 +40,9 @@ public class EspecificacaoComponenteDAO {
                             descricao_componente = '%s'
                         """, processador.getNome()), new BeanPropertyRowMapper<>(EspecificacaoComponente.class));
 
-        if (especificacaoComponentes.size() == 0) {
+        if (especificacaoComponentes.isEmpty()) {
             con.execute(String.format("insert into especificacao_componente" +
-                            "(tipo_componente,descricao_componente, nome_fabricante, numero_serial) values ('%s', '%s', '%s', '%s')",
+                            "(tipo_componente, descricao_componente, nome_fabricante, numero_serial) values ('%s', '%s', '%s', '%s')",
                   "CPU",processador.getNome(), processador.getFabricante(), processador.getId()));
 
             especificacaoComponentes =
@@ -89,9 +75,9 @@ public class EspecificacaoComponenteDAO {
                             descricao_componente = '%s'
                         """, nomeMemoria), new BeanPropertyRowMapper<>(EspecificacaoComponente.class));
 
-        if (especificacaoComponentes.size() == 0) {
+        if (especificacaoComponentes.isEmpty()) {
             con.execute(String.format("insert into especificacao_componente" +
-                            "(tipo_componente,descricao_componente) values ('%s','%s')",
+                            "(tipo_componente, descricao_componente) values ('%s','%s')",
                     "RAM",nomeMemoria));
 
             especificacaoComponentes =
@@ -122,7 +108,7 @@ public class EspecificacaoComponenteDAO {
                             descricao_componente = '%s'
                         """, disco.getNome()), new BeanPropertyRowMapper<>(EspecificacaoComponente.class));
 
-        if (especificacaoComponentes.size() == 0) {
+        if (especificacaoComponentes.isEmpty()) {
             con.execute(String.format("insert into especificacao_componente" +
                             "(descricao_componente, nome_fabricante, numero_serial) values ('%s', '%s', '%s')",
                     disco.getNome(), disco.getModelo(), disco.getSerial()));
