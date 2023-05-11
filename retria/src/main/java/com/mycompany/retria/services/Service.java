@@ -28,29 +28,33 @@ public class Service {
     MaquinaUltrassomEspecificadaDAO maquinaUltrassomEspecificadaDAO = new MaquinaUltrassomEspecificadaDAO();
 
     List<Disco> discos = looca.getGrupoDeDiscos().getDiscos();
+
     public void ScriptDeValidacaoDeBanco(String emailAdm, String idProcessador) {
         admDao.setAdministrador(emailAdm, idProcessador);
-        maquinaUltrassomDAO.getMaquinaUltrassom(idProcessador,adm.getId_administrador(),adm.getFk_empresa()
-                ,looca.getSistema().getSistemaOperacional());
+        maquinaUltrassomDAO.getMaquinaUltrassom(idProcessador, adm.getId_administrador(), adm.getFk_empresa(),
+                 looca.getSistema().getSistemaOperacional());
 
         especificacaoComponenteDAO.getComponenteCpu(looca.getProcessador());
         especificacaoComponenteDAO.getComponenteMemoria(looca.getMemoria());
-        
+
         for (Disco disco : discos) {
             especificacaoComponenteDAO.getComponenteDisco(disco);
         }
 
         maquinaUltrassomEspecificadaDAO.getMaquiUltassomEspecRAM(
                 looca.getMemoria().getTotal(),
-                maquinaUltrassom.getIdMaquina(), 
+                maquinaUltrassom.getIdMaquina(),
                 especificacaoComponente.getId_especificacao_componente()
         );
-        
+
         maquinaUltrassomEspecificadaDAO.getMaquiUltassomEspecCPU(looca.getProcessador().getUso(),
                 looca.getProcessador().getFrequencia(),
-                maquinaUltrassom.getIdMaquina(), 
+                maquinaUltrassom.getIdMaquina(),
                 especificacaoComponente.getId_especificacao_componente());
 
+        for (Disco disco : discos) {
+            maquinaUltrassomEspecificadaDAO.getMaquiUltassomEspecDISCO(disco.getTamanho(), maquinaUltrassom.getIdMaquina(), especificacaoComponente.getId_especificacao_componente());
+        }
     }
 
     public double convertBytesToGB(long bytes) {

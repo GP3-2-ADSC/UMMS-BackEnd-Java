@@ -93,4 +93,115 @@ public class MaquinaUltrassomEspecificadaDAO {
                 dados.getFk_maquina(),
                 dados.getFk_especificacao_componente());
     }
+    
+    public MaquinaUltrassomEspecificada getMaquiUltassomEspecCPU(Double usoMaximo, Long frenquecia, Integer fkMaquina, Integer fkEspecComp) {
+
+        List<MaquinaUltrassomEspecificada> maquinaUltraEspec = con.query(String.format("""
+                        select
+                            m.*
+                        from 
+                            maquina_ultrassom_especificada m
+                        join 
+                            especificacao_componente e
+                        on
+                            m.fk_especificacao_componente = e.id_especificacao_componente
+                        where 
+                            uso_maximo = %f
+                        and frequencia_maxima = %f 
+                        and fk_maquina = %d
+                        and fk_especificacao_componente = %d;                
+                        and e.tipo_componente = 'CPU'
+                    """, usoMaximo, frenquecia, fkMaquina, fkEspecComp),
+                new BeanPropertyRowMapper<>(MaquinaUltrassomEspecificada.class));
+
+        if (maquinaUltraEspec.isEmpty()) {
+            con.execute(String.format("""
+                        insert into maquina_ultrassom_especificada 
+                            (uso_maximo,  frequencia_maxima, fk_maquina, fk_especificacao_componente)
+                        values (%f, %f, %d, %d);
+                      """, processador.getUso(), processador.getFrequencia(), fkMaquina, fkEspecComp));
+
+            maquinaUltraEspec
+                    = con.query(String.format("""
+                        select
+                            m.*
+                        from 
+                            maquina_ultrassom_especificada m
+                        join 
+                            especificacao_componente e
+                        on
+                            m.fk_especificacao_componente = e.id_especificacao_componente
+                        where 
+                            uso_maximo = %f
+                        and frequencia_maxima = %f
+                        and fk_maquina = %d
+                        and fk_especificacao_componente = %d;                
+                        and e.tipo_componente = 'CPU'
+                    """, usoMaximo,frenquecia ,fkMaquina, fkEspecComp),
+                            new BeanPropertyRowMapper<>(MaquinaUltrassomEspecificada.class));
+        }
+
+        MaquinaUltrassomEspecificada dados = maquinaUltraEspec.get(0);
+
+        System.out.println("ESPEFIFICAÇÃO DE COMPONENTES CADASTRADOS COM SUCESSO!");
+        return new MaquinaUltrassomEspecificada(dados.getId_especificacao_componente_maquina(),
+                dados.getUso_maximo(),
+                dados.getFrequencia_maxima(),
+                dados.getFk_maquina(),
+                dados.getFk_especificacao_componente());
+    }
+    public MaquinaUltrassomEspecificada getMaquiUltassomEspecDISCO(Long usoMaximo, Integer fkMaquina, Integer fkEspecComp) {
+
+        List<MaquinaUltrassomEspecificada> maquinaUltraEspec = con.query(String.format("""
+                        select
+                            m.*
+                        from 
+                            maquina_ultrassom_especificada m
+                        join 
+                            especificacao_componente e
+                        on
+                            m.fk_especificacao_componente = e.id_especificacao_componente
+                        where 
+                            uso_maximo = %f
+                        and fk_maquina = %d
+                        and fk_especificacao_componente = %d;                
+                        and e.tipo_componente = 'DISCO'
+                    """, usoMaximo,fkMaquina, fkEspecComp),
+                new BeanPropertyRowMapper<>(MaquinaUltrassomEspecificada.class));
+
+        if (maquinaUltraEspec.isEmpty()) {
+            con.execute(String.format("""
+                        insert into maquina_ultrassom_especificada 
+                            (uso_maximo, fk_maquina, fk_especificacao_componente)
+                        values (%f, %d, %d);
+                      """, usoMaximo,fkMaquina, fkEspecComp));
+
+            maquinaUltraEspec
+                    = con.query(String.format("""
+                        select
+                            m.*
+                        from 
+                            maquina_ultrassom_especificada m
+                        join 
+                            especificacao_componente e
+                        on
+                            m.fk_especificacao_componente = e.id_especificacao_componente
+                        where 
+                            uso_maximo = %f
+                        and fk_maquina = %d
+                        and fk_especificacao_componente = %d;                
+                        and e.tipo_componente = 'DISCO'
+                    """, usoMaximo,fkMaquina, fkEspecComp),
+                            new BeanPropertyRowMapper<>(MaquinaUltrassomEspecificada.class));
+        }
+
+        MaquinaUltrassomEspecificada dados = maquinaUltraEspec.get(0);
+
+        System.out.println("ESPEFIFICAÇÃO DE COMPONENTES CADASTRADOS COM SUCESSO!");
+        return new MaquinaUltrassomEspecificada(dados.getId_especificacao_componente_maquina(),
+                dados.getUso_maximo(),
+                null,
+                dados.getFk_maquina(),
+                dados.getFk_especificacao_componente());
+    }
 }

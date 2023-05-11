@@ -39,7 +39,7 @@ public class AdministradorDAO {
                         """, email, senha, idProcessador),
                 new BeanPropertyRowMapper(Administrador.class));
 
-            if (administradores.size() > 0) {
+            if (!administradores.isEmpty()) {
                 return true;
             }
 
