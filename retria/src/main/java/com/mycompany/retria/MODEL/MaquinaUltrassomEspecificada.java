@@ -16,14 +16,12 @@ public class MaquinaUltrassomEspecificada {
 
     private Integer id_especificacao_componente_maquina;
     private Double uso_maximo;
-    private Double frequencia_maxima;
     private Integer fk_maquina;
     private Integer fk_especificacao_componente;
 
-    public MaquinaUltrassomEspecificada(Integer id_especificacao_componente_maquina, Double uso_maximo, Double frequencia_maxima, Integer fk_maquina, Integer fk_especificacao_componente) {
+    public MaquinaUltrassomEspecificada(Integer id_especificacao_componente_maquina, Double uso_maximo, Integer fk_maquina, Integer fk_especificacao_componente) {
         this.id_especificacao_componente_maquina = id_especificacao_componente_maquina;
         this.uso_maximo = uso_maximo;
-        this.frequencia_maxima = frequencia_maxima;
         this.fk_maquina = fk_maquina;
         this.fk_especificacao_componente = fk_especificacao_componente;
     }
@@ -45,14 +43,6 @@ public class MaquinaUltrassomEspecificada {
         this.uso_maximo = uso_maximo;
     }
 
-    public Double getFrequencia_maxima() {
-        return frequencia_maxima;
-    }
-
-    public void setFrequencia_maxima(Double frequencia_maxima) {
-        this.frequencia_maxima = frequencia_maxima;
-    }
-
     public Integer getFk_maquina() {
         return fk_maquina;
     }
@@ -71,6 +61,6 @@ public class MaquinaUltrassomEspecificada {
 
     @Override
     public String toString() {
-        return "MaquinaUltrassomEspecificada{" + "id_especificacao_componente_maquina=" + id_especificacao_componente_maquina + ", uso_maximo=" + uso_maximo + ", frequencia_maxima=" + frequencia_maxima + ", fk_maquina=" + fk_maquina + ", fk_especificacao_componente=" + fk_especificacao_componente + '}';
+        return "MaquinaUltrassomEspecificada{" + "id_especificacao_componente_maquina=" + id_especificacao_componente_maquina + ", uso_maximo=" + uso_maximo + ", fk_maquina=" + fk_maquina + ", fk_especificacao_componente=" + fk_especificacao_componente + '}';
     }
 }

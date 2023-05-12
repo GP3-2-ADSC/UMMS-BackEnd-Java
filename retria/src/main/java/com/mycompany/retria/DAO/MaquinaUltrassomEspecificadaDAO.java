@@ -53,8 +53,8 @@ public class MaquinaUltrassomEspecificadaDAO {
                         where 
                             uso_maximo = %f
                         and fk_maquina = %d
-                        and fk_especificacao_componente = %d;                
-                        and e.tipo_componente = 'RAM'
+                        and fk_especificacao_componente = %d                
+                        and e.tipo_componente = 'RAM';
                     """, usoMaximo, fkMaquina, fkEspecComp),
                 new BeanPropertyRowMapper<>(MaquinaUltrassomEspecificada.class));
 
@@ -78,8 +78,8 @@ public class MaquinaUltrassomEspecificadaDAO {
                         where 
                             uso_maximo = %f
                         and fk_maquina = %d
-                        and fk_especificacao_componente = %d;                
-                        and e.tipo_componente = 'RAM'
+                        and fk_especificacao_componente = %d                
+                        and e.tipo_componente = 'RAM';
                     """, usoMaximo, fkMaquina, fkEspecComp),
                             new BeanPropertyRowMapper<>(MaquinaUltrassomEspecificada.class));
         }
@@ -89,7 +89,7 @@ public class MaquinaUltrassomEspecificadaDAO {
         System.out.println("ESPEFIFICAÇÃO DE COMPONENTES CADASTRADOS COM SUCESSO!");
         return new MaquinaUltrassomEspecificada(dados.getId_especificacao_componente_maquina(),
                 dados.getUso_maximo(),
-                null,
+                
                 dados.getFk_maquina(),
                 dados.getFk_especificacao_componente());
     }
@@ -109,8 +109,8 @@ public class MaquinaUltrassomEspecificadaDAO {
                             uso_maximo = %f
                         and frequencia_maxima = %f 
                         and fk_maquina = %d
-                        and fk_especificacao_componente = %d;                
-                        and e.tipo_componente = 'CPU'
+                        and fk_especificacao_componente = %d                
+                        and e.tipo_componente = 'CPU';
                     """, usoMaximo, frenquecia, fkMaquina, fkEspecComp),
                 new BeanPropertyRowMapper<>(MaquinaUltrassomEspecificada.class));
 
@@ -135,8 +135,8 @@ public class MaquinaUltrassomEspecificadaDAO {
                             uso_maximo = %f
                         and frequencia_maxima = %f
                         and fk_maquina = %d
-                        and fk_especificacao_componente = %d;                
-                        and e.tipo_componente = 'CPU'
+                        and fk_especificacao_componente = %d                
+                        and e.tipo_componente = 'CPU';
                     """, usoMaximo,frenquecia ,fkMaquina, fkEspecComp),
                             new BeanPropertyRowMapper<>(MaquinaUltrassomEspecificada.class));
         }
@@ -146,7 +146,6 @@ public class MaquinaUltrassomEspecificadaDAO {
         System.out.println("ESPEFIFICAÇÃO DE COMPONENTES CADASTRADOS COM SUCESSO!");
         return new MaquinaUltrassomEspecificada(dados.getId_especificacao_componente_maquina(),
                 dados.getUso_maximo(),
-                dados.getFrequencia_maxima(),
                 dados.getFk_maquina(),
                 dados.getFk_especificacao_componente());
     }
@@ -164,8 +163,8 @@ public class MaquinaUltrassomEspecificadaDAO {
                         where 
                             uso_maximo = %f
                         and fk_maquina = %d
-                        and fk_especificacao_componente = %d;                
-                        and e.tipo_componente = 'DISCO'
+                        and fk_especificacao_componente = %d                
+                        and e.tipo_componente = 'DISCO';
                     """, usoMaximo,fkMaquina, fkEspecComp),
                 new BeanPropertyRowMapper<>(MaquinaUltrassomEspecificada.class));
 
@@ -189,8 +188,8 @@ public class MaquinaUltrassomEspecificadaDAO {
                         where 
                             uso_maximo = %f
                         and fk_maquina = %d
-                        and fk_especificacao_componente = %d;                
-                        and e.tipo_componente = 'DISCO'
+                        and fk_especificacao_componente = %d               
+                        and e.tipo_componente = 'DISCO';
                     """, usoMaximo,fkMaquina, fkEspecComp),
                             new BeanPropertyRowMapper<>(MaquinaUltrassomEspecificada.class));
         }
@@ -200,7 +199,6 @@ public class MaquinaUltrassomEspecificadaDAO {
         System.out.println("ESPEFIFICAÇÃO DE COMPONENTES CADASTRADOS COM SUCESSO!");
         return new MaquinaUltrassomEspecificada(dados.getId_especificacao_componente_maquina(),
                 dados.getUso_maximo(),
-                null,
                 dados.getFk_maquina(),
                 dados.getFk_especificacao_componente());
     }
