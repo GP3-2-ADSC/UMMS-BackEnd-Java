@@ -65,4 +65,6 @@ public class EspecificacaoComponente {
                 ", descricao_componente='" + descricao_componente + '\'' +
                 '}';
     }
+
+
 }

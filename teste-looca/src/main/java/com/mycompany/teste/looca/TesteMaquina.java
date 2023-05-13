@@ -34,13 +34,7 @@ public class TesteMaquina {
     public static void main(String[] args) throws IOException {
         Looca looca = new Looca();
         Inovacao ping = new Inovacao();
-        // Informações da máquina
-        // inovação
 
-        ping.execCommand("ping 54.172.104.230");
-        System.out.println(ping.getMediaPing());
-
-        //  ping.internetTest();
-//        System.out.println(Conversor.formatarBytes());
+        System.out.println(looca.getRede().getGrupoDeInterfaces().getInterfaces().get(0).getEnderecoIpv4());
     }
 }

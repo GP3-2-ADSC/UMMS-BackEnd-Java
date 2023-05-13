@@ -7,25 +7,25 @@ public class MetricaComponente {
 
     private Integer idMetricaComponente;
 
-    private static final LocalDateTime dtMetrica = LocalDateTime.now();
-
-    private String dtMetricaFormatada = dtMetrica.format(DateTimeFormatter.ofPattern("uuuu/MM/dd HH:mm:ss"));
+    private final LocalDateTime dtMetrica = LocalDateTime.now();
 
     private Double uso;
 
-    private Double frequencia;
+    private Integer fkEspecificacaoComponente;
 
-    private final MaquinaUltrassomEspecificada maquinaUltrassomEspecificada;
-
-    public MetricaComponente(Integer idMetricaComponente, Double uso, Double frequencia,
-                             MaquinaUltrassomEspecificada maquinaUltrassomEspecificada) {
-
+    public MetricaComponente(Integer idMetricaComponente, Double uso, Integer fkEspecificacaoComponente) {
         this.idMetricaComponente = idMetricaComponente;
         this.uso = uso;
-        this.frequencia = frequencia;
-        this.maquinaUltrassomEspecificada = maquinaUltrassomEspecificada;
+        this.fkEspecificacaoComponente = fkEspecificacaoComponente;
     }
 
+    public String getDateFormatedSql () {
+        return dtMetrica.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+    }
+
+    public String getDateFormatedForLog () {
+        return dtMetrica.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+    }
 
     public Integer getIdMetricaComponente() {
         return idMetricaComponente;
@@ -33,14 +33,6 @@ public class MetricaComponente {
 
     public void setIdMetricaComponente(Integer idMetricaComponente) {
         this.idMetricaComponente = idMetricaComponente;
-    }
-
-    public String getDtMetricaFormatada() {
-        return dtMetricaFormatada;
-    }
-
-    public void setDtMetricaFormatada(String dtMetricaFormatada) {
-        this.dtMetricaFormatada = dtMetricaFormatada;
     }
 
     public Double getUso() {
@@ -51,18 +43,14 @@ public class MetricaComponente {
         this.uso = uso;
     }
 
-    public Double getFrequencia() {
-        return frequencia;
+
+    public Integer getFkEspecificacaoComponente() {
+        return fkEspecificacaoComponente;
     }
 
-    public void setFrequencia(Double frequencia) {
-        this.frequencia = frequencia;
+    public void setFkEspecificacaoComponente(Integer fkEspecificacaoComponente) {
+        this.fkEspecificacaoComponente = fkEspecificacaoComponente;
     }
-
-    public MaquinaUltrassomEspecificada getMaquinaUltrassomEspecificada() {
-        return maquinaUltrassomEspecificada;
-    }
-
 
     @Override
     public String toString() {
@@ -79,6 +67,6 @@ public class MetricaComponente {
                 Frequência : %.2f
                 
                 """, this.idMetricaComponente,
-                this.dtMetricaFormatada, this.uso, this.frequencia);
+                this.dtMetrica, this.uso);
     }
 }

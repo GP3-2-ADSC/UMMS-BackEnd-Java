@@ -20,11 +20,6 @@ import org.springframework.jdbc.core.JdbcTemplate;
  */
 public class MaquinaUltrassomEspecificadaDAO {
 
-    private Integer id_especificacao_componente_maquina;
-    private String numero_serial;
-    private Double uso_maximo;
-    private Double frequencia_maxima;
-
     Looca looca = new Looca();
 
     Memoria memoria = looca.getMemoria();
@@ -94,7 +89,7 @@ public class MaquinaUltrassomEspecificadaDAO {
                 dados.getFk_especificacao_componente());
     }
     
-    public MaquinaUltrassomEspecificada getMaquiUltassomEspecCPU(Double usoMaximo, Long frenquecia, Integer fkMaquina, Integer fkEspecComp) {
+    public MaquinaUltrassomEspecificada getMaquiUltassomEspecCPU(Double usoMaximo, Integer fkMaquina, Integer fkEspecComp) {
 
         List<MaquinaUltrassomEspecificada> maquinaUltraEspec = con.query(String.format("""
                         select
@@ -107,19 +102,18 @@ public class MaquinaUltrassomEspecificadaDAO {
                             m.fk_especificacao_componente = e.id_especificacao_componente
                         where 
                             uso_maximo = %f
-                        and frequencia_maxima = %f 
                         and fk_maquina = %d
                         and fk_especificacao_componente = %d                
                         and e.tipo_componente = 'CPU';
-                    """, usoMaximo, frenquecia, fkMaquina, fkEspecComp),
+                    """, usoMaximo, fkMaquina, fkEspecComp),
                 new BeanPropertyRowMapper<>(MaquinaUltrassomEspecificada.class));
 
         if (maquinaUltraEspec.isEmpty()) {
             con.execute(String.format("""
                         insert into maquina_ultrassom_especificada 
-                            (uso_maximo,  frequencia_maxima, fk_maquina, fk_especificacao_componente)
+                            (uso_maximo, fk_maquina, fk_especificacao_componente)
                         values (%f, %f, %d, %d);
-                      """, processador.getUso(), processador.getFrequencia(), fkMaquina, fkEspecComp));
+                      """, processador.getUso(), fkMaquina, fkEspecComp));
 
             maquinaUltraEspec
                     = con.query(String.format("""
@@ -133,11 +127,10 @@ public class MaquinaUltrassomEspecificadaDAO {
                             m.fk_especificacao_componente = e.id_especificacao_componente
                         where 
                             uso_maximo = %f
-                        and frequencia_maxima = %f
                         and fk_maquina = %d
                         and fk_especificacao_componente = %d                
                         and e.tipo_componente = 'CPU';
-                    """, usoMaximo,frenquecia ,fkMaquina, fkEspecComp),
+                    """, usoMaximo,fkMaquina, fkEspecComp),
                             new BeanPropertyRowMapper<>(MaquinaUltrassomEspecificada.class));
         }
 

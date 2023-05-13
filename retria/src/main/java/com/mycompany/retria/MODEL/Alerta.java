@@ -7,18 +7,22 @@ public class Alerta {
 
     private Integer idAlerta;
 
-    private static final LocalDateTime dtAlerta = LocalDateTime.now();
+    private final LocalDateTime dtMetrica = LocalDateTime.now();
+    private Integer tipoAlerta;
 
-    private String dtAlertaFormatada = dtAlerta.format(DateTimeFormatter.ofPattern("uuuu/MM/dd HH:mm:ss"));
+    private Integer fkMetricaComponente;
 
-    private String tipoAlerta;
-
-    private MetricaComponente metricaComponente;
-
-    public Alerta(Integer idAlerta, String tipoAlerta, MetricaComponente metricaComponente) {
+    public Alerta(Integer idAlerta, Integer tipoAlerta, Integer fkMetricaComponente) {
         this.idAlerta = idAlerta;
         this.tipoAlerta = tipoAlerta;
-        this.metricaComponente = metricaComponente;
+        this.fkMetricaComponente = fkMetricaComponente;
+    }
+
+    public String getDateFormatedSql () {
+        return dtMetrica.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+    }
+    public String getDateFormatedForLog () {
+        return dtMetrica.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
     }
 
     public Integer getIdAlerta() {
@@ -29,28 +33,20 @@ public class Alerta {
         this.idAlerta = idAlerta;
     }
 
-    public String getDtAlertaFormatada() {
-        return dtAlertaFormatada;
-    }
-
-    public void setDtAlertaFormatada(String dtAlertaFormatada) {
-        this.dtAlertaFormatada = dtAlertaFormatada;
-    }
-
-    public String getTipoAlerta() {
+    public Integer getTipoAlerta() {
         return tipoAlerta;
     }
 
-    public void setTipoAlerta(String tipoAlerta) {
+    public void setTipoAlerta(Integer tipoAlerta) {
         this.tipoAlerta = tipoAlerta;
     }
 
-    public MetricaComponente getMetricaComponente() {
-        return metricaComponente;
+    public Integer getFkMetricaComponente() {
+        return fkMetricaComponente;
     }
 
-    public void setMetricaComponente(MetricaComponente metricaComponente) {
-        this.metricaComponente = metricaComponente;
+    public void setFkMetricaComponente(Integer fkMetricaComponente) {
+        this.fkMetricaComponente = fkMetricaComponente;
     }
 
     @Override
@@ -65,6 +61,6 @@ public class Alerta {
                 
                 TIPO : %s
                 
-                """, this.idAlerta, this.dtAlertaFormatada, this.tipoAlerta);
+                """, this.idAlerta, this.tipoAlerta);
     }
 }
