@@ -44,13 +44,6 @@ public class MaquinaUltrassomDAO {
                         ('%s','%s' ,%d, %d);
                     """,sistema, idProcessador,fkAdmin, fkEmpresa));
 
-            conMysql.execute(String.format("""
-                    insert into maquina_ultrassom
-                        (sistema_operacional, numero_serial_maquina, fk_administrador,fk_empresa) 
-                    values
-                        ('%s','%s' ,%d, %d);
-                    """,sistema, idProcessador,fkAdmin, fkEmpresa));
-
             maquinasUltra = con.query(String.format("""
                         select 
                             m.* 
@@ -60,6 +53,14 @@ public class MaquinaUltrassomDAO {
                             m.numero_serial_maquina = '%s';
                         """, idProcessador),
                     new BeanPropertyRowMapper(MaquinaUltrassom.class));
+            MaquinaUltrassom dados = maquinasUltra.get(0);
+
+            conMysql.execute(String.format("""
+                    insert into maquina_ultrassom
+                        (id_maquina,sistema_operacional, numero_serial_maquina, fk_administrador,fk_empresa) 
+                    values
+                        (%d,'%s','%s' ,%d, %d);
+                    """,dados.getIdMaquina(),sistema, idProcessador,fkAdmin, fkEmpresa));
         }
 
         MaquinaUltrassom dados = maquinasUltra.get(0);

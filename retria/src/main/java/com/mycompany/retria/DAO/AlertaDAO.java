@@ -28,7 +28,6 @@ public class AlertaDAO {
         conMysql.execute(String.format("""
                 insert into alerta (dt_alerta,fk_tipo_alerta,fk_metrica_componente) values ('%s',%d,%d)
                 """, alerta.getDateFormatedSql(), alerta.getTipoAlerta(), alerta.getFkMetricaComponente()));
-
     }
 
 

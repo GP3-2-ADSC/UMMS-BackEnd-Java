@@ -24,9 +24,6 @@ public class MetricaComponenteDAO {
             con.execute(String.format("""
                 insert into metrica_componente (dt_metrica,uso,fk_especificacao_componente_maquina) values ('%s',%.0f,%d)
                 """,dataAtual,metrica.getUso(),metrica.getFkEspecificacaoComponente()));
-        conMysql.execute(String.format("""
-                insert into metrica_componente (dt_metrica,uso,fk_especificacao_componente_maquina) values ('%s',%.0f,%d)
-                """,dataAtual,metrica.getUso(),metrica.getFkEspecificacaoComponente()));
 
         List<MetricaComponente> metricas = con.query(String.format("""
                 select 
@@ -40,6 +37,9 @@ public class MetricaComponenteDAO {
                 """, dataAtual,metrica.getFkEspecificacaoComponente()),
                 new BeanPropertyRowMapper(MetricaComponente.class));
 
+        conMysql.execute(String.format("""
+                insert into metrica_componente (id_metrica_componente,dt_metrica,uso,fk_especificacao_componente_maquina) values (%d,'%s',%.0f,%d)
+                """,metricas.get(0).getIdMetricaComponente(),dataAtual,metrica.getUso(),metrica.getFkEspecificacaoComponente()));
 
         return metricas.get(0).getIdMetricaComponente();
     }

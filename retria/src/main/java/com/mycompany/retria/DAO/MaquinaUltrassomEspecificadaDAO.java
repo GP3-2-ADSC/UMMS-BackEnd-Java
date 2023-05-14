@@ -61,11 +61,6 @@ public class MaquinaUltrassomEspecificadaDAO {
                             (uso_maximo, fk_maquina, fk_especificacao_componente)
                         values (%.0f, %d, %d);
                       """, usoMaximo, fkMaquina, fkEspecComp));
-            conMysql.execute(String.format("""
-                        insert into maquina_ultrassom_especificada 
-                            (uso_maximo, fk_maquina, fk_especificacao_componente)
-                        values (%.0f, %d, %d);
-                      """, usoMaximo, fkMaquina, fkEspecComp));
 
             maquinaUltraEspec
                     = con.query(String.format("""
@@ -84,6 +79,14 @@ public class MaquinaUltrassomEspecificadaDAO {
                         and e.tipo_componente = 'RAM';
                     """, usoMaximo, fkMaquina, fkEspecComp),
                             new BeanPropertyRowMapper<>(MaquinaUltrassomEspecificada.class));
+
+            MaquinaUltrassomEspecificada dados = maquinaUltraEspec.get(0);
+
+            conMysql.execute(String.format("""
+                        insert into maquina_ultrassom_especificada 
+                            (id_especificacao_componente_maquina, uso_maximo, fk_maquina, fk_especificacao_componente)
+                        values (%d,%.0f, %d, %d);
+                      """,dados.getId_especificacao_componente_maquina() ,usoMaximo, fkMaquina, fkEspecComp));
         }
 
         MaquinaUltrassomEspecificada dados = maquinaUltraEspec.get(0);
@@ -121,11 +124,6 @@ public class MaquinaUltrassomEspecificadaDAO {
                             (uso_maximo, fk_maquina, fk_especificacao_componente)
                         values (%d, %d, %d);
                       """, usoMaximotoInt, fkMaquina, fkEspecComp));
-            conMysql.execute(String.format("""
-                        insert into maquina_ultrassom_especificada 
-                            (uso_maximo, fk_maquina, fk_especificacao_componente)
-                        values (%d, %d, %d);
-                      """, usoMaximotoInt, fkMaquina, fkEspecComp));
 
             maquinaUltraEspec
                     = con.query(String.format("""
@@ -144,6 +142,14 @@ public class MaquinaUltrassomEspecificadaDAO {
                         and e.tipo_componente = 'CPU';
                     """, usoMaximotoInt,fkMaquina, fkEspecComp),
                             new BeanPropertyRowMapper<>(MaquinaUltrassomEspecificada.class));
+
+            MaquinaUltrassomEspecificada dados = maquinaUltraEspec.get(0);
+
+            conMysql.execute(String.format("""
+                        insert into maquina_ultrassom_especificada 
+                            (id_especificacao_componente_maquina,uso_maximo, fk_maquina, fk_especificacao_componente)
+                        values (%d,%d, %d, %d);
+                      """,dados.getId_especificacao_componente_maquina(),usoMaximotoInt, fkMaquina, fkEspecComp));
         }
 
         MaquinaUltrassomEspecificada dados = maquinaUltraEspec.get(0);
@@ -180,12 +186,6 @@ public class MaquinaUltrassomEspecificadaDAO {
                         values (%d, %d, %d);
                       """, usoMaximotoInt,fkMaquina, fkEspecComp));
 
-            conMysql.execute(String.format("""
-                        insert into maquina_ultrassom_especificada 
-                            (uso_maximo, fk_maquina, fk_especificacao_componente)
-                        values (%d, %d, %d);
-                      """, usoMaximotoInt,fkMaquina, fkEspecComp));
-
             maquinaUltraEspec
                     = con.query(String.format("""
                         select
@@ -203,6 +203,14 @@ public class MaquinaUltrassomEspecificadaDAO {
                         and e.tipo_componente = 'DISCO';
                     """, usoMaximotoInt,fkMaquina, fkEspecComp),
                             new BeanPropertyRowMapper<>(MaquinaUltrassomEspecificada.class));
+
+            MaquinaUltrassomEspecificada dados = maquinaUltraEspec.get(0);
+
+            conMysql.execute(String.format("""
+                        insert into maquina_ultrassom_especificada 
+                            (id_especificacao_componente_maquina,uso_maximo, fk_maquina, fk_especificacao_componente)
+                        values (%d,%d, %d, %d);
+                      """,dados.getId_especificacao_componente_maquina(), usoMaximotoInt,fkMaquina, fkEspecComp));
         }
 
         MaquinaUltrassomEspecificada dados = maquinaUltraEspec.get(0);

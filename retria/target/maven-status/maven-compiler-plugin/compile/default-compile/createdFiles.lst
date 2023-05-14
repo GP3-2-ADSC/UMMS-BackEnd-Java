@@ -26,6 +26,7 @@ com\mycompany\retria\LoginInvalido.class
 com\mycompany\retria\MODEL\MaquinaUltrassom.class
 com\mycompany\retria\MODEL\Administrador.class
 com\mycompany\retria\RetriaLogin$5.class
+com\mycompany\retria\DAO\ConexaoMySqlEc2.class
 com\mycompany\retria\RetriaLogin.class
 com\mycompany\retria\DAO\MetricaComponenteDAO.class
 com\mycompany\retria\MODEL\EspecificacaoComponente.class

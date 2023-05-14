@@ -8,6 +8,8 @@ import com.github.britooo.looca.api.group.discos.Disco;
 import com.github.britooo.looca.api.group.memoria.Memoria;
 import com.github.britooo.looca.api.group.processador.Processador;
 import com.mycompany.retria.MODEL.EspecificacaoComponente;
+
+import java.sql.SQLException;
 import java.util.List;
 import com.mycompany.retria.services.Service;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
@@ -47,10 +49,6 @@ public class EspecificacaoComponenteDAO {
                             "(tipo_componente, descricao_componente, nome_fabricante, numero_serial) values ('%s', '%s', '%s', '%s')",
                   "CPU",processador.getNome(), processador.getFabricante(), processador.getId()));
 
-            conMysql.execute(String.format("insert into especificacao_componente" +
-                            "(tipo_componente, descricao_componente, nome_fabricante, numero_serial) values ('%s', '%s', '%s', '%s')",
-                    "CPU",processador.getNome(), processador.getFabricante(), processador.getId()));
-
             especificacaoComponentes =
                     con.query(String.format("""
                             select
@@ -60,6 +58,12 @@ public class EspecificacaoComponenteDAO {
                             where
                                 descricao_componente = '%s'
                             """, processador.getNome()), new BeanPropertyRowMapper<>(EspecificacaoComponente.class));
+
+            EspecificacaoComponente dados = especificacaoComponentes.get(0);
+
+            conMysql.execute(String.format("insert into especificacao_componente" +
+                            "(id_especificacao_componente,tipo_componente, descricao_componente, nome_fabricante, numero_serial) values (%d,'%s', '%s', '%s', '%s')",
+                    dados.getId_especificacao_componente(),"CPU", processador.getNome(), processador.getFabricante(), processador.getId()));
         }
 
         EspecificacaoComponente dados = especificacaoComponentes.get(0);
@@ -86,10 +90,6 @@ public class EspecificacaoComponenteDAO {
                             "(tipo_componente, descricao_componente) values ('%s','%s')",
                     "RAM",nomeMemoria));
 
-            conMysql.execute(String.format("insert into especificacao_componente" +
-                            "(tipo_componente, descricao_componente) values ('%s','%s')",
-                    "RAM",nomeMemoria));
-
             especificacaoComponentes =
                     con.query(String.format("""
                             select
@@ -99,6 +99,12 @@ public class EspecificacaoComponenteDAO {
                             where
                                 descricao_componente = '%s'
                             """, nomeMemoria), new BeanPropertyRowMapper<>(EspecificacaoComponente.class));
+
+            EspecificacaoComponente dados = especificacaoComponentes.get(0);
+
+            conMysql.execute(String.format("insert into especificacao_componente" +
+                            "(id_especificacao_componente,tipo_componente, descricao_componente) values (%d,'%s','%s')",
+                    dados.getId_especificacao_componente(),"RAM",nomeMemoria));
         }
 
         EspecificacaoComponente dados = especificacaoComponentes.get(0);
@@ -125,10 +131,6 @@ public class EspecificacaoComponenteDAO {
                             "(tipo_componente,descricao_componente, numero_serial) values ('%s', '%s','%s')",
                     "DISCO",nomeDisco, disco.getSerial()));
 
-            conMysql.execute(String.format("insert into especificacao_componente" +
-                            "(tipo_componente,descricao_componente, numero_serial) values ('%s', '%s','%s')",
-                    "DISCO",nomeDisco, disco.getSerial()));
-
             especificacaoComponentes =
                     con.query(String.format("""
                             select
@@ -140,6 +142,12 @@ public class EspecificacaoComponenteDAO {
                             OR
                                 numero_serial = '%s'
                             """, nomeDisco,disco.getSerial()), new BeanPropertyRowMapper<>(EspecificacaoComponente.class));
+
+            EspecificacaoComponente dados = especificacaoComponentes.get(0);
+
+            conMysql.execute(String.format("insert into especificacao_componente" +
+                            "(id_especificacao_componente,tipo_componente,descricao_componente, numero_serial) values (%d,'%s', '%s','%s')",
+                    dados.getId_especificacao_componente(),"DISCO",nomeDisco, disco.getSerial()));
         }
 
         EspecificacaoComponente dados = especificacaoComponentes.get(0);
