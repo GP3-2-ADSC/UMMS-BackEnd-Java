@@ -32,7 +32,6 @@ if [ $? -eq 0 ]
 				then
 					echo "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) Preparando para instalar a versão 17 do Java. Confirme a instalação quando solicitado ;D"
 					sudo apt install default-jre ; sudo apt install openjdk-17-jre-headless; -y
-					clear
 					echo "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) Java instalado com sucesso!"
 			fi
 		else 	
