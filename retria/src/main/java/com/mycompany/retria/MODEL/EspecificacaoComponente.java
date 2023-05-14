@@ -13,15 +13,17 @@ public class EspecificacaoComponente {
     
     private Integer id_especificacao_componente;
     private TipoComponente tipoComponente;
-
     private String nome_fabricante;
     private String descricao_componente;
 
-    public EspecificacaoComponente(Integer id_especificacao_componente, TipoComponente tipo, String nome_fabricante, String descricao_componente) {
+    private String numero_serial;
+
+    public EspecificacaoComponente(Integer id_especificacao_componente, TipoComponente tipo, String nome_fabricante, String descricao_componente, String numero_serial) {
         this.id_especificacao_componente = id_especificacao_componente;
         this.tipoComponente = tipo;
         this.nome_fabricante = nome_fabricante;
         this.descricao_componente = descricao_componente;
+        this.numero_serial = numero_serial;
     }
 
     public EspecificacaoComponente() {
@@ -53,6 +55,14 @@ public class EspecificacaoComponente {
 
     public String getDescricao_componente() {
         return descricao_componente;
+    }
+
+    public String getNumero_serial() {
+        return numero_serial;
+    }
+
+    public void setNumero_serial(String numero_serial) {
+        this.numero_serial = numero_serial;
     }
 
     public void setDescricao_componente(String descricao_componente) {

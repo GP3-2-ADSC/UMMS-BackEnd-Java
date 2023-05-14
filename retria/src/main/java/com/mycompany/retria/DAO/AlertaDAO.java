@@ -18,13 +18,11 @@ public class AlertaDAO {
     }
 
     public void setAlerta(Alerta alerta) {
-        List<Alerta> alertas = con.query(String.format("""
+        con.execute(String.format("""
                 insert into alerta (dt_alerta,fk_tipo_alerta,fk_metrica_componente) values ('%s',%d,%d)
-                """, alerta.getDateFormatedSql(),alerta.getTipoAlerta(),alerta.getFkMetricaComponente()),
-                new BeanPropertyRowMapper(MaquinaUltrassom.class));
+                """, alerta.getDateFormatedSql(), alerta.getTipoAlerta(), alerta.getFkMetricaComponente()));
 
     }
-
 
 
 }

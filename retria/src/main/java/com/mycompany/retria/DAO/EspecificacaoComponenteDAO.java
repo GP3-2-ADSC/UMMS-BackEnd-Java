@@ -59,7 +59,7 @@ public class EspecificacaoComponenteDAO {
         EspecificacaoComponente dados = especificacaoComponentes.get(0);
 
         return new EspecificacaoComponente(dados.getId_especificacao_componente(),
-                dados.getTipoComponente(), dados.getNome_fabricante(), dados.getDescricao_componente());
+                dados.getTipoComponente(), dados.getNome_fabricante(), dados.getDescricao_componente(),dados.getNumero_serial());
     }
 
     public EspecificacaoComponente getComponenteMemoria(Memoria memoria) {
@@ -93,7 +93,7 @@ public class EspecificacaoComponenteDAO {
 
         EspecificacaoComponente dados = especificacaoComponentes.get(0);
         return new EspecificacaoComponente(dados.getId_especificacao_componente(),
-                dados.getTipoComponente(), dados.getNome_fabricante(), dados.getDescricao_componente());
+                dados.getTipoComponente(), dados.getNome_fabricante(), dados.getDescricao_componente(),dados.getNumero_serial());
     }
 
     public EspecificacaoComponente getComponenteDisco(Disco disco) {
@@ -131,6 +131,6 @@ public class EspecificacaoComponenteDAO {
         EspecificacaoComponente dados = especificacaoComponentes.get(0);
 
         return new EspecificacaoComponente(dados.getId_especificacao_componente(),
-                dados.getTipoComponente(), dados.getNome_fabricante(), dados.getDescricao_componente());
+                dados.getTipoComponente(), dados.getNome_fabricante(), dados.getDescricao_componente(), dados.getNumero_serial());
     }
 }

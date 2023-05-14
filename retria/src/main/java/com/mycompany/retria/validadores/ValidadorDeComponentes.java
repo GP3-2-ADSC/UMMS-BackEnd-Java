@@ -26,8 +26,8 @@ public class ValidadorDeComponentes {
 
     public void validarCpu(Processador dados, Integer fkMaquinaUltrassom) throws ValidacaoException {
         Double usoProcessador = dados.getUso();
-        metricaComponente = new MetricaComponente(null,usoProcessador, fkMaquinaUltrassom);
-        Integer fkMetricaComponente=metricaComponenteDAO.setMetrica(metricaComponente);
+        metricaComponente = new MetricaComponente(null, usoProcessador, fkMaquinaUltrassom);
+        Integer fkMetricaComponente = metricaComponenteDAO.setMetrica(metricaComponente);
 
         if (dados == null) {
             throw new ValidacaoException("Não é possível validar o uso de cpu nulo!!!");
@@ -36,17 +36,14 @@ public class ValidadorDeComponentes {
         if (usoProcessador < 35.0) {
             System.out.println("Uso dentro dos conformes!");
         } else if (usoProcessador < 40.0) {
-            alertaDAO.setAlerta(new Alerta(null,1,fkMetricaComponente));
-            throw new ValidacaoException("Recomendo definir o limite de " +
-                    "alerta em torno de 70% a 80% do uso máximo aceitável");
+            alertaDAO.setAlerta(new Alerta(null, 1, fkMetricaComponente));
+            throw new ValidacaoException("CPU está com nível de uso em - ALERTA!");
         } else if (usoProcessador < 45.0) {
-            alertaDAO.setAlerta(new Alerta(null,2,fkMetricaComponente));
-            throw new ValidacaoException("(Recomendo definir o limite de perigo em torno de 80% a 90% do uso\n" +
-                    "máximo aceitável");
+            alertaDAO.setAlerta(new Alerta(null, 2, fkMetricaComponente));
+            throw new ValidacaoException("CPU está com nível de uso em - PERIGOSO! Contate o suporte!");
         } else {
-            alertaDAO.setAlerta(new Alerta(null,3,fkMetricaComponente));
-            throw new ValidacaoException("Recomendo definir o limite crítico em 90% a 100% do uso máximo\n" +
-                    "aceitável");
+            alertaDAO.setAlerta(new Alerta(null, 3, fkMetricaComponente));
+            throw new ValidacaoException("CPU está com nível de uso em - CRÍTICO! Contate o suporte IMEDIATAMENTE!");
         }
     }
 
@@ -56,8 +53,8 @@ public class ValidadorDeComponentes {
         Double porcentagemDeRam = (usoMemoria * 100) / memRamTotal;
 
         System.out.println("USO DE RAM " + usoMemoria);
-        metricaComponente = new MetricaComponente(null,porcentagemDeRam, fkMaquinaUltrassom);
-        Integer fkMetricaComponente= metricaComponenteDAO.setMetrica(metricaComponente);
+        metricaComponente = new MetricaComponente(null, porcentagemDeRam, fkMaquinaUltrassom);
+        Integer fkMetricaComponente = metricaComponenteDAO.setMetrica(metricaComponente);
 
         if (dados == null) {
             throw new ValidacaoException("Não é possível validar memória nula!!!");
@@ -65,51 +62,42 @@ public class ValidadorDeComponentes {
         if (porcentagemDeRam < 49.0) {
             System.out.println("Uso de ram dentro dos conformes!");
         } else if (porcentagemDeRam < 56.0) {
-            alertaDAO.setAlerta(new Alerta(null,1,fkMetricaComponente));
-            throw new ValidacaoException("Recomendo definir o limite de " +
-                    "alerta em torno de 70% a 80% do uso máximo aceitável");
+            alertaDAO.setAlerta(new Alerta(null, 1, fkMetricaComponente));
+            throw new ValidacaoException("RAM está com nível de uso em - ALERTA!");
         } else if (porcentagemDeRam < 63.0) {
-            alertaDAO.setAlerta(new Alerta(null,2,fkMetricaComponente));
-            throw new ValidacaoException("(Recomendo definir o limite de perigo em torno de 80% a 90% do uso\n" +
-                    "máximo aceitável");
+            alertaDAO.setAlerta(new Alerta(null, 2, fkMetricaComponente));
+            throw new ValidacaoException("RAM está com nível de uso em - PERIGOSO! Contate o suporte!");
         } else {
-            alertaDAO.setAlerta(new Alerta(null,3,fkMetricaComponente));
-            throw new ValidacaoException("Recomendo definir o limite crítico em 90% a 100% do uso máximo\n" +
-                    "aceitável");
+            alertaDAO.setAlerta(new Alerta(null, 3, fkMetricaComponente));
+            throw new ValidacaoException("RAM está com nível de uso em - CRÍTICO! Contate o suporte IMEDIATAMENTE!");
         }
     }
 
-    public void validarDisco(List<Disco> dados, Integer fkMaquinaUltrassom) throws ValidacaoException {
+    public void validarDisco(Disco dados, Integer fkMaquinaUltrassom) throws ValidacaoException {
+        Double usoDisco = service.convertBytesToGB(dados.getBytesDeEscritas());
+        Double emUso = service.convertBytesToGB(dados.getTamanho()) - usoDisco;
+        Double porcentagemDeUsoDisc = (usoDisco * 100) / service.convertBytesToGB(dados.getTamanho());
+        metricaComponente = new MetricaComponente(null, porcentagemDeUsoDisc, fkMaquinaUltrassom);
+        Integer fkMetricaComponente = metricaComponenteDAO.setMetrica(metricaComponente);
 
-        if (dados.size() == 0) {
+        if (dados == null) {
             throw new ValidacaoException("Não é possível validar discos de uma lista vazia!!!");
         }
 
-        for (Disco disco : dados) {
-            //Double usoDiscTotal = service.convertBytesToGB(disco.getTamanho());
-            //Double DiscEmUso = service.convertBytesToGB();
-            Double usoDisco = service.convertBytesToGB(disco.getBytesDeEscritas());
-            metricaComponente = new MetricaComponente(null,usoDisco, fkMaquinaUltrassom);
-            Integer fkMetricaComponente= metricaComponenteDAO.setMetrica(metricaComponente);
-
-            if (usoDisco < 56.0) {
-                System.out.println("Uso de DISCO dentro dos conformes!");
-            }
-            else if ( usoDisco < 64.0) {
-                alertaDAO.setAlerta(new Alerta(null,1,fkMetricaComponente));
-                throw new ValidacaoException("Recomendo definir o limite de " +
-                        "alerta em torno de 70% a 80% do uso máximo aceitável");
-            } else if (usoDisco < 72.0) {
-                alertaDAO.setAlerta(new Alerta(null,2,fkMetricaComponente));
-                throw new ValidacaoException("(Recomendo definir o limite de perigo em torno de 80% a 90% do uso\n" +
-                        "máximo aceitável");
-            } else {
-                alertaDAO.setAlerta(new Alerta(null,3,fkMetricaComponente));
-                throw new ValidacaoException("Recomendo definir o limite crítico em 90% a 100% do uso máximo\n" +
-                        "aceitável");
-            }
+        if (porcentagemDeUsoDisc < 56.0) {
+            System.out.println("Uso de DISCO dentro dos conformes!");
+        } else if (porcentagemDeUsoDisc < 64.0) {
+            alertaDAO.setAlerta(new Alerta(null, 1, fkMetricaComponente));
+            throw new ValidacaoException("DISCO está com nível de uso em - ALERTA!");
+        } else if (porcentagemDeUsoDisc < 72.0) {
+            alertaDAO.setAlerta(new Alerta(null, 2, fkMetricaComponente));
+            throw new ValidacaoException("DISCO está com nível de uso em - PERIGOSO! Contate o suporte!");
+        } else {
+            alertaDAO.setAlerta(new Alerta(null, 3, fkMetricaComponente));
+            throw new ValidacaoException("DISCO está com nível de uso em - CRÍTICO! Contate o suporte IMEDIATAMENTE!");
         }
-
     }
 
 }
+
+
