@@ -21,7 +21,7 @@ if [ $? -eq 0 ]
 			echo "$(tput setaf 10)[Bot assistant]:$(tput setaf 7)  Ok! Você escolheu instalar o Java ;D"
 			echo "$(tput setaf 10)[Bot assistant]:$(tput setaf 7)  Adicionando o repositório!"
 			sleep 2
-			sudo add-apt-repository ppa:webupd8team/java -y
+			sudo add-apt-repository ppa:linuxuprising/java -y
 			clear
 			echo "$(tput setaf 10)[Bot assistant]:$(tput setaf 7)  Atualizando! Quase lá."
 			sleep 2
@@ -39,38 +39,32 @@ if [ $? -eq 0 ]
 		echo "$(tput setaf 10)[Bot assistant]:$(tput setaf 7)  Você optou por não instalar o Java por enquanto, até a próxima então!"
 	fi
 fi
-
-docker -version
-if[ $? -eq 0]
-	then
-		echo "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) : Você já tem o docker instalado!!!"
-	else	
-		echo "$(tput setaf 10)[Bot assistant]:$(tput setaf 7)  Identifiquei aqui que você não tem nenhuma versão do docker instalado, mas sem problemas, irei resolver isso agora!"
-		echo "$(tput setaf 10)[Bot assistant]:$(tput setaf 7)  Confirme para mim se realmente deseja instalar o docker (S/N)?"
-	read inst
-	if [ \"$inst\" == \"S\" ]
-		then
-			echo "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) Ok! Você escolheu instalar o docker ;D"
-			echo "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) Adicionando o repositório!"
-			sleep 2
-			sudo apt install docker.io -y
-			clear
-			echo "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) Atualizando! Quase lá."
-			sleep 2
-			sudo apt update -y
-			clear
-			if [ $VERSAO -eq 20 ]
-				then
-					sudo systemctl start docker -y
-					echo "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) Ativando o serviço do Docker no sistema operacional"
-					sleep 2
-					sudo sudo systemctl enable docker -y
-					echo "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) Habilitando o serviço do Docker para ser iniciado junto ao sistema operacional"
-					sleep 2
-					clear
-			fi
-			else 	
-		echo "$(tput setaf 10)[Bot assistant]:$(tput setaf 7)  Você optou por não instalar o Docker por enquanto, até a próxima então!"
-	fi
+	docker -version
+if [ $? -eq 0 ]; then
+    echo "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) Você já tem o Docker instalado!"
+else
+    echo "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) Identifiquei que você não tem nenhuma versão do Docker instalada, mas sem problemas, irei resolver isso agora!"
+    echo "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) Confirme se realmente deseja instalar o Docker (S/N):"
+    read inst
+    if [ "$inst" == "S" ]; then
+        echo "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) Ok! Você escolheu instalar o Docker ;D"
+        echo "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) Adicionando o repositório!"
+        sleep 2
+        sudo apt install docker.io -y
+        clear
+        echo "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) Atualizando! Quase lá."
+        sleep 2
+        sudo apt update -y
+        clear
+    	sudo systemctl start docker -y
+    	echo "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) Ativando o serviço do Docker no sistema operacional"
+    	sleep 2
+    	sudo systemctl enable docker -y
+    	echo "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) Habilitando o serviço do Docker para ser iniciado junto ao sistema operacional"
+    	sleep 2
+    	clear
+    else
+        echo "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) Você optou por não instalar o Docker por enquanto, até a próxima então!"
+    fi
 fi
 
