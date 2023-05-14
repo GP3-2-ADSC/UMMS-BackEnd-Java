@@ -12,10 +12,15 @@ public class AlertaDAO {
 
     JdbcTemplate con;
 
+    public AlertaDAO() {
+        Conexao conexao = new Conexao();
+        con = conexao.getConnection();
+    }
+
     public void setAlerta(Alerta alerta) {
         List<Alerta> alertas = con.query(String.format("""
-                insert into metrica (dt_metrica,fk_tipo_alerta,fk_metrica_componente) values ('%s',%d,%d)
-                """, alerta.getDateFormatedSql(),alerta,alerta.getFkMetricaComponente()),
+                insert into alerta (dt_alerta,fk_tipo_alerta,fk_metrica_componente) values ('%s',%d,%d)
+                """, alerta.getDateFormatedSql(),alerta.getTipoAlerta(),alerta.getFkMetricaComponente()),
                 new BeanPropertyRowMapper(MaquinaUltrassom.class));
 
     }

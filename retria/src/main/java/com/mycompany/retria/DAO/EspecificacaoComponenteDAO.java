@@ -97,7 +97,7 @@ public class EspecificacaoComponenteDAO {
     }
 
     public EspecificacaoComponente getComponenteDisco(Disco disco) {
-
+        String nomeDisco = String.format("HD/SSD - %.0f GB", service.convertBytesToGB(disco.getTamanho()));
         List<EspecificacaoComponente> especificacaoComponentes =
                 con.query(String.format("""
                         select
@@ -108,12 +108,12 @@ public class EspecificacaoComponenteDAO {
                             descricao_componente = '%s'
                         OR
                             numero_serial = '%s'
-                        """, disco.getNome(),disco.getSerial()), new BeanPropertyRowMapper<>(EspecificacaoComponente.class));
+                        """, nomeDisco,disco.getSerial()), new BeanPropertyRowMapper<>(EspecificacaoComponente.class));
 
         if (especificacaoComponentes.isEmpty()) {
             con.execute(String.format("insert into especificacao_componente" +
                             "(tipo_componente,descricao_componente, numero_serial) values ('%s', '%s','%s')",
-                    "DISCO",disco.getModelo(), disco.getSerial()));
+                    "DISCO",nomeDisco, disco.getSerial()));
 
             especificacaoComponentes =
                     con.query(String.format("""
@@ -125,7 +125,7 @@ public class EspecificacaoComponenteDAO {
                                 descricao_componente = '%s'
                             OR
                                 numero_serial = '%s'
-                            """, disco.getModelo(),disco.getSerial()), new BeanPropertyRowMapper<>(EspecificacaoComponente.class));
+                            """, nomeDisco,disco.getSerial()), new BeanPropertyRowMapper<>(EspecificacaoComponente.class));
         }
 
         EspecificacaoComponente dados = especificacaoComponentes.get(0);

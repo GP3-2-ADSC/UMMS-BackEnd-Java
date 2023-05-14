@@ -68,42 +68,63 @@ public class Service {
                         .findFirst().get().getId_especificacao_componente()
         ));
 
-        for (Disco disco : discos) {
-            if (disco == null) {
-                break;
+        for (int i = 0; i < discos.size();i++) {
+            Disco disco = discos.get(i);
+            System.out.println("DISCO ATUAL " + disco);
+
+            if (i > 0) {
+                System.out.println("ESTOU NO IF DO DISCO!");
+                especificacaoComponente.stream().filter(e -> e.getTipoComponente().equals(TipoComponente.DISCO))
+                        .skip(1).findFirst().get().getId_especificacao_componente();
             }
             maquinaUltrassomEspec.add(maquinaUltrassomEspecificadaDAO.getMaquiUltassomEspecDISCO(convertBytesToGB(disco.getTamanho()),
-                    maquinaUltrassom.getIdMaquina(),
-                    especificacaoComponente.stream().filter(e -> e.getTipoComponente().equals(TipoComponente.DISCO))
+                    maquinaUltrassom.getIdMaquina(), especificacaoComponente.stream().filter(e -> e.getTipoComponente().equals(TipoComponente.DISCO))
                             .findFirst().get().getId_especificacao_componente()
             ));
+
         }
 
     }
+
 
     public void validarMetrica() throws ValidacaoException {
         List<Disco> discos = looca.getGrupoDeDiscos().getDiscos();
         ValidadorDeComponentes validadorDeComponentes = new ValidadorDeComponentes();
         Inovacao inovacao = new Inovacao();
 
-        Integer fkCpu = especificacaoComponente.stream()
+        Integer fkCpuEspec = especificacaoComponente.stream()
                 .filter(e -> e.getTipoComponente().equals(TipoComponente.CPU))
                 .findFirst().get().getId_especificacao_componente();
 
-        Integer fkRam = especificacaoComponente.stream()
+        Integer fkRamEspec = especificacaoComponente.stream()
                 .filter(e -> e.getTipoComponente().equals(TipoComponente.RAM))
                 .findFirst().get().getId_especificacao_componente();
 
-        Integer fkDisco = especificacaoComponente.stream()
+        Integer fkDiscoEspec0 = especificacaoComponente.stream()
                 .filter(e -> e.getTipoComponente().equals(TipoComponente.DISCO))
                 .findFirst().get().getId_especificacao_componente();
+
+        Integer fkDiscoEspec1 = especificacaoComponente.stream().filter(e -> e.getTipoComponente()
+                        .equals(TipoComponente.DISCO))
+                .skip(1).findFirst().get().getId_especificacao_componente();
+
+        Integer fkCpu = maquinaUltrassomEspec.stream().filter(e -> e.getFk_especificacao_componente()
+                .equals(fkCpuEspec)).findFirst().get().getId_especificacao_componente_maquina();
+
+        Integer fkRam = maquinaUltrassomEspec.stream().filter(e -> e.getFk_especificacao_componente()
+                .equals(fkRamEspec)).findFirst().get().getId_especificacao_componente_maquina();
+
+        Integer fkDisco0 = maquinaUltrassomEspec.stream().filter(e -> e.getFk_especificacao_componente()
+                .equals(fkDiscoEspec0)).findFirst().get().getId_especificacao_componente_maquina();
+
+
 
         new Timer().scheduleAtFixedRate(new TimerTask() {
             public void run() {
                 try {
                     validadorDeComponentes.validarCpu(looca.getProcessador(), fkCpu);
                     validadorDeComponentes.validarRam(looca.getMemoria(), fkRam);
-                    validadorDeComponentes.validarDisco(discos, fkDisco);
+                    validadorDeComponentes.validarDisco(discos, fkDisco0);
 
                 } catch (ValidacaoException e) {
                     throw new RuntimeException(e);

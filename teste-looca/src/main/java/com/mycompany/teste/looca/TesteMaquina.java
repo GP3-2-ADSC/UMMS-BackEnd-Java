@@ -34,7 +34,13 @@ public class TesteMaquina {
     public static void main(String[] args) throws IOException {
         Looca looca = new Looca();
         Inovacao ping = new Inovacao();
+        List<Disco> discos = looca.getGrupoDeDiscos().getDiscos();
 
-        System.out.println(looca.getRede().getGrupoDeInterfaces().getInterfaces().get(0).getEnderecoIpv4());
+        for (Disco disco : discos) {
+            System.out.println(disco.getTamanho() / (1024.0 * 1024.0 * 1024.0));
+        }
+    }
+    public Double convertBytesToGB(long bytes) {
+        return bytes / (1024.0 * 1024.0 * 1024.0);
     }
 }
