@@ -26,7 +26,9 @@ public class MaquinaUltrassomEspecificada {
         this.fk_especificacao_componente = fk_especificacao_componente;
     }
 
-    
+    public MaquinaUltrassomEspecificada() {
+    }
+
     public Integer getId_especificacao_componente_maquina() {
         return id_especificacao_componente_maquina;
     }

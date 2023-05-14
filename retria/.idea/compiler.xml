@@ -12,7 +12,7 @@
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
-      <module name="retria" options="--add-exports java.base/jdk.internal.logger=ALL-UNNAMED" />
+      <module name="retria" options="" />
     </option>
   </component>
 </project>

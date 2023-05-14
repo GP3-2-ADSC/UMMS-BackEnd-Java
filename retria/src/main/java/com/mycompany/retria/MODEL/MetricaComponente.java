@@ -19,6 +19,9 @@ public class MetricaComponente {
         this.fkEspecificacaoComponente = fkEspecificacaoComponente;
     }
 
+    public MetricaComponente() {
+    }
+
     public String getDateFormatedSql () {
         return dtMetrica.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
     }

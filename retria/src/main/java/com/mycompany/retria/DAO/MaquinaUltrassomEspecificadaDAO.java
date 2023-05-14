@@ -34,8 +34,7 @@ public class MaquinaUltrassomEspecificadaDAO {
         con = conexao.getConnection();
     }
 
-    public MaquinaUltrassomEspecificada getMaquiUltassomEspecRAM(Long usoMaximo, Integer fkMaquina, Integer fkEspecComp) {
-
+    public MaquinaUltrassomEspecificada getMaquiUltassomEspecRAM(Double usoMaximo, Integer fkMaquina, Integer fkEspecComp) {
         List<MaquinaUltrassomEspecificada> maquinaUltraEspec = con.query(String.format("""
                         select
                             m.*
@@ -46,7 +45,7 @@ public class MaquinaUltrassomEspecificadaDAO {
                         on
                             m.fk_especificacao_componente = e.id_especificacao_componente
                         where 
-                            uso_maximo = %f
+                            uso_maximo = %.0f
                         and fk_maquina = %d
                         and fk_especificacao_componente = %d                
                         and e.tipo_componente = 'RAM';
@@ -57,8 +56,8 @@ public class MaquinaUltrassomEspecificadaDAO {
             con.execute(String.format("""
                         insert into maquina_ultrassom_especificada 
                             (uso_maximo, fk_maquina, fk_especificacao_componente)
-                        values (%f, %d, %d);
-                      """, memoria.getTotal(), fkMaquina, fkEspecComp));
+                        values (%.0f, %d, %d);
+                      """, usoMaximo, fkMaquina, fkEspecComp));
 
             maquinaUltraEspec
                     = con.query(String.format("""
@@ -71,7 +70,7 @@ public class MaquinaUltrassomEspecificadaDAO {
                         on
                             m.fk_especificacao_componente = e.id_especificacao_componente
                         where 
-                            uso_maximo = %f
+                            uso_maximo = %.0f
                         and fk_maquina = %d
                         and fk_especificacao_componente = %d                
                         and e.tipo_componente = 'RAM';
@@ -90,7 +89,7 @@ public class MaquinaUltrassomEspecificadaDAO {
     }
     
     public MaquinaUltrassomEspecificada getMaquiUltassomEspecCPU(Double usoMaximo, Integer fkMaquina, Integer fkEspecComp) {
-
+        Integer usoMaximotoInt = usoMaximo.intValue();
         List<MaquinaUltrassomEspecificada> maquinaUltraEspec = con.query(String.format("""
                         select
                             m.*
@@ -101,19 +100,19 @@ public class MaquinaUltrassomEspecificadaDAO {
                         on
                             m.fk_especificacao_componente = e.id_especificacao_componente
                         where 
-                            uso_maximo = %f
+                            uso_maximo = %d
                         and fk_maquina = %d
                         and fk_especificacao_componente = %d                
                         and e.tipo_componente = 'CPU';
-                    """, usoMaximo, fkMaquina, fkEspecComp),
+                    """, usoMaximotoInt, fkMaquina, fkEspecComp),
                 new BeanPropertyRowMapper<>(MaquinaUltrassomEspecificada.class));
 
         if (maquinaUltraEspec.isEmpty()) {
             con.execute(String.format("""
                         insert into maquina_ultrassom_especificada 
                             (uso_maximo, fk_maquina, fk_especificacao_componente)
-                        values (%f, %f, %d, %d);
-                      """, processador.getUso(), fkMaquina, fkEspecComp));
+                        values (%d, %d, %d);
+                      """, usoMaximotoInt, fkMaquina, fkEspecComp));
 
             maquinaUltraEspec
                     = con.query(String.format("""
@@ -126,11 +125,11 @@ public class MaquinaUltrassomEspecificadaDAO {
                         on
                             m.fk_especificacao_componente = e.id_especificacao_componente
                         where 
-                            uso_maximo = %f
+                            uso_maximo = %d
                         and fk_maquina = %d
                         and fk_especificacao_componente = %d                
                         and e.tipo_componente = 'CPU';
-                    """, usoMaximo,fkMaquina, fkEspecComp),
+                    """, usoMaximotoInt,fkMaquina, fkEspecComp),
                             new BeanPropertyRowMapper<>(MaquinaUltrassomEspecificada.class));
         }
 
@@ -142,8 +141,8 @@ public class MaquinaUltrassomEspecificadaDAO {
                 dados.getFk_maquina(),
                 dados.getFk_especificacao_componente());
     }
-    public MaquinaUltrassomEspecificada getMaquiUltassomEspecDISCO(Long usoMaximo, Integer fkMaquina, Integer fkEspecComp) {
-
+    public MaquinaUltrassomEspecificada getMaquiUltassomEspecDISCO(Double usoMaximo, Integer fkMaquina, Integer fkEspecComp) {
+        Integer usoMaximotoInt = usoMaximo.intValue();
         List<MaquinaUltrassomEspecificada> maquinaUltraEspec = con.query(String.format("""
                         select
                             m.*
@@ -154,19 +153,19 @@ public class MaquinaUltrassomEspecificadaDAO {
                         on
                             m.fk_especificacao_componente = e.id_especificacao_componente
                         where 
-                            uso_maximo = %f
+                            uso_maximo = %d
                         and fk_maquina = %d
                         and fk_especificacao_componente = %d                
                         and e.tipo_componente = 'DISCO';
-                    """, usoMaximo,fkMaquina, fkEspecComp),
+                    """, usoMaximotoInt,fkMaquina, fkEspecComp),
                 new BeanPropertyRowMapper<>(MaquinaUltrassomEspecificada.class));
 
         if (maquinaUltraEspec.isEmpty()) {
             con.execute(String.format("""
                         insert into maquina_ultrassom_especificada 
                             (uso_maximo, fk_maquina, fk_especificacao_componente)
-                        values (%f, %d, %d);
-                      """, usoMaximo,fkMaquina, fkEspecComp));
+                        values (%d, %d, %d);
+                      """, usoMaximotoInt,fkMaquina, fkEspecComp));
 
             maquinaUltraEspec
                     = con.query(String.format("""
@@ -179,11 +178,11 @@ public class MaquinaUltrassomEspecificadaDAO {
                         on
                             m.fk_especificacao_componente = e.id_especificacao_componente
                         where 
-                            uso_maximo = %f
+                            uso_maximo = %d
                         and fk_maquina = %d
                         and fk_especificacao_componente = %d               
                         and e.tipo_componente = 'DISCO';
-                    """, usoMaximo,fkMaquina, fkEspecComp),
+                    """, usoMaximotoInt,fkMaquina, fkEspecComp),
                             new BeanPropertyRowMapper<>(MaquinaUltrassomEspecificada.class));
         }
 

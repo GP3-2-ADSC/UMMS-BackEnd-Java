@@ -19,6 +19,7 @@ public class Empresa {
     private String senha;
     private String responsavel_empresa;
 
+
     public Integer getId_empresa() {
         return id_empresa;
     }

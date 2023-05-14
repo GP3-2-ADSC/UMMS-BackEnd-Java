@@ -27,9 +27,9 @@ public class MaquinaUltrassomDAO {
                         select 
                             m.* 
                         from 
-                            maquina_ultrassom
+                            maquina_ultrassom as m
                         where 
-                            numero_serial_maquina = '%s';
+                            m.numero_serial_maquina = '%s';
                         """, idProcessador),
                 new BeanPropertyRowMapper(MaquinaUltrassom.class));
 
@@ -45,9 +45,9 @@ public class MaquinaUltrassomDAO {
                         select 
                             m.* 
                         from 
-                            maquina_ultrassom
+                            maquina_ultrassom as m
                         where 
-                            numero_serial_maquina = '%s';
+                            m.numero_serial_maquina = '%s';
                         """, idProcessador),
                     new BeanPropertyRowMapper(MaquinaUltrassom.class));
         }

@@ -180,9 +180,9 @@ public class RetriaLogin extends javax.swing.JFrame {
         String email = (campoEmail.getText());
         String senha = (campo_senha.getText());
 
-        if (admDAO.consultar(email, senha, looca.getProcessador().getIdentificador())) {
+        if (admDAO.consultar(email, senha)) {
             new LoginValidado().setVisible(true);
-            service.scriptDeValidacaoDeBanco(email,looca.getProcessador().getIdentificador());
+            service.scriptDeValidacaoDeBanco(email,senha);
             try {
                 service.validarMetrica();
             } catch (Exception ex) {

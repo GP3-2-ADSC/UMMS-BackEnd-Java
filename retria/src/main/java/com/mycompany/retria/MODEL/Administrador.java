@@ -21,6 +21,8 @@ public class Administrador {
         this.fk_empresa = fk_empresa;
     }
 
+    public Administrador() {
+    }
 
     public Integer getId_administrador() {
         return id_administrador;

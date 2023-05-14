@@ -25,6 +25,10 @@ public class MaquinaUltrassom {
         this.fkEmpresa = fkEmpresa;
     }
 
+
+    public MaquinaUltrassom() {
+    }
+
     public Integer getIdMaquina() {
         return idMaquina;
     }

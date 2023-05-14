@@ -18,6 +18,9 @@ public class Alerta {
         this.fkMetricaComponente = fkMetricaComponente;
     }
 
+    public Alerta() {
+    }
+
     public String getDateFormatedSql () {
         return dtMetrica.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
     }

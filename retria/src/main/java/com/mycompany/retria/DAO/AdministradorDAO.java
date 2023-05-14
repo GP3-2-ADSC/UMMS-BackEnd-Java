@@ -14,6 +14,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
  * @author lucka
  */
 public class AdministradorDAO {
+
     JdbcTemplate con;
 
     public AdministradorDAO() {
@@ -21,22 +22,17 @@ public class AdministradorDAO {
         con = conexao.getConnection();
     }
 
-    public Boolean consultar(String email, String senha, String idProcessador) {
+    public Boolean consultar(String email, String senha) {
 
         List<Administrador> administradores = con.query(String.format("""
                         SELECT 
-                            a.*
+                            *
                         FROM 
-                            administrador as a
-                        JOIN
-                            maquina_ultrassom as m
-                        ON
-                            a.id_administrador = m.fk_administrador
+                            administrador
                         WHERE
-                            a.email_administrador = '%s'
-                        AND a.senha_administrador = '%s'
-                        AND m.numero_serial_maquina = '%s';
-                        """, email, senha, idProcessador),
+                            email_administrador = '%s'
+                        AND senha_administrador = '%s';
+                        """, email, senha),
                 new BeanPropertyRowMapper(Administrador.class));
 
             if (!administradores.isEmpty()) {
@@ -46,21 +42,17 @@ public class AdministradorDAO {
         System.out.println("Email e/ou senha invalidos");
         return false;
     }
-    public Administrador setAdministrador(String email, String idProcessador) {
+    public Administrador setAdministrador(String email, String senha) {
 
         List<Administrador> administradores = con.query(String.format("""
                         SELECT 
-                            a.*
+                            *
                         FROM 
-                            administrador as a
-                        JOIN
-                            maquina_ultrassom as m
-                        ON
-                            a.id_administrador = m.fk_administrador
+                            administrador
                         WHERE
-                            a.email_administrador = '%s'
-                        AND m.numero_serial_maquina = '%s'
-                        """, email, idProcessador),
+                            email_administrador = '%s'
+                        AND senha_administrador = '%s';
+                        """, email, senha),
                 new BeanPropertyRowMapper(Administrador.class));
 
             Administrador dados = administradores.get(0);

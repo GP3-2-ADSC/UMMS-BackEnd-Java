@@ -106,12 +106,14 @@ public class EspecificacaoComponenteDAO {
                             especificacao_componente
                         where
                             descricao_componente = '%s'
-                        """, disco.getNome()), new BeanPropertyRowMapper<>(EspecificacaoComponente.class));
+                        OR
+                            numero_serial = '%s'
+                        """, disco.getNome(),disco.getSerial()), new BeanPropertyRowMapper<>(EspecificacaoComponente.class));
 
         if (especificacaoComponentes.isEmpty()) {
             con.execute(String.format("insert into especificacao_componente" +
-                            "(descricao_componente, nome_fabricante, numero_serial) values ('%s', '%s', '%s')",
-                    disco.getNome(), disco.getModelo(), disco.getSerial()));
+                            "(tipo_componente,descricao_componente, numero_serial) values ('%s', '%s','%s')",
+                    "DISCO",disco.getModelo(), disco.getSerial()));
 
             especificacaoComponentes =
                     con.query(String.format("""
@@ -121,7 +123,9 @@ public class EspecificacaoComponenteDAO {
                                 especificacao_componente
                             where
                                 descricao_componente = '%s'
-                            """, disco.getNome()), new BeanPropertyRowMapper<>(EspecificacaoComponente.class));
+                            OR
+                                numero_serial = '%s'
+                            """, disco.getModelo(),disco.getSerial()), new BeanPropertyRowMapper<>(EspecificacaoComponente.class));
         }
 
         EspecificacaoComponente dados = especificacaoComponentes.get(0);

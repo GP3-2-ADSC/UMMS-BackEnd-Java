@@ -24,6 +24,9 @@ public class EspecificacaoComponente {
         this.descricao_componente = descricao_componente;
     }
 
+    public EspecificacaoComponente() {
+    }
+
     public Integer getId_especificacao_componente() {
         return id_especificacao_componente;
     }
