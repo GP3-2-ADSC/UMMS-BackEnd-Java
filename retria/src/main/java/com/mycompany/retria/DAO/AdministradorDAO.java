@@ -16,10 +16,13 @@ import org.springframework.jdbc.core.JdbcTemplate;
 public class AdministradorDAO {
 
     JdbcTemplate con;
+    JdbcTemplate conMysql;
 
     public AdministradorDAO() {
         Conexao conexao = new Conexao();
         con = conexao.getConnection();
+        ConexaoMySqlEc2 conMysqlEc2 = new ConexaoMySqlEc2();
+        conMysql = conMysqlEc2.getConnection();
     }
 
     public Boolean consultar(String email, String senha) {

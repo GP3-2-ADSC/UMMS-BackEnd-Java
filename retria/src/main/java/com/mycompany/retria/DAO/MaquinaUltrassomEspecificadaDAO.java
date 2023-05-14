@@ -28,10 +28,13 @@ public class MaquinaUltrassomEspecificadaDAO {
     Sistema sistema = looca.getSistema();
 
     JdbcTemplate con;
+    JdbcTemplate conMysql;
 
     public MaquinaUltrassomEspecificadaDAO() {
         Conexao conexao = new Conexao();
         con = conexao.getConnection();
+        ConexaoMySqlEc2 conMysqlEc2 = new ConexaoMySqlEc2();
+        conMysql = conMysqlEc2.getConnection();
     }
 
     public MaquinaUltrassomEspecificada getMaquiUltassomEspecRAM(Double usoMaximo, Integer fkMaquina, Integer fkEspecComp) {
@@ -54,6 +57,11 @@ public class MaquinaUltrassomEspecificadaDAO {
 
         if (maquinaUltraEspec.isEmpty()) {
             con.execute(String.format("""
+                        insert into maquina_ultrassom_especificada 
+                            (uso_maximo, fk_maquina, fk_especificacao_componente)
+                        values (%.0f, %d, %d);
+                      """, usoMaximo, fkMaquina, fkEspecComp));
+            conMysql.execute(String.format("""
                         insert into maquina_ultrassom_especificada 
                             (uso_maximo, fk_maquina, fk_especificacao_componente)
                         values (%.0f, %d, %d);
@@ -113,6 +121,11 @@ public class MaquinaUltrassomEspecificadaDAO {
                             (uso_maximo, fk_maquina, fk_especificacao_componente)
                         values (%d, %d, %d);
                       """, usoMaximotoInt, fkMaquina, fkEspecComp));
+            conMysql.execute(String.format("""
+                        insert into maquina_ultrassom_especificada 
+                            (uso_maximo, fk_maquina, fk_especificacao_componente)
+                        values (%d, %d, %d);
+                      """, usoMaximotoInt, fkMaquina, fkEspecComp));
 
             maquinaUltraEspec
                     = con.query(String.format("""
@@ -162,6 +175,12 @@ public class MaquinaUltrassomEspecificadaDAO {
 
         if (maquinaUltraEspec.isEmpty()) {
             con.execute(String.format("""
+                        insert into maquina_ultrassom_especificada 
+                            (uso_maximo, fk_maquina, fk_especificacao_componente)
+                        values (%d, %d, %d);
+                      """, usoMaximotoInt,fkMaquina, fkEspecComp));
+
+            conMysql.execute(String.format("""
                         insert into maquina_ultrassom_especificada 
                             (uso_maximo, fk_maquina, fk_especificacao_componente)
                         values (%d, %d, %d);

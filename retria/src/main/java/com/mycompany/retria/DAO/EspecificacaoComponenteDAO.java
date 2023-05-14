@@ -19,13 +19,15 @@ import org.springframework.jdbc.core.JdbcTemplate;
 public class EspecificacaoComponenteDAO {
 
     JdbcTemplate con;
-
+    JdbcTemplate conMysql;
     Service service = new Service();
 
 
     public EspecificacaoComponenteDAO() {
         Conexao conexao = new Conexao();
         con = conexao.getConnection();
+        ConexaoMySqlEc2 conMysqlEc2 = new ConexaoMySqlEc2();
+        conMysql = conMysqlEc2.getConnection();
     }
 
     public EspecificacaoComponente getComponenteCpu(Processador processador) {
@@ -44,6 +46,10 @@ public class EspecificacaoComponenteDAO {
             con.execute(String.format("insert into especificacao_componente" +
                             "(tipo_componente, descricao_componente, nome_fabricante, numero_serial) values ('%s', '%s', '%s', '%s')",
                   "CPU",processador.getNome(), processador.getFabricante(), processador.getId()));
+
+            conMysql.execute(String.format("insert into especificacao_componente" +
+                            "(tipo_componente, descricao_componente, nome_fabricante, numero_serial) values ('%s', '%s', '%s', '%s')",
+                    "CPU",processador.getNome(), processador.getFabricante(), processador.getId()));
 
             especificacaoComponentes =
                     con.query(String.format("""
@@ -80,6 +86,10 @@ public class EspecificacaoComponenteDAO {
                             "(tipo_componente, descricao_componente) values ('%s','%s')",
                     "RAM",nomeMemoria));
 
+            conMysql.execute(String.format("insert into especificacao_componente" +
+                            "(tipo_componente, descricao_componente) values ('%s','%s')",
+                    "RAM",nomeMemoria));
+
             especificacaoComponentes =
                     con.query(String.format("""
                             select
@@ -112,6 +122,10 @@ public class EspecificacaoComponenteDAO {
 
         if (especificacaoComponentes.isEmpty()) {
             con.execute(String.format("insert into especificacao_componente" +
+                            "(tipo_componente,descricao_componente, numero_serial) values ('%s', '%s','%s')",
+                    "DISCO",nomeDisco, disco.getSerial()));
+
+            conMysql.execute(String.format("insert into especificacao_componente" +
                             "(tipo_componente,descricao_componente, numero_serial) values ('%s', '%s','%s')",
                     "DISCO",nomeDisco, disco.getSerial()));
 

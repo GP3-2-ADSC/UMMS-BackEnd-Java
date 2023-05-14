@@ -142,11 +142,10 @@ public class Service {
                     }
                 }
 
-
                 inovacao.setIpRoteador(looca.getRede().getGrupoDeInterfaces().getInterfaces().get(0).getEnderecoIpv4().toString());
 
                 try {
-                    inovacao.execCommand("ping " + inovacao.getIpRoteador());
+                    inovacao.execCommand("ping -c 4 " + inovacao.getIpRoteador());
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }

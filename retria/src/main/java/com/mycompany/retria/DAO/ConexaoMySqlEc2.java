@@ -11,11 +11,11 @@ import org.springframework.jdbc.core.JdbcTemplate;
  *
  * @author lucka
  */
-public class Conexao {
+public class ConexaoMySqlEc2 {
 
     private final JdbcTemplate connection;
 
-    public Conexao() {
+    public ConexaoMySqlEc2() {
 
         /**
          * jdbc:sqlserver://umms-retria.database.windows.net:1433;database=BD-UMMS;user=adm@umms-retria;password=#Gfgrupo3;encrypt=true;trustServerCertificate=false;hostNameInCertificate=*.database.windows.net;loginTimeout=30;
@@ -25,19 +25,19 @@ public class Conexao {
         // setDriverClassName recebe o drive para conexão do banco // Mysql = com.mysql.cj.jdbc.Driver
 //        dataSource​.setDriverClassName("com.mysql.cj.jdbc.Driver");
 
-        dataSource.setDriverClassName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+        dataSource.setDriverClassName("com.mysql.cj.jdbc.Driver");
 
         // setUrl cria um arquivo de com o nome do banco que vc especificar no argumento // Mysql = jdbc:mysql://localhost:3306/nomeBanco
 //        dataSource​.setUrl("jdbc:mysql://localhost:3306/retria");
-        dataSource.setUrl("jdbc:sqlserver://umms-retria.database.windows.net:1433;database=BD-UMMS");
+        dataSource.setUrl("jdbc:mysql://0.0.0.0:3306/retria?autoReconnect=true&useSSL=false");
 
         // setUsername recebe o nome do usuario como argumento // root
-        dataSource.setUsername("adm");
+        dataSource.setUsername("root");
 
 //        dataSource​.setUsername("root");
         // setPassword recebe a senha do usuario como argumento
-        dataSource.setPassword("#Gfgrupo3");
-//      
+        dataSource.setPassword("urubu100");
+//
 //        dataSource​.setPassword("40028922");
 
         this.connection = new JdbcTemplate(dataSource);

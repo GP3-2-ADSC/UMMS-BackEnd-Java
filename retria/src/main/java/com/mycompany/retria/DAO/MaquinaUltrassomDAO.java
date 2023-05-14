@@ -16,10 +16,13 @@ import org.springframework.jdbc.core.JdbcTemplate;
  */
 public class MaquinaUltrassomDAO {
     JdbcTemplate con;
+    JdbcTemplate conMysql;
 
     public MaquinaUltrassomDAO() {
         Conexao conexao = new Conexao();
         con = conexao.getConnection();
+        ConexaoMySqlEc2 conMysqlEc2 = new ConexaoMySqlEc2();
+        conMysql = conMysqlEc2.getConnection();
     }
 
     public MaquinaUltrassom getMaquinaUltrassom(String idProcessador, Integer fkAdmin,Integer fkEmpresa, String sistema){
@@ -35,6 +38,13 @@ public class MaquinaUltrassomDAO {
 
         while(maquinasUltra.size() == 0){
             con.execute(String.format("""
+                    insert into maquina_ultrassom
+                        (sistema_operacional, numero_serial_maquina, fk_administrador,fk_empresa) 
+                    values
+                        ('%s','%s' ,%d, %d);
+                    """,sistema, idProcessador,fkAdmin, fkEmpresa));
+
+            conMysql.execute(String.format("""
                     insert into maquina_ultrassom
                         (sistema_operacional, numero_serial_maquina, fk_administrador,fk_empresa) 
                     values
