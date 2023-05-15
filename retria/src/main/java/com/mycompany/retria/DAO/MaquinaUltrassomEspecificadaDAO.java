@@ -55,6 +55,23 @@ public class MaquinaUltrassomEspecificadaDAO {
                     """, usoMaximo, fkMaquina, fkEspecComp),
                 new BeanPropertyRowMapper<>(MaquinaUltrassomEspecificada.class));
 
+        List<MaquinaUltrassomEspecificada> maquinaUltraEspecLocal = conMysql.query(String.format("""
+                        select
+                            m.*
+                        from 
+                            maquina_ultrassom_especificada m
+                        join 
+                            especificacao_componente e
+                        on
+                            m.fk_especificacao_componente = e.id_especificacao_componente
+                        where 
+                            uso_maximo = %.0f
+                        and fk_maquina = %d
+                        and fk_especificacao_componente = %d                
+                        and e.tipo_componente = 'RAM';
+                    """, usoMaximo, fkMaquina, fkEspecComp),
+                new BeanPropertyRowMapper<>(MaquinaUltrassomEspecificada.class));
+
         if (maquinaUltraEspec.isEmpty()) {
             con.execute(String.format("""
                         insert into maquina_ultrassom_especificada 
@@ -80,6 +97,9 @@ public class MaquinaUltrassomEspecificadaDAO {
                     """, usoMaximo, fkMaquina, fkEspecComp),
                             new BeanPropertyRowMapper<>(MaquinaUltrassomEspecificada.class));
 
+        }
+
+        if (maquinaUltraEspecLocal.isEmpty()) {
             MaquinaUltrassomEspecificada dados = maquinaUltraEspec.get(0);
 
             conMysql.execute(String.format("""
@@ -102,6 +122,23 @@ public class MaquinaUltrassomEspecificadaDAO {
     public MaquinaUltrassomEspecificada getMaquiUltassomEspecCPU(Double usoMaximo, Integer fkMaquina, Integer fkEspecComp) {
         Integer usoMaximotoInt = usoMaximo.intValue();
         List<MaquinaUltrassomEspecificada> maquinaUltraEspec = con.query(String.format("""
+                        select
+                            m.*
+                        from 
+                            maquina_ultrassom_especificada m
+                        join 
+                            especificacao_componente e
+                        on
+                            m.fk_especificacao_componente = e.id_especificacao_componente
+                        where 
+                            uso_maximo = %d
+                        and fk_maquina = %d
+                        and fk_especificacao_componente = %d                
+                        and e.tipo_componente = 'CPU';
+                    """, usoMaximotoInt, fkMaquina, fkEspecComp),
+                new BeanPropertyRowMapper<>(MaquinaUltrassomEspecificada.class));
+
+        List<MaquinaUltrassomEspecificada> maquinaUltraEspecLocal = conMysql.query(String.format("""
                         select
                             m.*
                         from 
@@ -142,7 +179,9 @@ public class MaquinaUltrassomEspecificadaDAO {
                         and e.tipo_componente = 'CPU';
                     """, usoMaximotoInt,fkMaquina, fkEspecComp),
                             new BeanPropertyRowMapper<>(MaquinaUltrassomEspecificada.class));
+        }
 
+        if (maquinaUltraEspecLocal.isEmpty()) {
             MaquinaUltrassomEspecificada dados = maquinaUltraEspec.get(0);
 
             conMysql.execute(String.format("""
@@ -179,6 +218,24 @@ public class MaquinaUltrassomEspecificadaDAO {
                     """, usoMaximotoInt,fkMaquina, fkEspecComp),
                 new BeanPropertyRowMapper<>(MaquinaUltrassomEspecificada.class));
 
+        List<MaquinaUltrassomEspecificada> maquinaUltraEspecLocal = conMysql.query(String.format("""
+                        select
+                            m.*
+                        from 
+                            maquina_ultrassom_especificada m
+                        join 
+                            especificacao_componente e
+                        on
+                            m.fk_especificacao_componente = e.id_especificacao_componente
+                        where 
+                            uso_maximo = %d
+                        and fk_maquina = %d
+                        and fk_especificacao_componente = %d                
+                        and e.tipo_componente = 'DISCO';
+                    """, usoMaximotoInt,fkMaquina, fkEspecComp),
+                new BeanPropertyRowMapper<>(MaquinaUltrassomEspecificada.class));
+
+
         if (maquinaUltraEspec.isEmpty()) {
             con.execute(String.format("""
                         insert into maquina_ultrassom_especificada 
@@ -203,7 +260,9 @@ public class MaquinaUltrassomEspecificadaDAO {
                         and e.tipo_componente = 'DISCO';
                     """, usoMaximotoInt,fkMaquina, fkEspecComp),
                             new BeanPropertyRowMapper<>(MaquinaUltrassomEspecificada.class));
+        }
 
+        if (maquinaUltraEspecLocal.isEmpty()) {
             MaquinaUltrassomEspecificada dados = maquinaUltraEspec.get(0);
 
             conMysql.execute(String.format("""
@@ -211,6 +270,7 @@ public class MaquinaUltrassomEspecificadaDAO {
                             (id_especificacao_componente_maquina,uso_maximo, fk_maquina, fk_especificacao_componente)
                         values (%d,%d, %d, %d);
                       """,dados.getId_especificacao_componente_maquina(), usoMaximotoInt,fkMaquina, fkEspecComp));
+
         }
 
         MaquinaUltrassomEspecificada dados = maquinaUltraEspec.get(0);

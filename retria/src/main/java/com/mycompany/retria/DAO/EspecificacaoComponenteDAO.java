@@ -44,6 +44,16 @@ public class EspecificacaoComponenteDAO {
                             descricao_componente = '%s'
                         """, processador.getNome()), new BeanPropertyRowMapper<>(EspecificacaoComponente.class));
 
+        List<EspecificacaoComponente> especificacaoComponentesLocal =
+                conMysql.query(String.format("""
+                        select
+                            *
+                        from
+                            especificacao_componente
+                        where
+                            descricao_componente = '%s'
+                        """, processador.getNome()), new BeanPropertyRowMapper<>(EspecificacaoComponente.class));
+
         if (especificacaoComponentes.isEmpty()) {
             con.execute(String.format("insert into especificacao_componente" +
                             "(tipo_componente, descricao_componente, nome_fabricante, numero_serial) values ('%s', '%s', '%s', '%s')",
@@ -58,11 +68,14 @@ public class EspecificacaoComponenteDAO {
                             where
                                 descricao_componente = '%s'
                             """, processador.getNome()), new BeanPropertyRowMapper<>(EspecificacaoComponente.class));
+        }
 
+        if (especificacaoComponentesLocal.isEmpty()) {
             EspecificacaoComponente dados = especificacaoComponentes.get(0);
 
             conMysql.execute(String.format("insert into especificacao_componente" +
-                            "(id_especificacao_componente,tipo_componente, descricao_componente, nome_fabricante, numero_serial) values (%d,'%s', '%s', '%s', '%s')",
+                            "(id_especificacao_componente,tipo_componente, descricao_componente, nome_fabricante, numero_serial) " +
+                            "values (%d,'%s', '%s', '%s', '%s')",
                     dados.getId_especificacao_componente(),"CPU", processador.getNome(), processador.getFabricante(), processador.getId()));
         }
 
@@ -77,6 +90,16 @@ public class EspecificacaoComponenteDAO {
 
         List<EspecificacaoComponente> especificacaoComponentes =
                 con.query(String.format("""
+                        select
+                            *
+                        from
+                            especificacao_componente
+                        where
+                            descricao_componente = '%s'
+                        """, nomeMemoria), new BeanPropertyRowMapper<>(EspecificacaoComponente.class));
+
+        List<EspecificacaoComponente> especificacaoComponentesLocal =
+                conMysql.query(String.format("""
                         select
                             *
                         from
@@ -100,6 +123,9 @@ public class EspecificacaoComponenteDAO {
                                 descricao_componente = '%s'
                             """, nomeMemoria), new BeanPropertyRowMapper<>(EspecificacaoComponente.class));
 
+        }
+
+        if (especificacaoComponentesLocal.size() == 0) {
             EspecificacaoComponente dados = especificacaoComponentes.get(0);
 
             conMysql.execute(String.format("insert into especificacao_componente" +
@@ -116,6 +142,18 @@ public class EspecificacaoComponenteDAO {
         String nomeDisco = String.format("HD/SSD - %.0f GB", service.convertBytesToGB(disco.getTamanho()));
         List<EspecificacaoComponente> especificacaoComponentes =
                 con.query(String.format("""
+                        select
+                            *
+                        from
+                            especificacao_componente
+                        where
+                            descricao_componente = '%s'
+                        OR
+                            numero_serial = '%s'
+                        """, nomeDisco,disco.getSerial()), new BeanPropertyRowMapper<>(EspecificacaoComponente.class));
+
+        List<EspecificacaoComponente> especificacaoComponentesLocal =
+                conMysql.query(String.format("""
                         select
                             *
                         from
@@ -143,6 +181,9 @@ public class EspecificacaoComponenteDAO {
                                 numero_serial = '%s'
                             """, nomeDisco,disco.getSerial()), new BeanPropertyRowMapper<>(EspecificacaoComponente.class));
 
+        }
+
+        if (especificacaoComponentesLocal.isEmpty()) {
             EspecificacaoComponente dados = especificacaoComponentes.get(0);
 
             conMysql.execute(String.format("insert into especificacao_componente" +

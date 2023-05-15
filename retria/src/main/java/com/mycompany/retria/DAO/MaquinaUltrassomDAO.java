@@ -36,6 +36,16 @@ public class MaquinaUltrassomDAO {
                         """, idProcessador),
                 new BeanPropertyRowMapper(MaquinaUltrassom.class));
 
+        List<MaquinaUltrassom> maquinasUltraLocal = conMysql.query(String.format("""
+                        select 
+                            m.* 
+                        from 
+                            maquina_ultrassom as m
+                        where 
+                            m.numero_serial_maquina = '%s';
+                        """, idProcessador),
+                new BeanPropertyRowMapper(MaquinaUltrassom.class));
+
         while(maquinasUltra.size() == 0){
             con.execute(String.format("""
                     insert into maquina_ultrassom
@@ -53,6 +63,10 @@ public class MaquinaUltrassomDAO {
                             m.numero_serial_maquina = '%s';
                         """, idProcessador),
                     new BeanPropertyRowMapper(MaquinaUltrassom.class));
+
+        }
+
+        while (maquinasUltraLocal.size() == 0) {
             MaquinaUltrassom dados = maquinasUltra.get(0);
 
             conMysql.execute(String.format("""
@@ -61,6 +75,16 @@ public class MaquinaUltrassomDAO {
                     values
                         (%d,'%s','%s' ,%d, %d);
                     """,dados.getIdMaquina(),sistema, idProcessador,fkAdmin, fkEmpresa));
+
+            maquinasUltraLocal = conMysql.query(String.format("""
+                        select 
+                            m.* 
+                        from 
+                            maquina_ultrassom as m
+                        where 
+                            m.numero_serial_maquina = '%s';
+                        """, idProcessador),
+                    new BeanPropertyRowMapper(MaquinaUltrassom.class));
         }
 
         MaquinaUltrassom dados = maquinasUltra.get(0);
