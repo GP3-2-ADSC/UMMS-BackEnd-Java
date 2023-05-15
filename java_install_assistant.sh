@@ -1,48 +1,42 @@
 #!/bin/bash
 
-PURPLE='0;35'
+RED='0;35'
 NC='\033[0m' 
 VERSAO=11
 	
-echo  "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) Olá Aluno, serei seu assistente para instalação do Java!;"
-echo  "$(tput setaf 10)[Bot assistant]:$(tput setaf 7)  Verificando aqui se você possui o Java instalado...;"
+echo  "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) Olá, usuário, serei seu assistente para instalação do Java e também do docker.;"
+echo  "$(tput setaf 10)[Bot assistant]:$(tput setaf 7)  Verificando aqui se você possui o Java e docker instalado...;"
 sleep 2
+	
+echo "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) Olá! Vou te ajudar a instalar o Java 17."
+echo "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) Verificando se o Java já está instalado..."
 
 java -version
-if [ $? -eq 0 ]
-	then
-		echo "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) : Você já tem o java instalado!!!"
-	else
-		echo "$(tput setaf 10)[Bot assistant]:$(tput setaf 7)  Opa! Não identifiquei nenhuma versão do Java instalado, mas sem problemas, irei resolver isso agora!"
-		echo "$(tput setaf 10)[Bot assistant]:$(tput setaf 7)  Confirme para mim se realmente deseja instalar o Java (S/N)?"
-	read inst
-	if [ \"$inst\" == \"S\" ]
-		then
-			echo "$(tput setaf 10)[Bot assistant]:$(tput setaf 7)  Ok! Você escolheu instalar o Java ;D"
-			echo "$(tput setaf 10)[Bot assistant]:$(tput setaf 7)  Adicionando o repositório!"
-			sleep 2
-			sudo add-apt-repository ppa:webupd8team/java -y
-			clear
-			echo "$(tput setaf 10)[Bot assistant]:$(tput setaf 7)  Atualizando! Quase lá."
-			sleep 2
-			sudo apt update -y
-			clear
-			
-			if [ $VERSAO -eq 17 ]
-				then
-					echo "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) Preparando para instalar a versão 17 do Java. Confirme a instalação quando solicitado ;D"
-					sudo apt install default-jre ; apt install openjdk-17-jre-headless; -y
-					clear
-					echo "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) Java instalado com sucesso!"
-				fi
-		else 	
-		echo "$(tput setaf 10)[Bot assistant]:$(tput setaf 7)  Você optou por não instalar o Java por enquanto, até a próxima então!"
-	fi
+if [ $? -eq 0 ]; then
+    echo "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) O Java já está instalado."
+    exit 0
 fi
 
-# ===================================================================
-# Todos direitos reservados para o autor: Dra. Profa. Marise Miranda.
-# Sob licença Creative Commons @2020
-# Podera modificar e reproduzir para uso pessoal.
-# Proibida a comercialização e a exclusão da autoria.
-# ===================================================================
+echo "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) O Java 17 não foi encontrado."
+echo "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) Deseja continuar a instalação? (S/N)"
+read inst
+
+if [ "$inst" != "S" ] && [ "$inst" != "s" ]; then
+    echo "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) Instalação cancelada. Até a próxima!"
+    exit 0
+fi
+
+echo "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) Adicionando o repositório do Java 17..."
+
+sudo apt-add-repository --yes ppa:linuxuprising/java
+sudo apt-get update
+
+echo "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) Instalando o Java 17..."
+
+sudo apt-get install -y oracle-java17-installer
+sudo apt-get install -y oracle-java17-set-default
+
+echo "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) Java 17 instalado com sucesso!"
+
+java -version
+
