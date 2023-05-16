@@ -1,6 +1,7 @@
 package com.mycompany.retria.validadores;
 
 import com.github.britooo.looca.api.group.discos.Disco;
+import com.github.britooo.looca.api.group.discos.Volume;
 import com.github.britooo.looca.api.group.memoria.Memoria;
 import com.github.britooo.looca.api.group.processador.Processador;
 import com.mycompany.retria.DAO.AlertaDAO;
@@ -73,10 +74,9 @@ public class ValidadorDeComponentes {
         }
     }
 
-    public void validarDisco(Disco dados, Integer fkMaquinaUltrassom) throws ValidacaoException {
-        Double usoDisco = service.convertBytesToGB(dados.getBytesDeEscritas());
-        Double emUso = service.convertBytesToGB(dados.getTamanho()) - usoDisco;
-        Double porcentagemDeUsoDisc = (usoDisco * 100) / service.convertBytesToGB(dados.getTamanho());
+    public void validarDisco(Volume dados, Integer fkMaquinaUltrassom) throws ValidacaoException {
+        Double emUso = service.convertBytesToGB(dados.getTotal() - dados.getDisponivel());
+        Double porcentagemDeUsoDisc = (emUso * 100) / service.convertBytesToGB(dados.getTotal());
         metricaComponente = new MetricaComponente(null, porcentagemDeUsoDisc, fkMaquinaUltrassom);
         Integer fkMetricaComponente = metricaComponenteDAO.setMetrica(metricaComponente);
 

@@ -7,6 +7,7 @@ package com.mycompany.teste.looca;
 import com.github.britooo.looca.api.core.Looca;
 import com.github.britooo.looca.api.group.discos.Disco;
 import com.github.britooo.looca.api.group.discos.DiscoGrupo;
+import com.github.britooo.looca.api.group.discos.Volume;
 import com.github.britooo.looca.api.group.memoria.Memoria;
 import com.github.britooo.looca.api.group.processador.Processador;
 import com.github.britooo.looca.api.group.rede.RedeInterface;
@@ -35,9 +36,23 @@ public class TesteMaquina {
         Looca looca = new Looca();
         Inovacao ping = new Inovacao();
         List<Disco> discos = looca.getGrupoDeDiscos().getDiscos();
+        List<Volume> volumes = looca.getGrupoDeDiscos().getVolumes();
 
         for (Disco disco : discos) {
-            System.out.println(disco.getTamanho() / (1024.0 * 1024.0 * 1024.0));
+            System.out.println(disco.getSerial());
+            System.out.println(disco.getTamanho());
+            System.out.println(disco.getNome());
+            System.out.println("\n------------------\n");
+        }
+
+        System.out.println("\n--------------------------------------------\n");
+
+        for (Volume volume : volumes) {
+            System.out.println(volume.getVolume());
+            System.out.println(volume.getTotal());
+            System.out.println(volume.getPontoDeMontagem());
+            System.out.println(volume.getDisponivel());
+            System.out.println("\n------------------\n");
         }
     }
     public Double convertBytesToGB(long bytes) {

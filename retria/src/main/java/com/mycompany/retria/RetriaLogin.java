@@ -176,7 +176,6 @@ public class RetriaLogin extends javax.swing.JFrame {
         Looca looca = new Looca();
         Service service = new Service();
 
-
         String email = (campoEmail.getText());
         String senha = (campo_senha.getText());
 

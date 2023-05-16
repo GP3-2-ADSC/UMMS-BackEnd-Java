@@ -2,6 +2,7 @@ package com.mycompany.retria.services;
 
 import com.github.britooo.looca.api.core.Looca;
 import com.github.britooo.looca.api.group.discos.Disco;
+import com.github.britooo.looca.api.group.discos.Volume;
 import com.mycompany.retria.DAO.AdministradorDAO;
 import com.mycompany.retria.DAO.EspecificacaoComponenteDAO;
 import com.mycompany.retria.DAO.MaquinaUltrassomDAO;
@@ -36,7 +37,7 @@ public class Service {
         MaquinaUltrassomEspecificadaDAO maquinaUltrassomEspecificadaDAO = new MaquinaUltrassomEspecificadaDAO();
 
 
-        List<Disco> discos = looca.getGrupoDeDiscos().getDiscos();
+        List<Volume> discos = looca.getGrupoDeDiscos().getVolumes();
 
         System.out.println("Estou na service!!!!!");
 
@@ -47,7 +48,7 @@ public class Service {
         especificacaoComponente.add(especificacaoComponenteDAO.getComponenteCpu(looca.getProcessador()));
         especificacaoComponente.add(especificacaoComponenteDAO.getComponenteMemoria(looca.getMemoria()));
 
-        for (Disco disco : discos) {
+        for (Volume disco : discos) {
             System.out.println("VOCÊ TEM " + discos.size() + " discos\n");
             System.out.println("DISCO ATUAL\n");
             System.out.println(disco);
@@ -68,15 +69,15 @@ public class Service {
         ));
 
         for (int i = 0; i < discos.size(); i++) {
-            Disco disco = discos.get(i);
+            Volume disco = discos.get(i);
             if (i > 0) {
-                maquinaUltrassomEspec.add(maquinaUltrassomEspecificadaDAO.getMaquiUltassomEspecDISCO(convertBytesToGB(disco.getTamanho()),
+                maquinaUltrassomEspec.add(maquinaUltrassomEspecificadaDAO.getMaquiUltassomEspecDISCO(convertBytesToGB(disco.getTotal()),
                         maquinaUltrassom.getIdMaquina(), especificacaoComponente.stream()
                                 .filter(e -> e.getTipoComponente().equals(TipoComponente.DISCO))
                                 .skip(1).findFirst().get().getId_especificacao_componente()
                 ));
             } else {
-                maquinaUltrassomEspec.add(maquinaUltrassomEspecificadaDAO.getMaquiUltassomEspecDISCO(convertBytesToGB(disco.getTamanho()),
+                maquinaUltrassomEspec.add(maquinaUltrassomEspecificadaDAO.getMaquiUltassomEspecDISCO(convertBytesToGB(disco.getTotal()),
                         maquinaUltrassom.getIdMaquina(), especificacaoComponente.stream()
                                 .filter(e -> e.getTipoComponente().equals(TipoComponente.DISCO))
                                 .findFirst().get().getId_especificacao_componente()
@@ -88,7 +89,7 @@ public class Service {
 
 
     public void validarMetrica() throws ValidacaoException {
-        List<Disco> discos = looca.getGrupoDeDiscos().getDiscos();
+        List<Volume> discos = looca.getGrupoDeDiscos().getVolumes();
         ValidadorDeComponentes validadorDeComponentes = new ValidadorDeComponentes();
         Inovacao inovacao = new Inovacao();
 
@@ -133,7 +134,7 @@ public class Service {
                         Integer fkDisco = maquinaUltrassomEspec.stream().filter(e -> e.getFk_especificacao_componente()
                                 .equals(fkDiscoEspec)).findFirst().get().getId_especificacao_componente_maquina();
 
-                        Disco discoAtual = discos.stream().filter(e -> e.getSerial()
+                        Volume discoAtual = discos.stream().filter(e -> e.getUUID()
                                 .equals(especAtual.getNumero_serial())).findFirst().get();
 
                         validadorDeComponentes.validarDisco(discoAtual, fkDisco);
