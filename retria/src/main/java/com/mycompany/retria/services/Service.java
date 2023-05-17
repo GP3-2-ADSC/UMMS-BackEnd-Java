@@ -159,5 +159,5 @@ public class Service {
 
     public Double convertBytesToGB(long bytes) {
         return bytes / (1024.0 * 1024.0 * 1024.0);
-    }
+    } 
 }
