@@ -1,0 +1,17 @@
+---- Informações do Sistema ----
+Fabricante: GNU/Linux
+Sistema Operacional: Ubuntu
+Arquitetura: 64
+Permissões: false
+Inicializado: 2023-05-17T12:20:57Z
+--------------------------------
+
+---- Soluções para resolver erro Ping ----
+- Verifique se o endereço IP está correto;
+- Verifique a conexão de rede;
+- Verifique se o destino está acessível;
+- Verifique as configurações de firewall;
+------------------------------------------
+
+17/05/2023 14:35:58 - Erro ping 192.0.2.0: 
+
