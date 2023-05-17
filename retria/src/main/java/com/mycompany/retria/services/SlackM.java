@@ -14,8 +14,7 @@ import java.io.IOException;
  */
 public class SlackM {
 
- /* private static String webHooksUrl = 
- " https://hooks.slack.com/services/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";*/
+    private static String webHooksUrl = "";
     private static String slackChannel = "hospital-estadual-de-vila-alpina--";
     
    
