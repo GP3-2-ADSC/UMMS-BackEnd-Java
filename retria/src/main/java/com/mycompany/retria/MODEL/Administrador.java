@@ -12,14 +12,25 @@ public class Administrador {
     private Integer id_administrador;
     private String nome_administrador;
     private String email_administrador;
+    private String senha_administrador;
+    private String telefone_administrador;
+    private String chave_seguranca_administrador;
+    
+    private Integer fk_ocupacao;
     private Integer fk_empresa;
 
-    public Administrador(Integer id_administrador, String nome_administrador, String email_administrador, Integer fk_empresa) {
+    public Administrador(Integer id_administrador, String nome_administrador, String email_administrador, String senha_administrador, String telefone_administrador, String chave_seguranca_administrador, Integer fk_ocupacao, Integer fk_empresa) {
         this.id_administrador = id_administrador;
         this.nome_administrador = nome_administrador;
         this.email_administrador = email_administrador;
+        this.senha_administrador = senha_administrador;
+        this.telefone_administrador = telefone_administrador;
+        this.chave_seguranca_administrador = chave_seguranca_administrador;
+        this.fk_ocupacao = fk_ocupacao;
         this.fk_empresa = fk_empresa;
     }
+
+    
 
     public Administrador() {
     }
@@ -56,6 +67,40 @@ public class Administrador {
     public void setFk_empresa(Integer fk_empresa) {
         this.fk_empresa = fk_empresa;
     }
+
+    public String getSenha_administrador() {
+        return senha_administrador;
+    }
+
+    public void setSenha_administrador(String senha_administrador) {
+        this.senha_administrador = senha_administrador;
+    }
+
+    public String getTelefone_administrador() {
+        return telefone_administrador;
+    }
+
+    public void setTelefone_administrador(String telefone_administrador) {
+        this.telefone_administrador = telefone_administrador;
+    }
+
+    public String getChave_seguranca_administrador() {
+        return chave_seguranca_administrador;
+    }
+
+    public void setChave_seguranca_administrador(String chave_seguranca_administrador) {
+        this.chave_seguranca_administrador = chave_seguranca_administrador;
+    }
+
+    public Integer getFk_ocupacao() {
+        return fk_ocupacao;
+    }
+
+    public void setFk_ocupacao(Integer fk_ocupacao) {
+        this.fk_ocupacao = fk_ocupacao;
+    }
+    
+    
 
     @Override
     public String toString() {

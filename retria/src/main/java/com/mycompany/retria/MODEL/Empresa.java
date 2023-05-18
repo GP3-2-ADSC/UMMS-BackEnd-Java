@@ -16,9 +16,8 @@ public class Empresa {
     private String telefone_01;
     private String telefone_02;
     private String email;
-    private String senha;
     private String responsavel_empresa;
-
+    private Integer fkMatriz;
 
     public Integer getId_empresa() {
         return id_empresa;
@@ -68,14 +67,16 @@ public class Empresa {
         this.email = email;
     }
 
-    public String getSenha() {
-        return senha;
+    public Integer getFkMatriz() {
+        return fkMatriz;
     }
 
-    public void setSenha(String senha) {
-        this.senha = senha;
+    public void setFkMatriz(Integer fkMatriz) {
+        this.fkMatriz = fkMatriz;
     }
-
+    
+    
+    
     public String getResponsavel_empresa() {
         return responsavel_empresa;
     }
@@ -86,6 +87,8 @@ public class Empresa {
 
     @Override
     public String toString() {
-        return "Empresa{" + "id_empresa=" + id_empresa + ", nome_mpresa=" + nome_empresa + ", prcnpj=" + prcnpj + ", telefone_01=" + telefone_01 + ", telefone_02=" + telefone_02 + ", email=" + email + ", senha=" + senha + ", responsavel_empresa=" + responsavel_empresa + '}';
+        return "Empresa{" + "id_empresa=" + id_empresa + ", nome_empresa=" + nome_empresa + ", prcnpj=" + prcnpj + ", telefone_01=" + telefone_01 + ", telefone_02=" + telefone_02 + ", email=" + email + ", responsavel_empresa=" + responsavel_empresa + ", fkMatriz=" + fkMatriz + '}';
     }
+
+    
 }
