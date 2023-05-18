@@ -18,9 +18,10 @@ public class SlackM {
     private static String slackChannel = "hospital-estadual-de-vila-alpina--";
     
    
-    public static void sendMensagemToSlack(String mensagem) {
+    public void sendMensagemToSlack(String mensagem) {
 
         try {
+            System.out.println("ESTOU NA CLASSE DO SLACK");
             StringBuilder msgbuilde = new StringBuilder();
             msgbuilde.append(mensagem);
 

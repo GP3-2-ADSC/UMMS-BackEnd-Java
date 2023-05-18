@@ -36,7 +36,7 @@ public class ConexaoMySqlEc2 {
 
 //        dataSource​.setUsername("root");
         // setPassword recebe a senha do usuario como argumento
-        dataSource.setPassword("40028922");
+        dataSource.setPassword("urubu100");
 //
 //        dataSource​.setPassword("40028922");
 

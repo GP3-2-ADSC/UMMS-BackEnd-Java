@@ -10,6 +10,7 @@ import com.mycompany.retria.MODEL.Alerta;
 import com.mycompany.retria.MODEL.MetricaComponente;
 import com.mycompany.retria.exception.ValidacaoException;
 import com.mycompany.retria.services.Service;
+import com.mycompany.retria.services.SlackM;
 
 import java.util.List;
 
@@ -23,12 +24,15 @@ public class ValidadorDeComponentes {
 
     private MetricaComponente metricaComponente;
 
+    private SlackM slack = new SlackM();
+
     private Alerta alerta;
 
     public void validarCpu(Processador dados, Integer fkMaquinaUltrassom) throws ValidacaoException {
         Double usoProcessador = dados.getUso();
         metricaComponente = new MetricaComponente(null, usoProcessador, fkMaquinaUltrassom);
         Integer fkMetricaComponente = metricaComponenteDAO.setMetrica(metricaComponente);
+        String frase = "";
 
         if (dados == null) {
             throw new ValidacaoException("Não é possível validar o uso de cpu nulo!!!");
@@ -38,13 +42,19 @@ public class ValidadorDeComponentes {
             System.out.println("Uso dentro dos conformes!");
         } else if (usoProcessador < 40.0) {
             alertaDAO.setAlerta(new Alerta(null, 1, fkMetricaComponente));
-            throw new ValidacaoException("CPU está com nível de uso em - ALERTA!");
+            frase = "CPU está com nível de uso em - ALERTA!";
+            slack.sendMensagemToSlack(frase);
+            throw new ValidacaoException(frase);
         } else if (usoProcessador < 45.0) {
             alertaDAO.setAlerta(new Alerta(null, 2, fkMetricaComponente));
-            throw new ValidacaoException("CPU está com nível de uso em - PERIGOSO! Contate o suporte!");
+            frase = "CPU está com nível de uso em - PERIGOSO! Contate o suporte!";
+            slack.sendMensagemToSlack(frase);
+            throw new ValidacaoException(frase);
         } else {
             alertaDAO.setAlerta(new Alerta(null, 3, fkMetricaComponente));
-            throw new ValidacaoException("CPU está com nível de uso em - CRÍTICO! Contate o suporte IMEDIATAMENTE!");
+            frase = "CPU está com nível de uso em - CRÍTICO! Contate o suporte IMEDIATAMENTE!";
+            slack.sendMensagemToSlack(frase);
+            throw new ValidacaoException(frase);
         }
     }
 
@@ -56,6 +66,8 @@ public class ValidadorDeComponentes {
         System.out.println("USO DE RAM " + usoMemoria);
         metricaComponente = new MetricaComponente(null, porcentagemDeRam, fkMaquinaUltrassom);
         Integer fkMetricaComponente = metricaComponenteDAO.setMetrica(metricaComponente);
+        String frase = "";
+
 
         if (dados == null) {
             throw new ValidacaoException("Não é possível validar memória nula!!!");
@@ -64,13 +76,19 @@ public class ValidadorDeComponentes {
             System.out.println("Uso de ram dentro dos conformes!");
         } else if (porcentagemDeRam < 56.0) {
             alertaDAO.setAlerta(new Alerta(null, 1, fkMetricaComponente));
-            throw new ValidacaoException("RAM está com nível de uso em - ALERTA!");
+            frase = "RAM está com nível de uso em - ALERTA!";
+            slack.sendMensagemToSlack(frase);
+            throw new ValidacaoException(frase);
         } else if (porcentagemDeRam < 63.0) {
             alertaDAO.setAlerta(new Alerta(null, 2, fkMetricaComponente));
-            throw new ValidacaoException("RAM está com nível de uso em - PERIGOSO! Contate o suporte!");
+            frase = "RAM está com nível de uso em - PERIGOSO! Contate o suporte!";
+            slack.sendMensagemToSlack(frase);
+            throw new ValidacaoException(frase);
         } else {
             alertaDAO.setAlerta(new Alerta(null, 3, fkMetricaComponente));
-            throw new ValidacaoException("RAM está com nível de uso em - CRÍTICO! Contate o suporte IMEDIATAMENTE!");
+            frase = "RAM está com nível de uso em - CRÍTICO! Contate o suporte IMEDIATAMENTE!";
+            slack.sendMensagemToSlack(frase);
+            throw new ValidacaoException(frase);
         }
     }
 
@@ -79,6 +97,7 @@ public class ValidadorDeComponentes {
         Double porcentagemDeUsoDisc = (emUso * 100) / service.convertBytesToGB(dados.getTotal());
         metricaComponente = new MetricaComponente(null, porcentagemDeUsoDisc, fkMaquinaUltrassom);
         Integer fkMetricaComponente = metricaComponenteDAO.setMetrica(metricaComponente);
+        String frase = "";
 
         if (dados == null) {
             throw new ValidacaoException("Não é possível validar discos de uma lista vazia!!!");
@@ -88,13 +107,19 @@ public class ValidadorDeComponentes {
             System.out.println("Uso de DISCO dentro dos conformes!");
         } else if (porcentagemDeUsoDisc < 64.0) {
             alertaDAO.setAlerta(new Alerta(null, 1, fkMetricaComponente));
-            throw new ValidacaoException("DISCO está com nível de uso em - ALERTA!");
+            frase = "DISCO está com nível de uso em - ALERTA!";
+            slack.sendMensagemToSlack(frase);
+            throw new ValidacaoException(frase);
         } else if (porcentagemDeUsoDisc < 72.0) {
             alertaDAO.setAlerta(new Alerta(null, 2, fkMetricaComponente));
-            throw new ValidacaoException("DISCO está com nível de uso em - PERIGOSO! Contate o suporte!");
+            frase = "DISCO está com nível de uso em - PERIGOSO! Contate o suporte!";
+            slack.sendMensagemToSlack(frase);
+            throw new ValidacaoException(frase);
         } else {
             alertaDAO.setAlerta(new Alerta(null, 3, fkMetricaComponente));
-            throw new ValidacaoException("DISCO está com nível de uso em - CRÍTICO! Contate o suporte IMEDIATAMENTE!");
+            frase = "DISCO está com nível de uso em - CRÍTICO! Contate o suporte IMEDIATAMENTE!";
+            slack.sendMensagemToSlack(frase);
+            throw new ValidacaoException(frase);
         }
     }
 
