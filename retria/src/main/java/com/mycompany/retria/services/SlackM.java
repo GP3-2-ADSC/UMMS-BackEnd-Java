@@ -19,17 +19,17 @@ public class SlackM {
     
    
     public void sendMensagemToSlack(String mensagem) {
+        System.out.println(mensagem);
+        //try {
+            //System.out.println("ESTOU NA CLASSE DO SLACK");
+            //StringBuilder msgbuilde = new StringBuilder();
+            //msgbuilde.append(mensagem);
 
-        try {
-            System.out.println("ESTOU NA CLASSE DO SLACK");
-            StringBuilder msgbuilde = new StringBuilder();
-            msgbuilde.append(mensagem);
+            //Payload payload = Payload.builder().channel(slackChannel).text(msgbuilde.toString()).build();
 
-            Payload payload = Payload.builder().channel(slackChannel).text(msgbuilde.toString()).build();
-
-            com.github.seratch.jslack.api.webhook.WebhookResponse wbResp = Slack.getInstance().send(webHooksUrl, payload);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+          //  com.github.seratch.jslack.api.webhook.WebhookResponse wbResp = Slack.getInstance().send(webHooksUrl, payload);
+        //} catch (IOException e) {
+          //  e.printStackTrace();
+        //}
     }
 }
