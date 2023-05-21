@@ -49,7 +49,9 @@ public class Service {
             String volume = discos.get(0).getVolume();
             String UUID = discos.get(0).getUUID();
             Double volumeTotal = convertBytesToGB(discos.stream().filter(d -> !Objects.equals(d.getVolume(), volume)).mapToLong(Volume::getTotal).sum());
+            System.out.println("Volume total " + volumeTotal);
             Double disponivelTotal = convertBytesToGB(discos.stream().filter(d -> !Objects.equals(d.getVolume(), volume)).mapToLong(Volume::getDisponivel).sum());
+            System.out.println("Disponivel total " + disponivelTotal);
             especificacaoComponente.add(especificacaoComponenteDAO.getComponenteDisco(UUID,volumeTotal,disponivelTotal));
         } else {
             especificacaoComponente.add(especificacaoComponenteDAO.getComponenteDisco(discos.get(0).getUUID(),
