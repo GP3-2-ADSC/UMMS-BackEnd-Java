@@ -12,10 +12,7 @@ import com.mycompany.retria.exception.ValidacaoException;
 import com.mycompany.retria.validadores.ValidadorDeComponentes;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
+import java.util.*;
 
 public class Service {
     private Administrador adm;
@@ -48,11 +45,15 @@ public class Service {
         especificacaoComponente.add(especificacaoComponenteDAO.getComponenteCpu(looca.getProcessador()));
         especificacaoComponente.add(especificacaoComponenteDAO.getComponenteMemoria(looca.getMemoria()));
 
-        for (Volume disco : discos) {
-            System.out.println("VOCÊ TEM " + discos.size() + " discos\n");
-            System.out.println("DISCO ATUAL\n");
-            System.out.println(disco);
-            especificacaoComponente.add(especificacaoComponenteDAO.getComponenteDisco(disco));
+        if (discos.size() > 1) {
+            String volume = discos.get(0).getVolume();
+            String UUID = discos.get(0).getUUID();
+            Double volumeTotal = convertBytesToGB(discos.stream().filter(d -> !Objects.equals(d.getVolume(), volume)).mapToLong(Volume::getTotal).sum());
+            Double disponivelTotal = convertBytesToGB(discos.stream().filter(d -> !Objects.equals(d.getVolume(), volume)).mapToLong(Volume::getDisponivel).sum());
+            especificacaoComponente.add(especificacaoComponenteDAO.getComponenteDisco(UUID,volumeTotal,disponivelTotal));
+        } else {
+            especificacaoComponente.add(especificacaoComponenteDAO.getComponenteDisco(discos.get(0).getUUID(),
+                    convertBytesToGB(discos.get(0).getTotal()),convertBytesToGB(discos.get(0).getDisponivel())));
         }
 
         maquinaUltrassomEspec.add(maquinaUltrassomEspecificadaDAO.getMaquiUltassomEspecCPU(100.0,
@@ -68,23 +69,16 @@ public class Service {
                         .findFirst().get().getId_especificacao_componente()
         ));
 
-        for (int i = 0; i < discos.size(); i++) {
-            Volume disco = discos.get(i);
-            if (i > 0) {
-                maquinaUltrassomEspec.add(maquinaUltrassomEspecificadaDAO.getMaquiUltassomEspecDISCO(convertBytesToGB(disco.getTotal()),
-                        maquinaUltrassom.getIdMaquina(), especificacaoComponente.stream()
-                                .filter(e -> e.getTipoComponente().equals(TipoComponente.DISCO))
-                                .skip(1).findFirst().get().getId_especificacao_componente()
-                ));
-            } else {
-                maquinaUltrassomEspec.add(maquinaUltrassomEspecificadaDAO.getMaquiUltassomEspecDISCO(convertBytesToGB(disco.getTotal()),
-                        maquinaUltrassom.getIdMaquina(), especificacaoComponente.stream()
-                                .filter(e -> e.getTipoComponente().equals(TipoComponente.DISCO))
-                                .findFirst().get().getId_especificacao_componente()
-                ));
-            }
-        }
 
+        String volume = discos.get(0).getVolume();
+        maquinaUltrassomEspec.add(maquinaUltrassomEspecificadaDAO.getMaquiUltassomEspecDISCO(
+                convertBytesToGB(discos.stream().filter(d -> !Objects.equals(d.getVolume(), volume))
+                        .mapToLong(Volume::getTotal).sum()),
+                maquinaUltrassom.getIdMaquina(), especificacaoComponente.stream()
+                        .filter(e -> e.getTipoComponente().equals(TipoComponente.DISCO))
+                        .findFirst().get().getId_especificacao_componente()
+
+        ));
     }
 
 

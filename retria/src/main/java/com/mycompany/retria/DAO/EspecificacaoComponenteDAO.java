@@ -139,8 +139,8 @@ public class EspecificacaoComponenteDAO {
                 dados.getTipoComponente(), dados.getNome_fabricante(), dados.getDescricao_componente(),dados.getNumero_serial());
     }
 
-    public EspecificacaoComponente getComponenteDisco(Volume disco) {
-        String nomeDisco = String.format("HD/SSD - %.0f GB", service.convertBytesToGB(disco.getTotal()));
+    public EspecificacaoComponente getComponenteDisco(String volume, Double volumeTotal, Double disponivelTotal) {
+        String nomeDisco = String.format("HD/SSD - %.0f GB", volumeTotal);
         List<EspecificacaoComponente> especificacaoComponentes =
                 con.query(String.format("""
                         select
@@ -151,7 +151,7 @@ public class EspecificacaoComponenteDAO {
                             descricao_componente = '%s'
                         OR
                             numero_serial = '%s'
-                        """, nomeDisco,disco.getUUID()), new BeanPropertyRowMapper<>(EspecificacaoComponente.class));
+                        """, nomeDisco,volume), new BeanPropertyRowMapper<>(EspecificacaoComponente.class));
 
         List<EspecificacaoComponente> especificacaoComponentesLocal =
                 conMysql.query(String.format("""
@@ -163,12 +163,12 @@ public class EspecificacaoComponenteDAO {
                             descricao_componente = '%s'
                         OR
                             numero_serial = '%s'
-                        """, nomeDisco,disco.getUUID()), new BeanPropertyRowMapper<>(EspecificacaoComponente.class));
+                        """, nomeDisco,volume), new BeanPropertyRowMapper<>(EspecificacaoComponente.class));
 
         if (especificacaoComponentes.isEmpty()) {
             con.execute(String.format("insert into especificacao_componente" +
                             "(tipo_componente,descricao_componente, numero_serial) values ('%s', '%s','%s')",
-                    "DISCO",nomeDisco, disco.getUUID()));
+                    "DISCO",nomeDisco, volume));
 
             especificacaoComponentes =
                     con.query(String.format("""
@@ -180,7 +180,7 @@ public class EspecificacaoComponenteDAO {
                                 descricao_componente = '%s'
                             OR
                                 numero_serial = '%s'
-                            """, nomeDisco,disco.getUUID()), new BeanPropertyRowMapper<>(EspecificacaoComponente.class));
+                            """, nomeDisco,volume), new BeanPropertyRowMapper<>(EspecificacaoComponente.class));
 
         }
 
@@ -189,7 +189,7 @@ public class EspecificacaoComponenteDAO {
 
             conMysql.execute(String.format("insert into especificacao_componente" +
                             "(id_especificacao_componente,tipo_componente,descricao_componente, numero_serial) values (%d,'%s', '%s','%s')",
-                    dados.getId_especificacao_componente(),"DISCO",nomeDisco, disco.getUUID()));
+                    dados.getId_especificacao_componente(),"DISCO",nomeDisco, volume));
         }
 
         EspecificacaoComponente dados = especificacaoComponentes.get(0);
