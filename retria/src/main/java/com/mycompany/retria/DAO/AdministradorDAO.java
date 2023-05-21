@@ -73,7 +73,7 @@ public class AdministradorDAO {
         if (administradoresLocal.isEmpty()) {
             
             Administrador dados = administradores.get(0);
-            empresaDAO.setEmpresaBDLocal(dados.getId_administrador());
+            empresaDAO.setEmpresaBDLocal(dados.getFk_empresa());
             conMysql.execute(String.format("insert into administrador values"
                     + " (%d, '%s', '%s', '%s', '%s', '%s', %d, %d)",
                     dados.getId_administrador(), dados.getNome_administrador(),
