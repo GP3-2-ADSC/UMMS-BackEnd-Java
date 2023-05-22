@@ -73,10 +73,12 @@ public class Service {
         for (int i = 0; i < especificacaoComponente.size(); i++) {
             EspecificacaoComponente esAtual = especificacaoComponente.get(i);
 
-            maquinaUltrassomEspec.add(maquinaUltrassomEspecificadaDAO.
-                    getMaquiUltassomEspecDISCO(100.0,maquinaUltrassom.
-                            getIdMaquina(),esAtual.getId_especificacao_componente()));
-
+            System.out.println("Passando essa maquina " + esAtual);
+            if (esAtual.getTipoComponente().equals(TipoComponente.DISCO)) {
+                maquinaUltrassomEspec.add(maquinaUltrassomEspecificadaDAO.
+                        getMaquiUltassomEspecDISCO(100.0,maquinaUltrassom.
+                                getIdMaquina(),esAtual.getId_especificacao_componente()));
+            }
         }
 
     }
