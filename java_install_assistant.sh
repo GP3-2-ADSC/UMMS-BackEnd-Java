@@ -92,8 +92,8 @@ sleep 5
 
 echo "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) Iniciando serviço e configurando docker"
 
-sudo service docker start
 systemctl enable docker
+sudo service docker start
 sleep 2
 
 echo "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) Verificando versão do docker"
