@@ -64,27 +64,19 @@ public class Service {
         ));
 
         maquinaUltrassomEspec.add(maquinaUltrassomEspecificadaDAO.getMaquiUltassomEspecRAM(
-                convertBytesToGB(looca.getMemoria().getTotal()),
+                100.0,
                 maquinaUltrassom.getIdMaquina(),
                 especificacaoComponente.stream().filter(e -> e.getTipoComponente().equals(TipoComponente.RAM))
                         .findFirst().get().getId_especificacao_componente()
         ));
 
-        for (int i = 0; i < discos.size(); i++) {
-            Volume disco = discos.get(i);
-            if (i > 0) {
-                maquinaUltrassomEspec.add(maquinaUltrassomEspecificadaDAO.getMaquiUltassomEspecDISCO(convertBytesToGB(disco.getTotal()),
-                        maquinaUltrassom.getIdMaquina(), especificacaoComponente.stream()
-                                .filter(e -> e.getTipoComponente().equals(TipoComponente.DISCO))
-                                .skip(i).findFirst().get().getId_especificacao_componente()
-                ));
-            } else {
-                maquinaUltrassomEspec.add(maquinaUltrassomEspecificadaDAO.getMaquiUltassomEspecDISCO(convertBytesToGB(disco.getTotal()),
-                        maquinaUltrassom.getIdMaquina(), especificacaoComponente.stream()
-                                .filter(e -> e.getTipoComponente().equals(TipoComponente.DISCO))
-                                .findFirst().get().getId_especificacao_componente()
-                ));
-            }
+        for (int i = 0; i < especificacaoComponente.size(); i++) {
+            EspecificacaoComponente esAtual = especificacaoComponente.get(i);
+
+            maquinaUltrassomEspec.add(maquinaUltrassomEspecificadaDAO.
+                    getMaquiUltassomEspecDISCO(100.0,maquinaUltrassom.
+                            getIdMaquina(),esAtual.getId_especificacao_componente()));
+
         }
 
     }
