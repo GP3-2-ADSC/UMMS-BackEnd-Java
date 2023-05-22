@@ -153,7 +153,7 @@ public class EspecificacaoComponenteDAO {
                             especificacao_componente
                         where
                             descricao_componente = '%s'
-                        OR
+                        and
                             numero_serial = '%s'
                         """, nomeDisco,disco.getUUID()), new BeanPropertyRowMapper<>(EspecificacaoComponente.class));
 
@@ -165,7 +165,7 @@ public class EspecificacaoComponenteDAO {
                             especificacao_componente
                         where
                             descricao_componente = '%s'
-                        OR
+                        and
                             numero_serial = '%s'
                         """, nomeDisco,disco.getUUID()), new BeanPropertyRowMapper<>(EspecificacaoComponente.class));
 
@@ -182,7 +182,7 @@ public class EspecificacaoComponenteDAO {
                                 especificacao_componente
                             where
                                 descricao_componente = '%s'
-                            OR
+                            and
                                 numero_serial = '%s'
                             """, nomeDisco,disco.getUUID()), new BeanPropertyRowMapper<>(EspecificacaoComponente.class));
 
