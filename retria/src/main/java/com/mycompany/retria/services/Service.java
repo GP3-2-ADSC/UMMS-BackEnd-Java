@@ -49,7 +49,12 @@ public class Service {
             System.out.println("VOCÊ TEM " + discos.size() + " discos\n");
             System.out.println("DISCO ATUAL\n");
             System.out.println(disco);
-            especificacaoComponente.add(especificacaoComponenteDAO.getComponenteDisco(disco));
+
+            EspecificacaoComponente retorno = especificacaoComponenteDAO.getComponenteDisco(disco);
+            if (retorno != null) {
+                especificacaoComponente.add(retorno);
+            }
+
         }
 
         maquinaUltrassomEspec.add(maquinaUltrassomEspecificadaDAO.getMaquiUltassomEspecCPU(100.0,
@@ -124,7 +129,6 @@ public class Service {
 
                 for (int i = 0; i < componentesDisc.size(); i++) {
                     try {
-                        if (componentesDisc.get(i) != null) {
                             System.out.println("tamanho da componentes " + componentesDisc.size());
                             System.out.println("VOLTA " + i);
                             EspecificacaoComponente especAtual = componentesDisc.get(i);
@@ -138,7 +142,7 @@ public class Service {
                                     .equals(especAtual.getNumero_serial())).findFirst().get();
 
                             validadorDeComponentes.validarDisco(discoAtual, fkDisco);
-                        }
+
                     } catch (ValidacaoException e) {
                         System.out.println(e);
                     }

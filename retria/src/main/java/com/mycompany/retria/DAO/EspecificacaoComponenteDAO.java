@@ -205,7 +205,12 @@ public class EspecificacaoComponenteDAO {
             componentesCadastrados.add(componenteACadastrar);
             return componenteACadastrar;
         } else {
-            return componentesCadastrados.contains(componenteACadastrar) ? null : componenteACadastrar;
+            for (EspecificacaoComponente e : componentesCadastrados){
+                if (e.getNumero_serial().equalsIgnoreCase(componenteACadastrar.getNumero_serial())) {
+                    return null;
+                }
+            }
         }
+        return componenteACadastrar;
     }
 }
