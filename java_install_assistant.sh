@@ -88,9 +88,11 @@ echo "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) Instalando o Docker..."
 
 apt install -y docker.io
 
+sleep 5
+
 echo "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) Iniciando serviço e configurando docker"
 
-systemctl start docker
+sudo service docker start
 systemctl enable docker
 sleep 2
 
