@@ -71,7 +71,7 @@ public class Service {
                 maquinaUltrassomEspec.add(maquinaUltrassomEspecificadaDAO.getMaquiUltassomEspecDISCO(convertBytesToGB(disco.getTotal()),
                         maquinaUltrassom.getIdMaquina(), especificacaoComponente.stream()
                                 .filter(e -> e.getTipoComponente().equals(TipoComponente.DISCO))
-                                .skip(1).findFirst().get().getId_especificacao_componente()
+                                .skip(i).findFirst().get().getId_especificacao_componente()
                 ));
             } else {
                 maquinaUltrassomEspec.add(maquinaUltrassomEspecificadaDAO.getMaquiUltassomEspecDISCO(convertBytesToGB(disco.getTotal()),
@@ -124,19 +124,21 @@ public class Service {
 
                 for (int i = 0; i < componentesDisc.size(); i++) {
                     try {
-                        System.out.println("tamanho da componentes " + componentesDisc.size());
-                        System.out.println("VOLTA " + i);
-                        EspecificacaoComponente especAtual = componentesDisc.get(i);
+                        if (componentesDisc.get(i) != null) {
+                            System.out.println("tamanho da componentes " + componentesDisc.size());
+                            System.out.println("VOLTA " + i);
+                            EspecificacaoComponente especAtual = componentesDisc.get(i);
 
-                        Integer fkDiscoEspec = especAtual.getId_especificacao_componente();
+                            Integer fkDiscoEspec = especAtual.getId_especificacao_componente();
 
-                        Integer fkDisco = maquinaUltrassomEspec.stream().filter(e -> e.getFk_especificacao_componente()
-                                .equals(fkDiscoEspec)).findFirst().get().getId_especificacao_componente_maquina();
+                            Integer fkDisco = maquinaUltrassomEspec.stream().filter(e -> e.getFk_especificacao_componente()
+                                    .equals(fkDiscoEspec)).findFirst().get().getId_especificacao_componente_maquina();
 
-                        Volume discoAtual = discos.stream().filter(e -> e.getUUID()
-                                .equals(especAtual.getNumero_serial())).findFirst().get();
+                            Volume discoAtual = discos.stream().filter(e -> e.getUUID()
+                                    .equals(especAtual.getNumero_serial())).findFirst().get();
 
-                        validadorDeComponentes.validarDisco(discoAtual, fkDisco);
+                            validadorDeComponentes.validarDisco(discoAtual, fkDisco);
+                        }
                     } catch (ValidacaoException e) {
                         System.out.println(e);
                     }

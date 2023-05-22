@@ -40,7 +40,7 @@ public class TesteMaquina {
 
         for (Disco disco : discos) {
             System.out.println(disco.getSerial());
-            System.out.println(disco.getTamanho());
+            System.out.println(convertBytesToGB(disco.getTamanho()));
             System.out.println(disco.getNome());
             System.out.println("\n------------------\n");
         }
@@ -49,13 +49,13 @@ public class TesteMaquina {
 
         for (Volume volume : volumes) {
             System.out.println(volume.getVolume());
-            System.out.println(volume.getTotal());
+            System.out.println(convertBytesToGB(volume.getTotal()));
             System.out.println(volume.getPontoDeMontagem());
-            System.out.println(volume.getDisponivel());
+            System.out.println(convertBytesToGB(volume.getDisponivel()));
             System.out.println("\n------------------\n");
         }
     }
-    public Double convertBytesToGB(long bytes) {
+    public static Double convertBytesToGB(long bytes) {
         return bytes / (1024.0 * 1024.0 * 1024.0);
     }
 }

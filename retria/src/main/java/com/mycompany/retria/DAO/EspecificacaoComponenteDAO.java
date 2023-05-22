@@ -11,6 +11,7 @@ import com.github.britooo.looca.api.group.processador.Processador;
 import com.mycompany.retria.MODEL.EspecificacaoComponente;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import com.mycompany.retria.services.Service;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
@@ -25,12 +26,15 @@ public class EspecificacaoComponenteDAO {
     JdbcTemplate conMysql;
     Service service = new Service();
 
+    private List<EspecificacaoComponente> componentesCadastrados;
+
 
     public EspecificacaoComponenteDAO() {
         Conexao conexao = new Conexao();
         con = conexao.getConnection();
         ConexaoMySqlEc2 conMysqlEc2 = new ConexaoMySqlEc2();
         conMysql = conMysqlEc2.getConnection();
+        componentesCadastrados = new ArrayList<>();
     }
 
     public EspecificacaoComponente getComponenteCpu(Processador processador) {
@@ -194,7 +198,14 @@ public class EspecificacaoComponenteDAO {
 
         EspecificacaoComponente dados = especificacaoComponentes.get(0);
 
-        return new EspecificacaoComponente(dados.getId_especificacao_componente(),
+        EspecificacaoComponente componenteACadastrar = new EspecificacaoComponente(dados.getId_especificacao_componente(),
                 dados.getTipoComponente(), dados.getNome_fabricante(), dados.getDescricao_componente(), dados.getNumero_serial());
+
+        if (componentesCadastrados.size() == 0) {
+            componentesCadastrados.add(componenteACadastrar);
+            return componenteACadastrar;
+        } else {
+            return componentesCadastrados.contains(componenteACadastrar) ? null : componenteACadastrar;
+        }
     }
 }
