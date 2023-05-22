@@ -123,8 +123,9 @@ public class Service {
 
 
                 for (int i = 0; i < componentesDisc.size(); i++) {
-                    System.out.println("tamanho da componentes " + componentesDisc.size());
                     try {
+                        System.out.println("tamanho da componentes " + componentesDisc.size());
+                        System.out.println("VOLTA " + i);
                         EspecificacaoComponente especAtual = componentesDisc.get(i);
 
                         Integer fkDiscoEspec = especAtual.getId_especificacao_componente();
