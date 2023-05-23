@@ -1,0 +1,18 @@
+---- Informações do Sistema ----
+Fabricante: GNU/Linux
+Sistema Operacional: Ubuntu
+Arquitetura: 64
+Permissões: false
+Inicializado: 2023-05-23T14:29:30Z
+--------------------------------
+
+---- Soluções para resolver erro Ping ----
+- Verifique se o endereço IP está correto;
+- Verifique a conexão de rede;
+- Verifique se o destino está acessível;
+- Verifique as configurações de firewall;
+- Caso nenhuma das opções funcione, por favor entre em contato;
+------------------------------------------
+
+23/05/2023 14:33:10 - Erro ping 0.222.001
+23/05/2023 14:34:09 - Erro ping 0.222.001
