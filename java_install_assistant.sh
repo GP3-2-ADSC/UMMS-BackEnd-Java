@@ -11,7 +11,7 @@ sleep 2
 echo "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) Olá! Vou te ajudar a instalar o Java 17."
 echo "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) Verificando se o Java já está instalado..."
 
-java -version
+java --version
 if [ $? -eq 0 ]; then
     echo "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) O Java já está instalado."
     exit 0
@@ -38,7 +38,7 @@ sudo apt-get install -y oracle-java17-set-default
 
 echo "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) Java 17 instalado com sucesso!"
 
-java -version
+java --version
 
 sleep 5
 
@@ -53,7 +53,7 @@ echo "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) Olá! Vou te ajudar a inst
 echo "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) Verificando se o Docker já está instalado..."
 sleep 2
 
-docker -version
+docker --version
 if [ $? -eq 0 ]; then
     echo "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) O Docker já está instalado."
     exit 0
