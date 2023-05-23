@@ -29,12 +29,11 @@ fi
 echo "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) Adicionando o repositório do Java 17..."
 
 sudo apt-add-repository --yes ppa:linuxuprising/java
-sudo apt-get update
+sudo apt update
 
 echo "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) Instalando o Java 17..."
 
-sudo apt-get install -y oracle-java17-installer
-sudo apt-get install -y oracle-java17-set-default
+sudo apt install -y oracle-java17-installer && sudo apt install -y oracle-java17-set-default
 
 echo "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) Java 17 instalado com sucesso!"
 
@@ -43,6 +42,7 @@ java --version
 sleep 5
 
 echo "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) Você deseja instalar o docker?"
+read inst
 
 if [ "$inst" != "S" ] && [ "$inst" != "s" ]; then
     echo "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) Instalação cancelada. Até a próxima!"
@@ -54,6 +54,7 @@ echo "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) Verificando se o Docker j�
 sleep 2
 
 docker --version
+
 if [ $? -eq 0 ]; then
     echo "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) O Docker já está instalado."
     exit 0
