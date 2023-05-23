@@ -36,12 +36,12 @@ sleep 3
 echo "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) Instalando o Java 17..."
 
 sleep 2
+if [ $VERSAO -eq 17 ]
+		then
+            sudo apt install default-jre ; apt install openjdk-17-jre-headless; --yes
 
-
-sudo apt install default-jre ; apt install openjdk-17-jre-headless; -y
-
-echo "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) Java 17 instalado com sucesso!"
-
+        echo "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) Java 17 instalado com sucesso!"
+fi
 java --version
 
 sleep 5
