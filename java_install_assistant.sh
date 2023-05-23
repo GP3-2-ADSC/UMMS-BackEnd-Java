@@ -30,10 +30,15 @@ echo "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) Adicionando o repositório
 
 sudo apt-add-repository --yes ppa:linuxuprising/java
 sudo apt update
+sleep 3
+
 
 echo "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) Instalando o Java 17..."
 
-sudo apt install -y oracle-java17-installer && sudo apt install -y oracle-java17-set-default
+sleep 2
+
+
+sudo apt install default-jre ; apt install openjdk-17-jre-headless; -y
 
 echo "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) Java 17 instalado com sucesso!"
 
@@ -41,7 +46,7 @@ java --version
 
 sleep 5
 
-echo "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) Você deseja instalar o docker?"
+echo "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) Você deseja instalar o docker? (S/N)"
 read inst
 
 if [ "$inst" != "S" ] && [ "$inst" != "s" ]; then
