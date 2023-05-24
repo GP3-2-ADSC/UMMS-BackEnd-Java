@@ -28,8 +28,8 @@ public class ConexaoMySqlEc2 {
         dataSource.setDriverClassName("com.mysql.cj.jdbc.Driver");
 
         // setUrl cria um arquivo de com o nome do banco que vc especificar no argumento // Mysql = jdbc:mysql://localhost:3306/nomeBanco
-        //dataSource.setUrl("jdbc:mysql://localhost:3306/retria");
-        dataSource.setUrl("jdbc:mysql://0.0.0.0:3306/retria?autoReconnect=true&useSSL=false");
+        dataSource.setUrl("jdbc:mysql://localhost:3306/retria");
+        //dataSource.setUrl("jdbc:mysql://0.0.0.0:3306/retria?autoReconnect=true&useSSL=false");
 
         // setUsername recebe o nome do usuario como argumento // root
         dataSource.setUsername("root");

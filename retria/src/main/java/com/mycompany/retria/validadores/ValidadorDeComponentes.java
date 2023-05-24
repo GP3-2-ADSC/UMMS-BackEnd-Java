@@ -97,6 +97,7 @@ public class ValidadorDeComponentes {
     public void validarDisco(Volume dados, Integer fkMaquinaUltrassom) throws ValidacaoException {
         Double emUso = service.convertBytesToGB(dados.getTotal() - dados.getDisponivel());
         Double porcentagemDeUsoDisc = (emUso * 100) / service.convertBytesToGB(dados.getTotal());
+        System.out.println("---------------------------- " + porcentagemDeUsoDisc);
         metricaComponente = new MetricaComponente(null, porcentagemDeUsoDisc, fkMaquinaUltrassom);
         Integer fkMetricaComponente = metricaComponenteDAO.setMetrica(metricaComponente);
         String frase = "";

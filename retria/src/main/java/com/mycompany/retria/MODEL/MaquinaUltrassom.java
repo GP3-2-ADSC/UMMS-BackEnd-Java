@@ -11,20 +11,19 @@ package com.mycompany.retria.MODEL;
 public class MaquinaUltrassom {
     private Integer idMaquina;
     private String sistemaOperacional;
-    private String idProcessador;
-
-    private Integer fkAdmin;
-
+    private String numeroSerialMaquina;
+    private String statusMaquina;
+    private Integer fkAdministrador;
     private Integer fkEmpresa;
-    private String isAtivo;
 
-    public MaquinaUltrassom(Integer idMaquina, String sistemaOperacional, String idProcessador, Integer fkAdmin, Integer fkEmpresa, String isAtivo) {
+
+    public MaquinaUltrassom(Integer idMaquina, String sistemaOperacional, String idProcessador, String isAtivo,Integer fkAdmin, Integer fkEmpresa) {
         this.idMaquina = idMaquina;
         this.sistemaOperacional = sistemaOperacional;
-        this.idProcessador = idProcessador;
-        this.fkAdmin = fkAdmin;
+        this.numeroSerialMaquina = idProcessador;
+        this.statusMaquina = isAtivo;
+        this.fkAdministrador = fkAdmin;
         this.fkEmpresa = fkEmpresa;
-        this.isAtivo = isAtivo;
     }
 
 
@@ -47,20 +46,12 @@ public class MaquinaUltrassom {
         this.sistemaOperacional = sistemaOperacional;
     }
 
-    public String getIdProcessador() {
-        return idProcessador;
+    public String getNumeroSerialMaquina() {
+        return numeroSerialMaquina;
     }
 
-    public void setIdProcessador(String idProcessador) {
-        this.idProcessador = idProcessador;
-    }
-
-    public Integer getFkAdmin() {
-        return fkAdmin;
-    }
-
-    public void setFkAdmin(Integer fkAdmin) {
-        this.fkAdmin = fkAdmin;
+    public void setNumeroSerialMaquina(String numeroSerialMaquina) {
+        this.numeroSerialMaquina = numeroSerialMaquina;
     }
 
     public Integer getFkEmpresa() {
@@ -71,22 +62,31 @@ public class MaquinaUltrassom {
         this.fkEmpresa = fkEmpresa;
     }
 
+    public String getStatusMaquina() {
+        return statusMaquina;
+    }
+
+    public void setStatusMaquina(String statusMaquina) {
+        this.statusMaquina = statusMaquina;
+    }
+
+    public Integer getFkAdministrador() {
+        return fkAdministrador;
+    }
+
+    public void setFkAdministrador(Integer fkAdministrador) {
+        this.fkAdministrador = fkAdministrador;
+    }
+
     @Override
     public String toString() {
         return "MaquinaUltrassom{" +
                 "idMaquina=" + idMaquina +
                 ", sistemaOperacional='" + sistemaOperacional + '\'' +
-                ", idProcessador='" + idProcessador + '\'' +
-                ", fkAdmin=" + fkAdmin +
+                ", idProcessador='" + numeroSerialMaquina + '\'' +
+                ", statusMaquina='" + statusMaquina + '\'' +
+                ", fkAdministrador=" + fkAdministrador +
                 ", fkEmpresa=" + fkEmpresa +
                 '}';
-    }
-
-    public String getIsAtivo() {
-        return isAtivo;
-    }
-
-    public void setIsAtivo(String isAtivo) {
-        this.isAtivo = isAtivo;
     }
 }

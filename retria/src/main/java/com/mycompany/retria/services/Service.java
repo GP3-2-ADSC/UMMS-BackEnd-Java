@@ -43,7 +43,9 @@ public class Service {
         maquinaUltrassom = maquinaUltrassomDAO.getMaquinaUltrassom(looca.getProcessador().getId(), adm.getId_administrador(), adm.getFk_empresa(),
                 looca.getSistema().getSistemaOperacional());
 
-        if (!maquinaUltrassom.equals("true")) {
+        System.out.println(maquinaUltrassom);
+
+        if (!maquinaUltrassom.getStatusMaquina().equals("true")) {
             System.out.println("Maquina não autorizada! Contate  o seu administrador!");
             return;
         }
@@ -99,7 +101,7 @@ public class Service {
 
 
     public void validarMetrica() throws ValidacaoException {
-        if (!maquinaUltrassom.equals("true")) {
+        if (!maquinaUltrassom.getStatusMaquina().equals("true")) {
             System.out.println("Maquina não autorizada! Contate  o seu administrador!");
             return;
         }
@@ -162,8 +164,9 @@ public class Service {
 
                         Volume discoAtual = discos.stream().filter(e -> e.getUUID()
                                 .equals(especAtual.getNumero_serial())).findFirst().get();
-
-                        validadorDeComponentes.validarDisco(discoAtual, fkDisco);
+                        if (discoAtual.getTotal() != 0){
+                            validadorDeComponentes.validarDisco(discoAtual, fkDisco);
+                        }
 
                     } catch (ValidacaoException e) {
                         System.out.println(e);
