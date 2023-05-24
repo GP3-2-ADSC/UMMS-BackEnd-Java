@@ -43,7 +43,7 @@ public class Service {
         maquinaUltrassom = maquinaUltrassomDAO.getMaquinaUltrassom(looca.getProcessador().getId(), adm.getId_administrador(), adm.getFk_empresa(),
                 looca.getSistema().getSistemaOperacional());
 
-        if (!maquinaUltrassom.getIsAtivo()) {
+        if (!maquinaUltrassom.equals("true")) {
             System.out.println("Maquina não autorizada! Contate  o seu administrador!");
             return;
         }
@@ -99,7 +99,7 @@ public class Service {
 
 
     public void validarMetrica() throws ValidacaoException {
-        if (!maquinaUltrassom.getIsAtivo()) {
+        if (!maquinaUltrassom.equals("true")) {
             System.out.println("Maquina não autorizada! Contate  o seu administrador!");
             return;
         }
