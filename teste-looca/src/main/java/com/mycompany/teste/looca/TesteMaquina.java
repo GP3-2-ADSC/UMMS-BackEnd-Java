@@ -35,25 +35,20 @@ public class TesteMaquina {
     public static void main(String[] args) throws IOException {
         Looca looca = new Looca();
         Inovacao ping = new Inovacao();
-        List<Disco> discos = looca.getGrupoDeDiscos().getDiscos();
-        List<Volume> volumes = looca.getGrupoDeDiscos().getVolumes();
+        List<RedeInterface> redes = looca.getRede().getGrupoDeInterfaces().getInterfaces();
 
-        for (Disco disco : discos) {
-            System.out.println(disco.getSerial());
-            System.out.println(convertBytesToGB(disco.getTamanho()));
-            System.out.println(disco.getNome());
-            System.out.println("\n------------------\n");
+
+        RedeInterface redeAtual = redes.stream().filter(r -> r.getBytesRecebidos() > 0 && r.getBytesEnviados() > 0).findFirst().get();
+
+        long bytesRec1 = redeAtual.getBytesRecebidos();
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
         }
+        long bytesRec2 = redeAtual.getBytesRecebidos();
+        System.out.println(bytesRec2 - bytesRec1);
 
-        System.out.println("\n--------------------------------------------\n");
-
-        for (Volume volume : volumes) {
-            System.out.println(volume.getVolume());
-            System.out.println(convertBytesToGB(volume.getTotal()));
-            System.out.println(volume.getPontoDeMontagem());
-            System.out.println(convertBytesToGB(volume.getDisponivel()));
-            System.out.println("\n------------------\n");
-        }
     }
     public static Double convertBytesToGB(long bytes) {
         return bytes / (1024.0 * 1024.0 * 1024.0);

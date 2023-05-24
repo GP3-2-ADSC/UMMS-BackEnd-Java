@@ -4,6 +4,7 @@ import com.github.britooo.looca.api.group.discos.Disco;
 import com.github.britooo.looca.api.group.discos.Volume;
 import com.github.britooo.looca.api.group.memoria.Memoria;
 import com.github.britooo.looca.api.group.processador.Processador;
+import com.github.britooo.looca.api.group.rede.RedeInterface;
 import com.mycompany.retria.DAO.AlertaDAO;
 import com.mycompany.retria.DAO.MetricaComponenteDAO;
 import com.mycompany.retria.MODEL.Alerta;
@@ -11,6 +12,7 @@ import com.mycompany.retria.MODEL.MetricaComponente;
 import com.mycompany.retria.exception.ValidacaoException;
 import com.mycompany.retria.services.Service;
 import com.mycompany.retria.services.SlackM;
+import org.checkerframework.checker.units.qual.Time;
 
 import java.util.List;
 
@@ -123,6 +125,24 @@ public class ValidadorDeComponentes {
         }
     }
 
+    public void validarRede(RedeInterface redeAtual, Integer fkRede) {
+        long bytesRec1 = redeAtual.getBytesRecebidos();
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+        long bytesRec2 = redeAtual.getBytesRecebidos();
+
+        Double mbpsAtual = service.convertBytesToMB(bytesRec2 - bytesRec1);
+
+        System.out.println("Bytes recebidos 1: " + bytesRec1);
+        System.out.println("Bytes recebidos 2: " + bytesRec2);
+        System.out.println("Velocidade de Download da Internet " + mbpsAtual);
+        metricaComponente = new MetricaComponente(null, mbpsAtual, fkRede);
+        Integer fkMetricaComponente = metricaComponenteDAO.setMetrica(metricaComponente);
+
+    }
 }
 
 

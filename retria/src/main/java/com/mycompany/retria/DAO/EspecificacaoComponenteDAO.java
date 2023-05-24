@@ -8,6 +8,7 @@ import com.github.britooo.looca.api.group.discos.Disco;
 import com.github.britooo.looca.api.group.discos.Volume;
 import com.github.britooo.looca.api.group.memoria.Memoria;
 import com.github.britooo.looca.api.group.processador.Processador;
+import com.github.britooo.looca.api.group.rede.RedeInterface;
 import com.mycompany.retria.MODEL.EspecificacaoComponente;
 
 import java.sql.SQLException;
@@ -212,5 +213,65 @@ public class EspecificacaoComponenteDAO {
             }
         }
         return componenteACadastrar;
+    }
+
+    public EspecificacaoComponente getRede(List<RedeInterface> interfaces) {
+        RedeInterface redeAtual = interfaces.stream().
+                filter(r -> r.getBytesRecebidos() > 0 && r.getBytesEnviados() > 0).findFirst().get();
+
+        List<EspecificacaoComponente> especificacaoComponentes =
+                con.query(String.format("""
+                        select
+                            *
+                        from
+                            especificacao_componente
+                        where
+                            descricao_componente = '%s'
+                        and
+                            numero_serial = '%s'
+                        """, redeAtual.getNomeExibicao(),redeAtual.getEnderecoMac()), new BeanPropertyRowMapper<>(EspecificacaoComponente.class));
+
+        List<EspecificacaoComponente> especificacaoComponentesLocal =
+                conMysql.query(String.format("""
+                        select
+                            *
+                        from
+                            especificacao_componente
+                        where
+                            descricao_componente = '%s'
+                        and
+                            numero_serial = '%s'
+                        """, redeAtual.getNomeExibicao(),redeAtual.getEnderecoMac()), new BeanPropertyRowMapper<>(EspecificacaoComponente.class));
+
+        if (especificacaoComponentes.isEmpty()) {
+            con.execute(String.format("insert into especificacao_componente" +
+                            "(tipo_componente,descricao_componente, numero_serial) values ('%s', '%s','%s')",
+                    "REDE",redeAtual.getNomeExibicao(), redeAtual.getEnderecoMac()));
+
+            especificacaoComponentes =
+                    con.query(String.format("""
+                            select
+                                *
+                            from
+                                especificacao_componente
+                            where
+                                descricao_componente = '%s'
+                            and
+                                numero_serial = '%s'
+                            """, redeAtual.getNomeExibicao(),redeAtual.getEnderecoMac()), new BeanPropertyRowMapper<>(EspecificacaoComponente.class));
+
+        }
+
+        if (especificacaoComponentesLocal.isEmpty()) {
+            EspecificacaoComponente dados = especificacaoComponentes.get(0);
+
+            conMysql.execute(String.format("insert into especificacao_componente" +
+                            "(id_especificacao_componente,tipo_componente,descricao_componente, numero_serial) values (%d,'%s', '%s','%s')",
+                    dados.getId_especificacao_componente(),"REDE",redeAtual.getNomeExibicao(),redeAtual.getEnderecoMac()));
+        }
+
+        EspecificacaoComponente dados = especificacaoComponentes.get(0);
+        return new EspecificacaoComponente(dados.getId_especificacao_componente(),
+                dados.getTipoComponente(), dados.getNome_fabricante(), dados.getDescricao_componente(),dados.getNumero_serial());
     }
 }
