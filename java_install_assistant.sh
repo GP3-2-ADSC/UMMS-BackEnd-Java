@@ -29,7 +29,7 @@ fi
 echo "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) Adicionando o repositório do Java 17..."
 
 sudo apt-add-repository --yes ppa:linuxuprising/java
-sudo apt update
+sudo apt update && sudo apt upgrade
 sleep 3
 
 
