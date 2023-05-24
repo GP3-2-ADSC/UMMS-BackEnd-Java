@@ -90,6 +90,6 @@ public class MaquinaUltrassomDAO {
         MaquinaUltrassom dados = maquinasUltra.get(0);
 
         return new MaquinaUltrassom(dados.getIdMaquina(),dados.getSistemaOperacional(),dados.getIdProcessador(),
-                dados.getFkAdmin(), dados.getFkEmpresa());
+                dados.getFkAdmin(), dados.getFkEmpresa(),dados.getIsAtivo());
     }
 }

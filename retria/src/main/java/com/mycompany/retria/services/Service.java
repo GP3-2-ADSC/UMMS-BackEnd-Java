@@ -1,7 +1,6 @@
 package com.mycompany.retria.services;
 
 import com.github.britooo.looca.api.core.Looca;
-import com.github.britooo.looca.api.group.discos.Disco;
 import com.github.britooo.looca.api.group.discos.Volume;
 import com.github.britooo.looca.api.group.rede.RedeInterface;
 import com.mycompany.retria.DAO.AdministradorDAO;
@@ -10,6 +9,7 @@ import com.mycompany.retria.DAO.MaquinaUltrassomDAO;
 import com.mycompany.retria.DAO.MaquinaUltrassomEspecificadaDAO;
 import com.mycompany.retria.MODEL.*;
 import com.mycompany.retria.exception.ValidacaoException;
+import com.mycompany.retria.exception.MaquinaValidacaoException;
 import com.mycompany.retria.validadores.ValidadorDeComponentes;
 
 import java.io.IOException;
@@ -43,56 +43,67 @@ public class Service {
         maquinaUltrassom = maquinaUltrassomDAO.getMaquinaUltrassom(looca.getProcessador().getId(), adm.getId_administrador(), adm.getFk_empresa(),
                 looca.getSistema().getSistemaOperacional());
 
-        especificacaoComponente.add(especificacaoComponenteDAO.getComponenteCpu(looca.getProcessador()));
-        especificacaoComponente.add(especificacaoComponenteDAO.getComponenteMemoria(looca.getMemoria()));
-        especificacaoComponente.add(especificacaoComponenteDAO.getRede(looca.getRede().getGrupoDeInterfaces().getInterfaces()));
+        if (!maquinaUltrassom.getIsAtivo()) {
+            System.out.println("Maquina não autorizada! Contate  o seu administrador!");
+            return;
+        }
 
-        for (Volume disco : discos) {
-            System.out.println("VOCÊ TEM " + discos.size() + " discos\n");
-            System.out.println("DISCO ATUAL\n");
-            System.out.println(disco);
+            especificacaoComponente.add(especificacaoComponenteDAO.getComponenteCpu(looca.getProcessador()));
+            especificacaoComponente.add(especificacaoComponenteDAO.getComponenteMemoria(looca.getMemoria()));
+            especificacaoComponente.add(especificacaoComponenteDAO.getRede(looca.getRede().getGrupoDeInterfaces().getInterfaces()));
 
-            EspecificacaoComponente retorno = especificacaoComponenteDAO.getComponenteDisco(disco);
-            if (retorno != null) {
-                especificacaoComponente.add(retorno);
+            for (Volume disco : discos) {
+                System.out.println("VOCÊ TEM " + discos.size() + " discos\n");
+                System.out.println("DISCO ATUAL\n");
+                System.out.println(disco);
+
+                EspecificacaoComponente retorno = especificacaoComponenteDAO.getComponenteDisco(disco);
+                if (retorno != null) {
+                    especificacaoComponente.add(retorno);
+                }
+
             }
+
+            maquinaUltrassomEspec.add(maquinaUltrassomEspecificadaDAO.getMaquiUltassomEspecCPU(100.0,
+                    maquinaUltrassom.getIdMaquina(),
+                    especificacaoComponente.stream().filter(e -> e.getTipoComponente().equals(TipoComponente.CPU))
+                            .findFirst().get().getId_especificacao_componente()
+            ));
+
+            maquinaUltrassomEspec.add(maquinaUltrassomEspecificadaDAO.getMaquiUltassomEspecRAM(
+                    100.0,
+                    maquinaUltrassom.getIdMaquina(),
+                    especificacaoComponente.stream().filter(e -> e.getTipoComponente().equals(TipoComponente.RAM))
+                            .findFirst().get().getId_especificacao_componente()
+            ));
+
+            for (int i = 0; i < especificacaoComponente.size(); i++) {
+                EspecificacaoComponente esAtual = especificacaoComponente.get(i);
+
+                System.out.println("Passando essa maquina " + esAtual);
+                if (esAtual.getTipoComponente().equals(TipoComponente.DISCO)) {
+                    maquinaUltrassomEspec.add(maquinaUltrassomEspecificadaDAO.
+                            getMaquiUltassomEspecDISCO(100.0, maquinaUltrassom.
+                                    getIdMaquina(), esAtual.getId_especificacao_componente()));
+                }
+            }
+
+            maquinaUltrassomEspec.add(maquinaUltrassomEspecificadaDAO.getMaquiUltassomEspecRede(
+                    maquinaUltrassom.getIdMaquina(),
+                    especificacaoComponente.stream().filter(e -> e.getTipoComponente().equals(TipoComponente.REDE))
+                            .findFirst().get().getId_especificacao_componente()
+            ));
 
         }
 
-        maquinaUltrassomEspec.add(maquinaUltrassomEspecificadaDAO.getMaquiUltassomEspecCPU(100.0,
-                maquinaUltrassom.getIdMaquina(),
-                especificacaoComponente.stream().filter(e -> e.getTipoComponente().equals(TipoComponente.CPU))
-                        .findFirst().get().getId_especificacao_componente()
-        ));
-
-        maquinaUltrassomEspec.add(maquinaUltrassomEspecificadaDAO.getMaquiUltassomEspecRAM(
-                100.0,
-                maquinaUltrassom.getIdMaquina(),
-                especificacaoComponente.stream().filter(e -> e.getTipoComponente().equals(TipoComponente.RAM))
-                        .findFirst().get().getId_especificacao_componente()
-        ));
-
-        for (int i = 0; i < especificacaoComponente.size(); i++) {
-            EspecificacaoComponente esAtual = especificacaoComponente.get(i);
-
-            System.out.println("Passando essa maquina " + esAtual);
-            if (esAtual.getTipoComponente().equals(TipoComponente.DISCO)) {
-                maquinaUltrassomEspec.add(maquinaUltrassomEspecificadaDAO.
-                        getMaquiUltassomEspecDISCO(100.0, maquinaUltrassom.
-                                getIdMaquina(), esAtual.getId_especificacao_componente()));
-            }
-        }
-
-        maquinaUltrassomEspec.add(maquinaUltrassomEspecificadaDAO.getMaquiUltassomEspecRede(
-                maquinaUltrassom.getIdMaquina(),
-                especificacaoComponente.stream().filter(e -> e.getTipoComponente().equals(TipoComponente.REDE))
-                        .findFirst().get().getId_especificacao_componente()
-        ));
-
-    }
 
 
     public void validarMetrica() throws ValidacaoException {
+        if (!maquinaUltrassom.getIsAtivo()) {
+            System.out.println("Maquina não autorizada! Contate  o seu administrador!");
+            return;
+        }
+
         List<Volume> discos = looca.getGrupoDeDiscos().getVolumes();
         ValidadorDeComponentes validadorDeComponentes = new ValidadorDeComponentes();
         Inovacao inovacao = new Inovacao();

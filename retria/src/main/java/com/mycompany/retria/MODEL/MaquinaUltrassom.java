@@ -16,13 +16,15 @@ public class MaquinaUltrassom {
     private Integer fkAdmin;
 
     private Integer fkEmpresa;
+    private Boolean isAtivo;
 
-    public MaquinaUltrassom(Integer idMaquina, String sistemaOperacional, String idProcessador, Integer fkAdmin, Integer fkEmpresa) {
+    public MaquinaUltrassom(Integer idMaquina, String sistemaOperacional, String idProcessador, Integer fkAdmin, Integer fkEmpresa, Boolean isAtivo) {
         this.idMaquina = idMaquina;
         this.sistemaOperacional = sistemaOperacional;
         this.idProcessador = idProcessador;
         this.fkAdmin = fkAdmin;
         this.fkEmpresa = fkEmpresa;
+        this.isAtivo = isAtivo;
     }
 
 
@@ -78,5 +80,13 @@ public class MaquinaUltrassom {
                 ", fkAdmin=" + fkAdmin +
                 ", fkEmpresa=" + fkEmpresa +
                 '}';
+    }
+
+    public boolean getIsAtivo() {
+        return isAtivo;
+    }
+
+    public void setIsAtivo(boolean isAtivo) {
+        this.isAtivo = isAtivo;
     }
 }
