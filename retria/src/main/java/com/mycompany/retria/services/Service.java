@@ -101,6 +101,7 @@ public class Service {
 
 
     public void validarMetrica() throws ValidacaoException {
+        MaquinaUltrassomDAO maquinaUltrassomDAO = new MaquinaUltrassomDAO();
         if (!maquinaUltrassom.getStatusMaquina().equals("true")) {
             System.out.println("Maquina não autorizada! Contate  o seu administrador!");
             return;
@@ -139,51 +140,55 @@ public class Service {
 
         new Timer().scheduleAtFixedRate(new TimerTask() {
             public void run() {
-                try {
-                    validadorDeComponentes.validarCpu(looca.getProcessador(), fkCpu);
-                } catch (ValidacaoException e) {
-                    System.out.println(e);
-                }
+                if (!maquinaUltrassomDAO.getStatusAtual(maquinaUltrassom.getNumeroSerialMaquina()).equals("true")) {
+                    System.out.println("Maquina não autorizada! Contate  o seu administrador!");
+                } else {
 
-                try {
-                    validadorDeComponentes.validarRam(looca.getMemoria(), fkRam);
-                } catch (ValidacaoException e) {
-                    System.out.println(e);
-                }
-
-                for (int i = 0; i < componentesDisc.size(); i++) {
                     try {
-                        System.out.println("tamanho da componentes " + componentesDisc.size());
-                        System.out.println("VOLTA " + i);
-                        EspecificacaoComponente especAtual = componentesDisc.get(i);
-
-                        Integer fkDiscoEspec = especAtual.getId_especificacao_componente();
-
-                        Integer fkDisco = maquinaUltrassomEspec.stream().filter(e -> e.getFk_especificacao_componente()
-                                .equals(fkDiscoEspec)).findFirst().get().getId_especificacao_componente_maquina();
-
-                        Volume discoAtual = discos.stream().filter(e -> e.getUUID()
-                                .equals(especAtual.getNumero_serial())).findFirst().get();
-                        if (discoAtual.getTotal() != 0){
-                            validadorDeComponentes.validarDisco(discoAtual, fkDisco);
-                        }
-
+                        validadorDeComponentes.validarCpu(looca.getProcessador(), fkCpu);
                     } catch (ValidacaoException e) {
                         System.out.println(e);
                     }
+
+                    try {
+                        validadorDeComponentes.validarRam(looca.getMemoria(), fkRam);
+                    } catch (ValidacaoException e) {
+                        System.out.println(e);
+                    }
+
+                    for (int i = 0; i < componentesDisc.size(); i++) {
+                        try {
+                            System.out.println("tamanho da componentes " + componentesDisc.size());
+                            System.out.println("VOLTA " + i);
+                            EspecificacaoComponente especAtual = componentesDisc.get(i);
+
+                            Integer fkDiscoEspec = especAtual.getId_especificacao_componente();
+
+                            Integer fkDisco = maquinaUltrassomEspec.stream().filter(e -> e.getFk_especificacao_componente()
+                                    .equals(fkDiscoEspec)).findFirst().get().getId_especificacao_componente_maquina();
+
+                            Volume discoAtual = discos.stream().filter(e -> e.getUUID()
+                                    .equals(especAtual.getNumero_serial())).findFirst().get();
+                            if (discoAtual.getTotal() != 0) {
+                                validadorDeComponentes.validarDisco(discoAtual, fkDisco);
+                            }
+
+                        } catch (ValidacaoException e) {
+                            System.out.println(e);
+                        }
+                    }
+
+                    validadorDeComponentes.validarRede(redeAtual, fkRede);
+
+
+                    inovacao.setIpRoteador(looca.getRede().getGrupoDeInterfaces().getInterfaces().get(0).getEnderecoIpv4().toString());
+
+                    try {
+                        inovacao.execCommand("ping -c 4 " + inovacao.getIpRoteador());
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
                 }
-
-                validadorDeComponentes.validarRede(redeAtual, fkRede);
-
-
-                inovacao.setIpRoteador(looca.getRede().getGrupoDeInterfaces().getInterfaces().get(0).getEnderecoIpv4().toString());
-
-                try {
-                    inovacao.execCommand("ping -c 4 " + inovacao.getIpRoteador());
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
-
             }
         }, 0, 10000);
 

@@ -93,4 +93,43 @@ public class MaquinaUltrassomDAO {
         return new MaquinaUltrassom(dados.getIdMaquina(),dados.getSistemaOperacional(),dados.getNumeroSerialMaquina(),
                 dados.getStatusMaquina(),dados.getFkAdministrador(), dados.getFkEmpresa());
     }
+
+    public String getStatusAtual(String idProcessador) {
+
+        List<MaquinaUltrassom> maquinasUltra = con.query(String.format("""
+                        select 
+                            m.* 
+                        from 
+                            maquina_ultrassom as m
+                        where 
+                            m.numero_serial_maquina = '%s';
+                        """, idProcessador),
+                new BeanPropertyRowMapper(MaquinaUltrassom.class));
+
+        List<MaquinaUltrassom> maquinasUltraLocal = conMysql.query(String.format("""
+                        select 
+                            m.* 
+                        from 
+                            maquina_ultrassom as m
+                        where 
+                            m.numero_serial_maquina = '%s';
+                        """, idProcessador),
+                new BeanPropertyRowMapper(MaquinaUltrassom.class));
+
+        MaquinaUltrassom dados = maquinasUltra.get(0);
+        MaquinaUltrassom dadosLocal = maquinasUltraLocal.get(0);
+
+        if (!dadosLocal.getStatusMaquina().equalsIgnoreCase(dados.getStatusMaquina())) {
+            conMysql.execute(String.format("""
+                        UPDATE maquina_ultrassom
+                        SET
+                            status_maquina = '%s'
+                        WHERE
+                            id_maquina = %d AND fk_administrador = %d
+                                AND fk_empresa = %d;
+                    """, dados.getStatusMaquina(),dados.getIdMaquina(),dados.getFkAdministrador(),dados.getFkEmpresa()));
+        }
+
+        return dados.getStatusMaquina();
+    }
 }
