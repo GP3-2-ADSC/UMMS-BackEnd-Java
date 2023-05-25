@@ -15,6 +15,7 @@ import com.mycompany.retria.services.SlackM;
 import org.checkerframework.checker.units.qual.Time;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 public class ValidadorDeComponentes {
 
@@ -69,7 +70,7 @@ public class ValidadorDeComponentes {
         metricaComponente = new MetricaComponente(null, porcentagemDeRam, fkMaquinaUltrassom);
         Integer fkMetricaComponente = metricaComponenteDAO.setMetrica(metricaComponente);
         String frase = "";
-
+        System.out.println("A FK É " + fkMetricaComponente);
 
         if (dados == null) {
             throw new ValidacaoException("Não é possível validar memória nula!!!");
@@ -129,17 +130,13 @@ public class ValidadorDeComponentes {
     public void validarRede(RedeInterface redeAtual, Integer fkRede) {
         long bytesRec1 = redeAtual.getBytesRecebidos();
         try {
-            Thread.sleep(1000);
+            TimeUnit.SECONDS.sleep(3);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
         long bytesRec2 = redeAtual.getBytesRecebidos();
-
         Double mbpsAtual = service.convertBytesToMB(bytesRec2 - bytesRec1);
-
-        System.out.println("Bytes recebidos 1: " + bytesRec1);
-        System.out.println("Bytes recebidos 2: " + bytesRec2);
-        System.out.println("Velocidade de Download da Internet " + mbpsAtual);
+        System.out.println(mbpsAtual);
         metricaComponente = new MetricaComponente(null, mbpsAtual, fkRede);
         Integer fkMetricaComponente = metricaComponenteDAO.setMetrica(metricaComponente);
 
