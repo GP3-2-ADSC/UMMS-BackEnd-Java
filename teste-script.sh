@@ -1,40 +1,41 @@
 #!/bin/bash
-echo  "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) Olá, usuário, serei seu assistente para instalação do Docker.;"
-echo  "$(tput setaf 10)[Bot assistant]:$(tput setaf 7)  Verificando aqui se você possui o docker instalado...;"
+
+PURPLE='0;35'
+NC='\033[0m' 
+VERSAO=11
+	
+echo  "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) Olá Aluno, serei seu assistente para instalação do Java!;"
+echo  "$(tput setaf 10)[Bot assistant]:$(tput setaf 7)  Verificando aqui se você possui o Java instalado...;"
 sleep 2
-# Verifica se o script está sendo executado como root
-if [ "$EUID" -ne 0 ]; then
-  echo "Este script precisa ser executado como root. Por favor, execute-o com sudo ou como usuário root."
-  exit
-fi
 
-# Atualiza o sistema
-apt update
-
-# Instala as dependências necessárias para adicionar repositórios via HTTPS
-apt install -y apt-transport-https ca-certificates curl software-properties-common
-
-# Adiciona a chave GPG oficial do Docker
-curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
-
-# Adiciona o repositório estável do Docker ao sistema
-echo "deb [arch=amd64 signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
-
-# Atualiza o sistema novamente após adicionar o repositório do Docker
-apt update
-
-# Instala o Docker.io
-apt install -y docker.io
-
-# Inicia o serviço do Docker e configura para iniciar automaticamente na inicialização do sistema
-systemctl start docker
-systemctl enable docker
-
-# Verifica a versão do Docker instalada
-docker --version
-
-# Verifica se o usuário atual faz parte do grupo "docker" e, se não, adiciona-o ao grupo
-if ! groups "$(whoami)" | grep -q "\bdocker\b"; then
-  usermod -aG docker "$(whoami)"
-  echo "O usuário $(whoami) foi adicionado ao grupo 'docker'. É necessário fazer logout e login novamente para que as alterações tenham efeito."
+java -version
+if [ $? -eq 0 ]
+	then
+		echo "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) : Você já tem o java instalado!!!"
+	else
+		echo "$(tput setaf 10)[Bot assistant]:$(tput setaf 7)  Opa! Não identifiquei nenhuma versão do Java instalado, mas sem problemas, irei resolver isso agora!"
+		echo "$(tput setaf 10)[Bot assistant]:$(tput setaf 7)  Confirme para mim se realmente deseja instalar o Java (S/N)?"
+	read inst
+	if [ \"$inst\" == \"S\" ]
+		then
+			echo "$(tput setaf 10)[Bot assistant]:$(tput setaf 7)  Ok! Você escolheu instalar o Java ;D"
+			echo "$(tput setaf 10)[Bot assistant]:$(tput setaf 7)  Adicionando o repositório!"
+			sleep 2
+			sudo add-apt-repository ppa:linuxuprising/java -y
+			clear
+			echo "$(tput setaf 10)[Bot assistant]:$(tput setaf 7)  Atualizando! Quase lá."
+			sleep 2
+			sudo apt update -y
+			clear
+			
+			if [ $VERSAO -eq 17 ]
+				then
+					echo "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) Preparando para instalar a versão 17 do Java. Confirme a instalação quando solicitado ;D"
+					sudo apt install default-jre && sudo apt install oracle-java17-installer  -y
+					clear
+					echo "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) Java instalado com sucesso!"
+				fi
+		else 	
+		echo "$(tput setaf 10)[Bot assistant]:$(tput setaf 7)  Você optou por não instalar o Java por enquanto, até a próxima então!"
+	fi
 fi
