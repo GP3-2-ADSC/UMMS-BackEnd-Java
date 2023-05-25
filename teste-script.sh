@@ -21,7 +21,7 @@ if [ $? -eq 0 ]
 			echo "$(tput setaf 10)[Bot assistant]:$(tput setaf 7)  Ok! Você escolheu instalar o Java ;D"
 			echo "$(tput setaf 10)[Bot assistant]:$(tput setaf 7)  Adicionando o repositório!"
 			sleep 2
-			sudo add-apt-repository ppa:linuxuprising/java -y
+			sudo add-apt-repository ppa:linuxuprising/java --yes
 			clear
 			echo "$(tput setaf 10)[Bot assistant]:$(tput setaf 7)  Atualizando! Quase lá."
 			sleep 2
