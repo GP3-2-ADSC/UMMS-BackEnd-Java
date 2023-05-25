@@ -19,9 +19,9 @@ if [ $? -eq 0 ]
 	if [ \"$inst\" == \"S\" ]
 		then
 			echo "$(tput setaf 10)[Bot assistant]:$(tput setaf 7)  Ok! Você escolheu instalar o Java ;D"
-			echo "$(tput setaf 10)[Bot assistant]:$(tput setaf 7)  Adicionando o repositório!"
+			echo "$(tput setaf 10)[Bot assistant]:$(tput setaf 7)  Adicionando dependência!"
 			sleep 2
-			sudo add-apt-repository ppa:linuxuprising/java --yes
+			sudo apt-get install gnupg2 software-properties-common -y
 			clear
 			echo "$(tput setaf 10)[Bot assistant]:$(tput setaf 7)  Atualizando! Quase lá."
 			sleep 2
@@ -30,9 +30,10 @@ if [ $? -eq 0 ]
 			
 			if [ $VERSAO -eq 17 ]
 				then
-					echo "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) Preparando para instalar a versão 17 do Java. Confirme a instalação quando solicitado ;D"
-					sudo apt install default-jre && sudo apt install oracle-java17-installer  -y
+					echo "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) Preparando para adicionar o repositório"
+					sudo add-apt-repository ppa:linuxuprising/javar  -y
 					clear
+					sudo apt-get install oracle-java17-installer oracle-java17-set-default
 					echo "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) Java instalado com sucesso!"
 				fi
 		else 	
