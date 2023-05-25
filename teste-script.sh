@@ -26,16 +26,11 @@ if [ $? -eq 0 ]
 			echo "$(tput setaf 10)[Bot assistant]:$(tput setaf 7)  Atualizando! Quase lá."
 			sleep 2
 			sudo apt update -y
-			
-			
-			if [ $VERSAO -eq 17 ]
-				then
 					echo "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) Preparando para adicionar o repositório"
 					sudo add-apt-repository ppa:linuxuprising/javar  -y
 					
 					sudo apt-get install oracle-java17-installer oracle-java17-set-default
 					echo "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) Java instalado com sucesso!"
-				fi
 		else 	
 		echo "$(tput setaf 10)[Bot assistant]:$(tput setaf 7)  Você optou por não instalar o Java por enquanto, até a próxima então!"
 	fi
