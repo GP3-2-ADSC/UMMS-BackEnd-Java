@@ -12,9 +12,7 @@ if [ $? -eq 0 ]; then
     exit 0
 fi
 
-# Define as variáveis de ambiente necessárias
-export JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64
-export PATH=$PATH:$JAVA_HOME/bin
+
 
 # Adiciona o repositório do Java 17
 add-apt-repository ppa:openjdk-r/ppa -y
@@ -91,4 +89,27 @@ sleep 2
 
 echo "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) Verificando versão do docker"
 docker --version
+if [ $? -eq 0 ]; then
+    echo "Docker foi instalado com sucesso."
+else
+    echo "Houve um erro durante a instalação do Docker."
+fi
+
+echo  "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) Você deseja efetuar a criação de um container? (S/N)"
+read inst
+
+if ["$inst" != "S" ] && [ "$inst" != "s" ]; then
+     echo "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) Até a próxima."
+    exit 0
+else
+    echo "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) Instalando a imagem do Mysql."
+    sudo docker pull mysql:8.0
+    sleep 2
+
+    echo "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) Criando o container e efetuando a configuração de nome do banco e senha"
+    sudo docker run -d -p 3306:3306 --name ContainerBD -e "MYSQL_DATABASE=retria" -e "MYSQL_ROOT_PASSWORD=urubu100" mysql:8.0
+    echo "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) Nome banco: retria - Senha: urubu100"
+    sleep 8
+fi
+
 
