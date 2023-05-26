@@ -1,32 +1,38 @@
 #!/bin/bash
 
-RED='0;35'
+PURPLE='0;35'
 NC='\033[0m' 
 VERSAO=11
 	
 
-# Verifica se o Java 17 já está instalado
+echo "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) Verificando se o Java 17 já está instalado"
+
+sleep 2
+
 java --version
 if [ $? -eq 0 ]; then
-    echo "Java 17 já está instalado."
+    echo "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) Java 17 já está instalado."
     exit 0
 fi
 
 
 
-# Adiciona o repositório do Java 17
+echo "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) Adicionando o repositório do Java 17"
+sleep 2
+
 add-apt-repository ppa:openjdk-r/ppa -y
 apt-get update
 
-# Instala o Java 17
+echo "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) Instalando o Java 17"
+sleep 2
 apt-get install openjdk-17-jdk -y
 
-# Verifica se a instalação foi bem sucedida
+
 java --version
 if [ $? -eq 0 ]; then
-    echo "Java 17 foi instalado com sucesso."
+    echo " $(tput setaf 10)[Bot assistant]:$(tput setaf 7) Java 17 foi instalado com sucesso."
 else
-    echo "Houve um erro durante a instalação do Java 17."
+    echo "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) Houve um erro durante a instalação do Java 17."
 fi
 
 sleep 5
@@ -65,7 +71,8 @@ sudo  apt install -y apt-transport-https ca-certificates curl software-propertie
 sleep 2
 
 echo "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) Adicionando o par de chaves do Docker"
-
+##  curl faz requisições HTTP
+##  gpg(dearmor) usada para manipular chaves, ela está salvando a chave no seguinte caminho -> /usr/share/keyrings/docker-archive-keyring.gpg
 curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
 sleep 2
 
@@ -90,9 +97,9 @@ sleep 2
 echo "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) Verificando versão do docker"
 docker --version
 if [ $? -eq 0 ]; then
-    echo "Docker foi instalado com sucesso."
+    echo "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) Docker foi instalado com sucesso."
 else
-    echo "Houve um erro durante a instalação do Docker."
+    echo "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) Houve um erro durante a instalação do Docker."
 fi
 
 echo  "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) Você deseja efetuar a criação de um container? (S/N)"
