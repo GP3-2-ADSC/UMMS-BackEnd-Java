@@ -4,45 +4,32 @@ RED='0;35'
 NC='\033[0m' 
 VERSAO=11
 	
-echo  "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) Olá, usuário, serei seu assistente para instalação do Java e também do docker.;"
-echo  "$(tput setaf 10)[Bot assistant]:$(tput setaf 7)  Verificando aqui se você possui o Java e docker instalado...;"
-sleep 2
-	
-echo "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) Olá! Vou te ajudar a instalar o Java 17."
-echo "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) Verificando se o Java já está instalado..."
 
+# Verifica se o Java 17 já está instalado
 java --version
 if [ $? -eq 0 ]; then
-    echo "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) O Java já está instalado."
+    echo "Java 17 já está instalado."
     exit 0
 fi
 
-echo "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) O Java 17 não foi encontrado."
-echo "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) Deseja continuar a instalação? (S/N)"
-read inst
+# Define as variáveis de ambiente necessárias
+export JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64
+export PATH=$PATH:$JAVA_HOME/bin
 
-if [ "$inst" != "S" ] && [ "$inst" != "s" ]; then
-    echo "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) Instalação cancelada. Até a próxima!"
-    exit 0
-fi
+# Adiciona o repositório do Java 17
+add-apt-repository ppa:openjdk-r/ppa -y
+apt-get update
 
-echo "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) Adicionando o repositório do Java 17..."
+# Instala o Java 17
+apt-get install openjdk-17-jdk -y
 
-sudo apt-add-repository --yes ppa:linuxuprising/java
-sudo apt update && sudo apt upgrade
-sleep 3
-
-
-echo "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) Instalando o Java 17..."
-
-sleep 2
-if [ $VERSAO -eq 17 ]
-		then
-            sudo apt install openjdk-17-jdk openjdk-17-jre --yes
-
-        echo "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) Java 17 instalado com sucesso!"
-fi
+# Verifica se a instalação foi bem sucedida
 java --version
+if [ $? -eq 0 ]; then
+    echo "Java 17 foi instalado com sucesso."
+else
+    echo "Houve um erro durante a instalação do Java 17."
+fi
 
 sleep 5
 
