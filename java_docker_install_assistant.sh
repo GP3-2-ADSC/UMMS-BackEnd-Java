@@ -12,7 +12,6 @@ sleep 2
 java --version
 if [ $? -eq 0 ]; then
     echo "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) Java 17 já está instalado."
-    exit 0
 fi
 
 
@@ -71,8 +70,10 @@ sudo  apt install -y apt-transport-https ca-certificates curl software-propertie
 sleep 2
 
 echo "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) Adicionando o par de chaves do Docker"
+
 ##  curl faz requisições HTTP
 ##  gpg(dearmor) usada para manipular chaves, ela está salvando a chave no seguinte caminho -> /usr/share/keyrings/docker-archive-keyring.gpg
+
 curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
 sleep 2
 
