@@ -12,28 +12,27 @@ sleep 2
 java --version
 if [ $? -eq 0 ]; then
     echo "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) Java 17 já está instalado."
-fi
-
-
-
-echo "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) Adicionando o repositório do Java 17"
-sleep 2
-
-add-apt-repository ppa:openjdk-r/ppa -y
-apt-get update
-
-echo "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) Instalando o Java 17"
-sleep 2
-apt-get install openjdk-17-jdk -y
-
-
-java --version
-if [ $? -eq 0 ]; then
-    echo " $(tput setaf 10)[Bot assistant]:$(tput setaf 7) Java 17 foi instalado com sucesso."
 else
-    echo "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) Houve um erro durante a instalação do Java 17."
-fi
 
+
+    echo "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) Adicionando o repositório do Java 17"
+    sleep 2
+
+    add-apt-repository ppa:openjdk-r/ppa -y
+    apt-get update
+
+    echo "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) Instalando o Java 17"
+    sleep 2
+    apt-get install openjdk-17-jdk -y
+
+
+    java --version
+    if [ $? -eq 0 ]; then
+    echo " $(tput setaf 10)[Bot assistant]:$(tput setaf 7) Java 17 foi instalado com sucesso."
+    else
+    echo "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) Houve um erro durante a instalação do Java 17."
+    fi
+fi
 sleep 5
 
 echo "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) Você deseja instalar o docker? (S/N)"
