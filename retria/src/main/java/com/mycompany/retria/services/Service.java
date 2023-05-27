@@ -9,10 +9,8 @@ import com.mycompany.retria.DAO.MaquinaUltrassomDAO;
 import com.mycompany.retria.DAO.MaquinaUltrassomEspecificadaDAO;
 import com.mycompany.retria.MODEL.*;
 import com.mycompany.retria.exception.ValidacaoException;
-import com.mycompany.retria.exception.MaquinaValidacaoException;
 import com.mycompany.retria.validadores.ValidadorDeComponentes;
 
-import java.io.IOException;
 import java.util.*;
 
 public class Service {
@@ -109,7 +107,7 @@ public class Service {
 
         List<Volume> discos = looca.getGrupoDeDiscos().getVolumes();
         ValidadorDeComponentes validadorDeComponentes = new ValidadorDeComponentes();
-        Inovacao inovacao = new Inovacao();
+        TesteConexaoComFornecedor testeConexaoComFornecedor = new TesteConexaoComFornecedor();
 
         Integer fkCpuEspec = especificacaoComponente.stream()
                 .filter(e -> e.getTipoComponente().equals(TipoComponente.CPU))
@@ -181,13 +179,9 @@ public class Service {
                     validadorDeComponentes.validarRede(redeAtual, fkRede);
 
 
-                    inovacao.setIpRoteador(looca.getRede().getGrupoDeInterfaces().getInterfaces().get(0).getEnderecoIpv4().toString());
+                    testeConexaoComFornecedor.setIpRoteador(looca.getRede().getGrupoDeInterfaces().getInterfaces().get(0).getEnderecoIpv4().toString());
 
-                    try {
-                        inovacao.execCommand("ping -c 4 " + inovacao.getIpRoteador());
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
-                    }
+                    testeConexaoComFornecedor.execLog("54.226.244.", adm.getNome_administrador(),maquinaUltrassom.getStatusMaquina());
                 }
             }
         }, 0, 10000);

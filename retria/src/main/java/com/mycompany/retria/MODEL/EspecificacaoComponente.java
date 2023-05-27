@@ -71,12 +71,13 @@ public class EspecificacaoComponente {
 
     @Override
     public String toString() {
-        return "EspecificacaoComponente{" +
-                "id_especificacao_componente=" + id_especificacao_componente +
-                ", tipoComponente=" + tipoComponente +
-                ", nome_fabricante='" + nome_fabricante + '\'' +
-                ", descricao_componente='" + descricao_componente + '\'' +
-                '}';
+       return String.format("""
+               %s
+               %s
+               %s
+               %s
+
+               """,tipoComponente,descricao_componente,numero_serial,nome_fabricante);
     }
 
 

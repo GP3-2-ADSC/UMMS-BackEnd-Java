@@ -24,7 +24,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
  */
 public class SlackRetria {
 
-    private static final String webHooksUrl = "https://hooks.slack.com/services/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";
+    private static final String webHooksUrl = "https://hooks.slack.com/services/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";
     private static final String slackChannel = "hospital-estadual-de-vila-alpina-";
     private LocalDateTime teste = LocalDateTime.now();
 

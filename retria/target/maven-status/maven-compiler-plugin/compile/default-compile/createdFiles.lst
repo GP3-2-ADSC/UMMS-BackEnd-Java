@@ -11,14 +11,12 @@ com\mycompany\retria\MODEL\Empresa.class
 com\mycompany\retria\DAO\EmpresaDAO.class
 com\mycompany\retria\DAO\MaquinaUltrassomDAO.class
 com\mycompany\retria\RetriaLogin$4.class
-com\mycompany\retria\MODEL\Inovacao.class
 com\mycompany\retria\MODEL\MetricaComponente.class
 com\mycompany\retria\DAO\AdministradorDAO.class
 com\mycompany\retria\services\Service.class
 com\mycompany\retria\LoginValidado$1.class
 com\mycompany\retria\LoginInvalido$2.class
 com\mycompany\retria\LoginValidado.class
-com\mycompany\retria\services\SlackM.class
 com\mycompany\retria\DAO\MaquinaUltrassomEspecificadaDAO.class
 com\mycompany\retria\DAO\EspecificacaoComponenteDAO.class
 com\mycompany\retria\RetriaLogin$1.class

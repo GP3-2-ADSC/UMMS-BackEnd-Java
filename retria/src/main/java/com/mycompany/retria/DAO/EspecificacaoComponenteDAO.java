@@ -48,7 +48,9 @@ public class EspecificacaoComponenteDAO {
                             especificacao_componente
                         where
                             descricao_componente = '%s'
-                        """, processador.getNome()), new BeanPropertyRowMapper<>(EspecificacaoComponente.class));
+                        and
+                            numero_serial = '%s'
+                        """, processador.getNome(),processador.getId()), new BeanPropertyRowMapper<>(EspecificacaoComponente.class));
 
         List<EspecificacaoComponente> especificacaoComponentesLocal =
                 conMysql.query(String.format("""
@@ -58,7 +60,9 @@ public class EspecificacaoComponenteDAO {
                             especificacao_componente
                         where
                             descricao_componente = '%s'
-                        """, processador.getNome()), new BeanPropertyRowMapper<>(EspecificacaoComponente.class));
+                        and
+                            numero_serial = '%s'
+                        """, processador.getNome(),processador.getId()), new BeanPropertyRowMapper<>(EspecificacaoComponente.class));
 
         if (especificacaoComponentes.isEmpty()) {
             con.execute(String.format("insert into especificacao_componente" +
@@ -73,7 +77,9 @@ public class EspecificacaoComponenteDAO {
                                 especificacao_componente
                             where
                                 descricao_componente = '%s'
-                            """, processador.getNome()), new BeanPropertyRowMapper<>(EspecificacaoComponente.class));
+                            and
+                                numero_serial = '%s'
+                            """, processador.getNome(),processador.getId()), new BeanPropertyRowMapper<>(EspecificacaoComponente.class));
         }
 
         if (especificacaoComponentesLocal.isEmpty()) {
