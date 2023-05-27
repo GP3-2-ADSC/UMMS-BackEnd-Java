@@ -1,6 +1,5 @@
 package com.mycompany.retria.validadores;
 
-import com.github.britooo.looca.api.group.discos.Disco;
 import com.github.britooo.looca.api.group.discos.Volume;
 import com.github.britooo.looca.api.group.memoria.Memoria;
 import com.github.britooo.looca.api.group.processador.Processador;
@@ -11,10 +10,9 @@ import com.mycompany.retria.MODEL.Alerta;
 import com.mycompany.retria.MODEL.MetricaComponente;
 import com.mycompany.retria.exception.ValidacaoException;
 import com.mycompany.retria.services.Service;
-import com.mycompany.retria.services.SlackM;
-import org.checkerframework.checker.units.qual.Time;
-
-import java.util.List;
+import com.mycompany.retria.services.SlackRetria;
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.concurrent.TimeUnit;
 
 public class ValidadorDeComponentes {
@@ -27,7 +25,7 @@ public class ValidadorDeComponentes {
 
     private MetricaComponente metricaComponente;
 
-    private SlackM slack = new SlackM();
+    private SlackRetria slack = new SlackRetria();
 
     private Alerta alerta;
 
@@ -142,5 +140,3 @@ public class ValidadorDeComponentes {
 
     }
 }
-
-
