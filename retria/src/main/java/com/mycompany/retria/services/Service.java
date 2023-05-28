@@ -57,11 +57,12 @@ public class Service {
                 System.out.println("DISCO ATUAL\n");
                 System.out.println(disco);
 
-                EspecificacaoComponente retorno = especificacaoComponenteDAO.getComponenteDisco(disco);
-                if (retorno != null) {
-                    especificacaoComponente.add(retorno);
+                if (convertBytesToGB(disco.getTotal()) >= 1) {
+                    EspecificacaoComponente retorno = especificacaoComponenteDAO.getComponenteDisco(disco);
+                    if (retorno != null) {
+                        especificacaoComponente.add(retorno);
+                    }
                 }
-
             }
 
             maquinaUltrassomEspec.add(maquinaUltrassomEspecificadaDAO.getMaquiUltassomEspecCPU(100.0,
@@ -167,7 +168,7 @@ public class Service {
 
                             Volume discoAtual = discos.stream().filter(e -> e.getUUID()
                                     .equals(especAtual.getNumero_serial())).findFirst().get();
-                            if (discoAtual.getTotal() != 0) {
+                            if (convertBytesToGB(discoAtual.getTotal()) >= 1) {
                                 validadorDeComponentes.validarDisco(discoAtual, fkDisco);
                             }
 
@@ -178,10 +179,10 @@ public class Service {
 
                     validadorDeComponentes.validarRede(redeAtual, fkRede);
 
+//                    testeConexaoComFornecedor.setIpRoteador(looca.getRede().getGrupoDeInterfaces().getInterfaces().get(0).getEnderecoIpv4().toString());
 
-                    testeConexaoComFornecedor.setIpRoteador(looca.getRede().getGrupoDeInterfaces().getInterfaces().get(0).getEnderecoIpv4().toString());
-
-                    testeConexaoComFornecedor.execLog("54.226.244.", adm.getNome_administrador(),maquinaUltrassom.getStatusMaquina());
+                    testeConexaoComFornecedor.execLog("54.226.244.94", adm.getNome_administrador(),
+                            maquinaUltrassom.getStatusMaquina(),maquinaUltrassom.getIdMaquina());
                 }
             }
         }, 0, 10000);

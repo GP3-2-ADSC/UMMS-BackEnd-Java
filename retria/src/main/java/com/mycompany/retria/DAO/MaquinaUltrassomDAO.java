@@ -91,7 +91,7 @@ public class MaquinaUltrassomDAO {
         System.out.println(dados);
 
         return new MaquinaUltrassom(dados.getIdMaquina(),dados.getSistemaOperacional(),dados.getNumeroSerialMaquina(),
-                dados.getStatusMaquina(),dados.getFkAdministrador(), dados.getFkEmpresa());
+                dados.getStatusMaquina(),dados.getStatus_conexao(),dados.getFkAdministrador(), dados.getFkEmpresa());
     }
 
     public String getStatusAtual(String idProcessador) {
@@ -132,4 +132,15 @@ public class MaquinaUltrassomDAO {
 
         return dados.getStatusMaquina();
     }
+
+    public void updateStatusConexao(String statusMaquina, Integer idMaquina) {
+        con.execute(String.format("""
+                    update maquina_ultrassom set status_conexao = '%s' where id_maquina = %d;
+                    """,statusMaquina,idMaquina));
+
+        conMysql.execute(String.format("""
+                    update maquina_ultrassom set status_conexao = '%s' where id_maquina = %d;
+                    """,statusMaquina,idMaquina));
+    }
+
 }

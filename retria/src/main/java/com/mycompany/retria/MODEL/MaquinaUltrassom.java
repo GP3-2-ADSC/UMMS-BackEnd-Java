@@ -13,19 +13,20 @@ public class MaquinaUltrassom {
     private String sistemaOperacional;
     private String numeroSerialMaquina;
     private String statusMaquina;
+    private String status_conexao;
     private Integer fkAdministrador;
     private Integer fkEmpresa;
 
 
-    public MaquinaUltrassom(Integer idMaquina, String sistemaOperacional, String idProcessador, String isAtivo,Integer fkAdmin, Integer fkEmpresa) {
+    public MaquinaUltrassom(Integer idMaquina, String sistemaOperacional, String idProcessador, String isAtivo, String statusConexao,Integer fkAdmin, Integer fkEmpresa) {
         this.idMaquina = idMaquina;
         this.sistemaOperacional = sistemaOperacional;
         this.numeroSerialMaquina = idProcessador;
         this.statusMaquina = isAtivo;
+        this.status_conexao = statusConexao;
         this.fkAdministrador = fkAdmin;
         this.fkEmpresa = fkEmpresa;
     }
-
 
     public MaquinaUltrassom() {
     }
@@ -70,6 +71,14 @@ public class MaquinaUltrassom {
         this.statusMaquina = statusMaquina;
     }
 
+    public String getStatus_conexao() {
+        return status_conexao;
+    }
+
+    public void setStatus_conexao(String status_conexao) {
+        this.status_conexao = status_conexao;
+    }
+
     public Integer getFkAdministrador() {
         return fkAdministrador;
     }
@@ -83,8 +92,9 @@ public class MaquinaUltrassom {
         return "MaquinaUltrassom{" +
                 "idMaquina=" + idMaquina +
                 ", sistemaOperacional='" + sistemaOperacional + '\'' +
-                ", idProcessador='" + numeroSerialMaquina + '\'' +
+                ", numeroSerialMaquina='" + numeroSerialMaquina + '\'' +
                 ", statusMaquina='" + statusMaquina + '\'' +
+                ", status_conexao='" + status_conexao + '\'' +
                 ", fkAdministrador=" + fkAdministrador +
                 ", fkEmpresa=" + fkEmpresa +
                 '}';

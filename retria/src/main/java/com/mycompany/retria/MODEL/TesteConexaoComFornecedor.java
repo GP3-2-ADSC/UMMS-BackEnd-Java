@@ -9,6 +9,7 @@ package com.mycompany.retria.MODEL;
  * @author silvam
  */
 import com.github.britooo.looca.api.core.Looca;
+import com.mycompany.retria.DAO.MaquinaUltrassomDAO;
 
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -56,7 +57,8 @@ public class TesteConexaoComFornecedor {
         }
     }
 
-    public void execLog(String ip, String adm, String status) {
+    public void execLog(String ip, String adm, String status, Integer idMaquina) {
+        MaquinaUltrassomDAO muDao = new MaquinaUltrassomDAO();
         Looca looca = new Looca();
         String ipAddress = ip; // O endereço do IP que queremos testar.
 
@@ -71,67 +73,61 @@ public class TesteConexaoComFornecedor {
                 SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
                 String currentTime = dateFormat.format(new Date());
                 String sistemaOperacional = looca.getSistema().getSistemaOperacional();
+                List<String> retorno = new ArrayList();
                 String commandLine;
+                String location;
+                String extraCommand;
 
                 if (sistemaOperacional.equalsIgnoreCase("windows")) {
                     System.out.println("SO ----> WINDOWS");
                     commandLine = "ping " + ipAddress;
+                    location = "cmd.exe";
+                    extraCommand = "/c";
                 } else {
-                    System.out.println("SO ----> LINUX OU MACOS");
-                    commandLine = "ping c -4 " + ipAddress;
+                    System.out.println("SO ----> LINUX");
+                    commandLine = "ping -c 4 " + ipAddress;
+                    location = "/bin/bash";
+                    extraCommand = "-c";
                 }
 
-                Process process = Runtime.getRuntime().exec(commandLine);
-                BufferedReader reader = new BufferedReader(new InputStreamReader(process.getErrorStream()));
-                int returnCode = process.waitFor();
+                ProcessBuilder builder = new ProcessBuilder(location, extraCommand, commandLine);
+                builder.redirectErrorStream(true);
 
-                if (returnCode == 1) {
-                    System.out.println("Houve erro ao executar o ping!!!!");
-                    StringBuilder errorBuilder = new StringBuilder();
-                    String linha;
-                    System.out.println("CODE ---- 1");
-                    while ((linha = reader.readLine()) != null) {
-                        errorBuilder.append(errorBuilder).append("\n");
+                Process process = builder.start();
+
+                InputStream inputStream = process.getInputStream();
+                BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
+                String linha;
+
+                while ((linha = reader.readLine()) != null) {
+                   retorno.add(linha);
+                }
+
+                int exitCode = process.waitFor();
+
+                if (exitCode != 0) {
+                    if (exitCode == 1) {
+                        writer.write(currentTime + " - Error on ping " + ipAddress + " - return code " + exitCode + " => " + retorno.get(0) + "\n");
+                        muDao.updateStatusConexao("Parcial",idMaquina);
+                    } else {
+                        writer.write(currentTime + " - Error on ping " + ipAddress + " - return code " + exitCode + " => " + retorno.get(0) + "\n");
+                        muDao.updateStatusConexao("Erro",idMaquina);
                     }
-                    reader.close();
-
-                    String errorMessage = errorBuilder.toString();
-
-                    writer.write(String.format("""
-                            Data = %s
-                            Código de retorno = %d
-                            Error = %s
-                            
-                            """,currentTime,returnCode," - Erro ping " + ipAddress + " : " + errorMessage + "\n"));
-                    writer.close();
-                } else if (returnCode == 2) {
-                    System.out.println("CODE ---- 2");
-                    String errorMessage = "Erro de execução de comando!\n" +
-                            "Possíveis causas: Operação não permitada, erro na resolução do host e problemas de " +
-                            "conexao de rede";
-
-                    writer.write(String.format("""
-                            Data = %s
-                            Código de retorno = %d
-                            Error = %s
-                            
-                            """,currentTime,returnCode," - Erro ping " + ipAddress + " : " + errorMessage + "\n"));
-                    writer.close();
                 } else {
-                    System.out.println("Comando executado com sucesso!");
+                    muDao.updateStatusConexao("Sucesso",idMaquina);
                 }
-
+                writer.close();
             } else {
                 System.out.println("TO NO ELSE!");
                 FileWriter writer = new FileWriter(logNome);
                 String cabecalho = formularCabecalhoLog(logNome,diaAtual.toString(),adm,status);
                 writer.write(cabecalho);
                 writer.close();
-                execLog(ip,adm,status);
+                execLog(ip, adm, status, idMaquina);
             }
 
-        } catch (IOException | InterruptedException e) {
-            System.err.println("Erro ao escrever no arquivo de log: " + e.getMessage());
+        } catch (Exception ex) {
+            System.err.println("Erro ao escrever no arquivo de log: " + ex.getMessage());
         }
     }
 
