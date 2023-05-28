@@ -1,5 +1,6 @@
 package com.mycompany.retria.DAO;
 
+import com.mycompany.retria.MODEL.Webhook;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 
@@ -18,9 +19,9 @@ public class WebhookDAO {
     }
 
     public String getLink() {
-        List<String> links = con.query("SELECT link FROM webhook WHERE id_web = 1",
-                new BeanPropertyRowMapper(String.class));
+        List<Webhook> links = con.query("SELECT link FROM webhook WHERE id_web = 3",
+                new BeanPropertyRowMapper(Webhook.class));
 
-        return links.get(0);
+        return links.get(0).getLink();
     }
 }
