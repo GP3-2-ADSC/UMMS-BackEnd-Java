@@ -18,7 +18,7 @@ services:
         ipv4_address: 172.20.0.2
 
   teste-java:
-    image: GP3-2-ADSC/retria-1.0-SNAPSHOT.jar:testee
+    image: gp3-2-adsc/retria-1.0-snapshot.jar:testee
     container_name: JavaContainer
     command: ["java", "-jar", "/app/retria-1.0-SNAPSHOT.jar"]
     stdin_open: true
