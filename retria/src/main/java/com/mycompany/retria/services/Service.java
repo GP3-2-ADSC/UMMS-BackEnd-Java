@@ -179,8 +179,6 @@ public class Service {
 
                     validadorDeComponentes.validarRede(redeAtual, fkRede);
 
-//                    testeConexaoComFornecedor.setIpRoteador(looca.getRede().getGrupoDeInterfaces().getInterfaces().get(0).getEnderecoIpv4().toString());
-
                     testeConexaoComFornecedor.execLog("54.226.244.94", adm.getNome_administrador(),
                             maquinaUltrassom.getStatusMaquina(),maquinaUltrassom.getIdMaquina());
                 }

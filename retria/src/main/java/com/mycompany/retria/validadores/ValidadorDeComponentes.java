@@ -11,6 +11,11 @@ import com.mycompany.retria.MODEL.MetricaComponente;
 import com.mycompany.retria.exception.ValidacaoException;
 import com.mycompany.retria.services.Service;
 import com.mycompany.retria.services.SlackRetria;
+import org.apache.commons.io.FileUtils;
+
+import java.io.File;
+import java.io.IOException;
+import java.net.URL;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.concurrent.TimeUnit;
@@ -126,17 +131,22 @@ public class ValidadorDeComponentes {
     }
 
     public void validarRede(RedeInterface redeAtual, Integer fkRede) {
-        long bytesRec1 = redeAtual.getBytesRecebidos();
         try {
+            long bytesRec1 = redeAtual.getBytesRecebidos();
+            File file = new File("download.txt");
+            String url = "https://drive.google.com/u/0/uc?id=1p2468G6rZupctuQRDEsKD9Clbd9m80ny&export=download";
+            FileUtils.copyURLToFile(new URL(url), file);
+            file.delete();
+
             TimeUnit.SECONDS.sleep(3);
-        } catch (InterruptedException e) {
+
+            long bytesRec2 = redeAtual.getBytesRecebidos();
+            Double mbpsAtual = service.convertBytesToMB(bytesRec2 - bytesRec1);
+            System.out.println(mbpsAtual);
+            metricaComponente = new MetricaComponente(null, mbpsAtual, fkRede);
+            Integer fkMetricaComponente = metricaComponenteDAO.setMetrica(metricaComponente);
+        } catch (IOException | InterruptedException e) {
             throw new RuntimeException(e);
         }
-        long bytesRec2 = redeAtual.getBytesRecebidos();
-        Double mbpsAtual = service.convertBytesToMB(bytesRec2 - bytesRec1);
-        System.out.println(mbpsAtual);
-        metricaComponente = new MetricaComponente(null, mbpsAtual, fkRede);
-        Integer fkMetricaComponente = metricaComponenteDAO.setMetrica(metricaComponente);
-
     }
 }

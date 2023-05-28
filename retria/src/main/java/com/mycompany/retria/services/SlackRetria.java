@@ -6,10 +6,7 @@ package com.mycompany.retria.services;
 
 import com.github.seratch.jslack.Slack;
 import com.github.seratch.jslack.api.webhook.Payload;
-import com.mycompany.retria.DAO.Conexao;
-import com.mycompany.retria.DAO.ConexaoMySqlEc2;
-import com.mycompany.retria.DAO.MaquinaUltrassomDAO;
-import com.mycompany.retria.DAO.MetricaComponenteDAO;
+import com.mycompany.retria.DAO.*;
 import com.mycompany.retria.MODEL.MetricaComponente;
 import java.io.IOException;
 import java.time.LocalDateTime;
@@ -24,11 +21,12 @@ import org.springframework.jdbc.core.JdbcTemplate;
  */
 public class SlackRetria {
 
-    private static final String webHooksUrl = "https://hooks.slack.com/services/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";
+    private static final String webHooksUrl = new WebhookDAO().getLink();
     private static final String slackChannel = "hospital-estadual-de-vila-alpina-";
     private LocalDateTime teste = LocalDateTime.now();
 
     public void sendMensagemToSlack(String mensagem) {
+        System.out.println(webHooksUrl);
         MetricaComponenteDAO m = new MetricaComponenteDAO();
         LocalDateTime teste2 = LocalDateTime.now();
 
