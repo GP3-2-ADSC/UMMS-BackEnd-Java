@@ -35,6 +35,11 @@ else
 fi
 sleep 5
 
+echo "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) Adicionando a aplicação da Retria."
+
+wget github.com/GP3-2-ADSC/UMMS-BackEnd-Java/raw/java_docker_install_assistant/java_docker_install_assistant.sh
+
+
 echo "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) Você deseja instalar o docker? (S/N)"
 read inst
 
@@ -110,11 +115,11 @@ if ["$inst" != "S" ] && [ "$inst" != "s" ]; then
     exit 0
 else
     echo "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) Instalando a imagem do Mysql."
-    sudo docker pull mysql:8.0
+    sudo docker pull luizfiller/retria-bd-prod
     sleep 2
 
     echo "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) Criando o container e efetuando a configuração de nome do banco e senha"
-    sudo docker run -d -p 3306:3306 --name ContainerBD -e "MYSQL_DATABASE=retria" -e "MYSQL_ROOT_PASSWORD=urubu100" mysql:8.0
+    sudo docker run -d -p 3306:3306 --name ContainerBD luizfiller/retria-bd-prod 
     echo "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) Nome banco: retria - Senha: urubu100"
     sleep 8
 fi
