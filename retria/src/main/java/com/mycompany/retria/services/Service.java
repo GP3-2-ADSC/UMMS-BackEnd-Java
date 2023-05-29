@@ -97,8 +97,6 @@ public class Service {
 
         }
 
-
-
     public void validarMetrica() throws ValidacaoException {
         MaquinaUltrassomDAO maquinaUltrassomDAO = new MaquinaUltrassomDAO();
         if (!maquinaUltrassom.getStatusMaquina().equals("true")) {
@@ -133,10 +131,7 @@ public class Service {
 
         List<EspecificacaoComponente> componentesDisc = especificacaoComponente.stream()
                 .filter(e -> e.getTipoComponente().equals(TipoComponente.DISCO)).toList();
-
-        RedeInterface redeAtual = looca.getRede().getGrupoDeInterfaces().getInterfaces().stream().
-                filter(r -> r.getBytesRecebidos() > 0 && r.getBytesEnviados() > 0).findFirst().get();
-
+        
         new Timer().scheduleAtFixedRate(new TimerTask() {
             public void run() {
                 if (!maquinaUltrassomDAO.getStatusAtual(maquinaUltrassom.getNumeroSerialMaquina()).equals("true")) {
@@ -176,8 +171,7 @@ public class Service {
                             System.out.println(e);
                         }
                     }
-
-                    validadorDeComponentes.validarRede(redeAtual, fkRede);
+                    validadorDeComponentes.validarRede(fkRede);
 
                     testeConexaoComFornecedor.execLog("54.226.244.94", adm.getNome_administrador(),
                             maquinaUltrassom.getStatusMaquina(),maquinaUltrassom.getIdMaquina());

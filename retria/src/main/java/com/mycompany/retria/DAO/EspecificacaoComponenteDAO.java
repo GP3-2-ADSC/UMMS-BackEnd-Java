@@ -222,8 +222,14 @@ public class EspecificacaoComponenteDAO {
     }
 
     public EspecificacaoComponente getRede(List<RedeInterface> interfaces) {
-        RedeInterface redeAtual = interfaces.stream().
-                filter(r -> r.getBytesRecebidos() > 0 && r.getBytesEnviados() > 0).findFirst().get();
+            RedeInterface redeAtual = interfaces.get(0);
+        for (int i = 0; i < interfaces.size(); i++) {
+            RedeInterface redeUsada = interfaces.get(i);
+
+            if (redeUsada.getBytesRecebidos() > redeAtual.getBytesRecebidos()) {
+                redeAtual = redeUsada;
+            }
+        }
 
         List<EspecificacaoComponente> especificacaoComponentes =
                 con.query(String.format("""

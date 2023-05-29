@@ -1,5 +1,6 @@
 package com.mycompany.retria.validadores;
 
+import com.github.britooo.looca.api.core.Looca;
 import com.github.britooo.looca.api.group.discos.Volume;
 import com.github.britooo.looca.api.group.memoria.Memoria;
 import com.github.britooo.looca.api.group.processador.Processador;
@@ -18,6 +19,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 public class ValidadorDeComponentes {
@@ -33,6 +35,8 @@ public class ValidadorDeComponentes {
     private SlackRetria slack = new SlackRetria();
 
     private Alerta alerta;
+
+    private Looca looca = new Looca();
 
     public void validarCpu(Processador dados, Integer fkMaquinaUltrassom) throws ValidacaoException {
         Double usoProcessador = dados.getUso();
@@ -130,22 +134,28 @@ public class ValidadorDeComponentes {
         }
     }
 
-    public void validarRede(RedeInterface redeAtual, Integer fkRede) {
+    public void validarRede(Integer fkRede) {
         try {
+
+            List<RedeInterface> interfaces = looca.getRede().getGrupoDeInterfaces().getInterfaces();
+            RedeInterface redeAtual = interfaces.get(0);
+
+            for (int i = 0; i < interfaces.size(); i++) {
+                RedeInterface redeUsada = interfaces.get(i);
+
+                if (redeUsada.getBytesRecebidos() > redeAtual.getBytesRecebidos()) {
+                    redeAtual = redeUsada;
+                }
+            }
+
             long bytesRec1 = redeAtual.getBytesRecebidos();
-            File file = new File("download.txt");
-            String url = "https://drive.google.com/u/0/uc?id=1p2468G6rZupctuQRDEsKD9Clbd9m80ny&export=download";
-            FileUtils.copyURLToFile(new URL(url), file);
-            file.delete();
-
             TimeUnit.SECONDS.sleep(3);
-
             long bytesRec2 = redeAtual.getBytesRecebidos();
             Double mbpsAtual = service.convertBytesToMB(bytesRec2 - bytesRec1);
             System.out.println(mbpsAtual);
             metricaComponente = new MetricaComponente(null, mbpsAtual, fkRede);
             Integer fkMetricaComponente = metricaComponenteDAO.setMetrica(metricaComponente);
-        } catch (IOException | InterruptedException e) {
+        } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
     }
