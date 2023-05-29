@@ -37,7 +37,7 @@ sleep 5
 
 echo "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) Adicionando a aplicação da Retria."
 
-wget github.com/GP3-2-ADSC/UMMS-BackEnd-Java/raw/java_docker_install_assistant/java_docker_install_assistant.sh
+wget github.com/GP3-2-ADSC/umms-back-end-java-cli/raw/main/retria/target/retria-1.0-SNAPSHOT-jar-with-dependencies.jar
 
 
 echo "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) Você deseja instalar o docker? (S/N)"
