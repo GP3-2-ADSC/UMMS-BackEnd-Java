@@ -1,0 +1,43 @@
+version: '3.8'
+
+services:
+  ContainerBD:
+    image: mysql:8.0
+    container_name: ContainerBD
+    command: --default-authentication-plugin=mysql_native_password
+    environment:
+      MYSQL_ROOT_PASSWORD: urubu100
+      MYSQL_DATABASE: retria
+      MYSQL_USER: root
+      MYSQL_PASSWORD: urubu100
+      MYSQL_ROOT_HOST: "%"
+    ports:
+      - "3307:3306"
+    networks:
+      app_net:
+        ipv4_address: 172.20.0.2
+
+  teste-java:
+    image: gp3-2-adsc/retria-1.0-snapshot.jar:testee
+    container_name: JavaContainer
+    command: ["java", "-jar", "/app/retria-1.0-SNAPSHOT.jar"]
+    stdin_open: true
+    tty: true
+    depends_on:
+      - ContainerBD
+    environment:
+      - DATABASE_HOST=root
+      - DATABASE_PORT=3306
+      - DATABASE_USER=root
+      - DATABASE_PASSWORD=urubu100
+      - DATABASE_NAME=retria
+    networks:
+      app_net:
+        ipv4_address: 172.20.0.3
+
+networks:
+  app_net:
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.20.0.0/16
