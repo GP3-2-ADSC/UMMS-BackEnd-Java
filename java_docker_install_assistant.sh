@@ -54,7 +54,6 @@ docker --version
 
 if [ $? -eq 0 ]; then
     echo "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) O Docker já está instalado."
-    exit 0
 fi
 
 echo "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) O docker não foi encontrado."
@@ -104,6 +103,7 @@ else
         echo "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) Houve um erro durante a instalação do Docker."
     fi
 fi
+
 echo  "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) Você deseja efetuar a criação de um container? (S/N)"
 read inst
 
