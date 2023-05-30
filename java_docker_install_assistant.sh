@@ -54,16 +54,17 @@ docker --version
 
 if [ $? -eq 0 ]; then
     echo "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) O Docker já está instalado."
-fi
+else
 
-echo "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) O docker não foi encontrado."
-echo "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) Deseja continuar a instalação? (S/N)"
-read inst
+    echo "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) O docker não foi encontrado."
 
-if [ "$inst" != "S" ] && [ "$inst" != "s" ]; then
+    echo "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) Deseja continuar a instalação? (S/N)"
+    read inst
+
+    if [ "$inst" != "S" ] && [ "$inst" != "s" ]; then
     echo "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) Instalação cancelada. Até a próxima!"
     exit 0
-else
+    else
     echo "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) Adicionando as dependências para adicionar o repositório via HTTPS"
     sudo  apt install -y apt-transport-https ca-certificates curl software-properties-common
 
@@ -97,13 +98,13 @@ else
 
     echo "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) Verificando versão do docker"
     docker --version
-    if [ $? -eq 0 ]; then
-        echo "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) Docker foi instalado com sucesso."
-        else
-        echo "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) Houve um erro durante a instalação do Docker."
+        if [ $? -eq 0 ]; then
+            echo "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) Docker foi instalado com sucesso."
+            else
+            echo "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) Houve um erro durante a instalação do Docker."
+        fi
     fi
 fi
-
 echo  "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) Você deseja efetuar a criação de um container? (S/N)"
 read inst
 
