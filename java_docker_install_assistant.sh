@@ -17,7 +17,7 @@ else
     sleep 2
 
     add-apt-repository ppa:openjdk-r/ppa -y
-    apt-get update
+    sudo apt update && sudo apt upgrade -y
 
     echo "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) Instalando o Java 17"
     sleep 2
@@ -82,7 +82,7 @@ else
 
     echo "deb [arch=amd64 signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
 
-    sudo apt update
+    sudo apt update && sudo apt upgrade -y
 
     echo "$(tput setaf 10)[Bot assistant]:$(tput setaf 7) Instalando o Docker..."
 
