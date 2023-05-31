@@ -173,7 +173,7 @@ public class Service {
                     }
                     validadorDeComponentes.validarRede(fkRede);
 
-                    testeConexaoComFornecedor.execLog("34.235.138.209", adm.getNome_administrador(),
+                    testeConexaoComFornecedor.execLog("18.204.205.246", adm.getNome_administrador(),
                             maquinaUltrassom.getStatusMaquina(),maquinaUltrassom.getIdMaquina());
                 }
             }
